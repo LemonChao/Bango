@@ -1,0 +1,20 @@
+//
+//  PrefixHeader.pch
+//  Bango
+//
+//  Created by zchao on 2019/3/7.
+//  Copyright © 2019 zchao. All rights reserved.
+//
+
+#ifndef PrefixHeader_pch
+#define PrefixHeader_pch
+
+#import "PodsHeader.h"
+#import "InterfaceHeader.h"
+#import "AppKeyHeader.h"
+#import "SystemHeader.h"
+#import "MethodHeader.h"
+#import "AppColorHeader.h"
+#import "ZCHeader.h"
+
+#endif /* PrefixHeader_pch */
