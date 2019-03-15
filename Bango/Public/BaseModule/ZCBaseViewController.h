@@ -7,13 +7,20 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "WRCustomNavigationBar.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface ZCBaseViewController : UIViewController
 - (void)configCustomNav;
 - (void)configViews;
 - (void)bindViewModel;
+- (void)setupNavBar;
+
+/**
+ 自定义导航栏用
+ */
+@property (nonatomic, strong) WRCustomNavigationBar *customNavBar;
+
 
 @end
 

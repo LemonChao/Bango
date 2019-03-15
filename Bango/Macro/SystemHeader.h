@@ -9,8 +9,6 @@
 #ifndef SystemHeader_h
 #define SystemHeader_h
 
-/** 十六进制颜色转换 */
-#define HEX_COLOR(hexValue) [UIColor colorWithRed:((float)((hexValue & 0xFF0000) >> 16))/255.0 green:((float)((hexValue & 0xFF00) >> 8))/255.0 blue:((float)(hexValue & 0xFF))/255.0 alpha:1.0]
 
 //判断是否是ipad
 
@@ -30,9 +28,11 @@
 #define IS_IPHONE_Xs_Max ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(1242, 2688), [[UIScreen mainScreen] currentMode].size) : NO)
 
 /** 获取适合屏幕的宽度 （x 宽度值(UI设计图上标注的) 注意： PX标注记得X2 ）*/
+/** 获取适合屏幕的宽度 （x 宽度值(UI设计图上标注的) 注意： 单位pt ）*/
 #define WidthRatio(x)     (x /375.0 * SCREEN_WIDTH )
 
-/** 获取适合屏幕的高度值 （x 高度值(UI设计图上标注的) 注意： PX标注记得X2）*/
+/** 获取适合屏幕的高度值 （x 高度值(UI设计图上标注的) 注意： PX标注记得X2 ）*/
+/** 获取适合屏幕的高度值 （x 高度值(UI设计图上标注的) 注意： 单位pt ）*/
 #define HeightRatio(x)    (x /667.0 * SCREEN_HEIGHT )
 
 /** 屏幕宽度 */
@@ -49,7 +49,7 @@
 #define StatusBarHeight (iPhoneX ? 44.f : 20.0f)
 
 // 导航栏高度
-#define NavigationBarHeight (iPhoneX ? 88.f : 64.f)
+#define NavBarHeight (iPhoneX ? 88.f : 64.f)
 
 // tabBar高度
 #define TabBarHeight (iPhoneX ? (83.f) : 49.f)
@@ -92,6 +92,10 @@
 
 // 当前应用
 #define Application [UIApplication sharedApplication]
+
+// Medium字体
+#define MediumFont(sizePX) [UIFont systemFontOfSize:WidthRatio(sizePX) weight:UIFontWeightMedium]
+
 
 // log 日志
 #ifdef DEBUG

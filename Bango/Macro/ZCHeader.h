@@ -10,5 +10,10 @@
 #define ZCHeader_h
 
 #import "NSString+Helper.h"
+//#import "ZCBaseViewController.h"
+//#import "ZCBaseNavigationController.h"
+#import "UITool.h"
+#import "NetWorkManager.h"
+#import "BaseMethod.h"
 
 #endif /* ZCHeader_h */
