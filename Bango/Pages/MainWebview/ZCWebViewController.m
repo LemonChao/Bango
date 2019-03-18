@@ -30,6 +30,7 @@
     [super viewDidLoad];
     [self webViewLoadRequest];
     [self.bridge setWebViewDelegate:self];
+    
 }
 
 - (void)configViews {
@@ -48,7 +49,9 @@
     
 #else
 //    self.baseUrlString = AppBaseUrl;
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"https://mr-bango.cn/html-src/dist/"] cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:60];
+    NSString *url = @"http://192.168.0.139:10001";
+//    NSString *url = @"http://192.168.0.139:10001/#/goods-detail?goods_id=82";
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url] cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:60];
     [_webView loadRequest:request];
     
 #endif
@@ -64,11 +67,21 @@
 
 -(void)LoginWeChatCallback:(WVJBResponseCallback)responseCallback{
     
+}
+
+- (void)startLogin:(WVJBResponseCallback)responseCallback {
     ZCLoginViewController *loginVC = [[ZCLoginViewController alloc] init];
     UINavigationController *navigationVC = [[UINavigationController alloc] initWithRootViewController:loginVC];
     [self presentViewController:navigationVC animated:YES completion:nil];
     
+    [loginVC setLoginCallback:^(NSDictionary * _Nonnull userInfo) {
+        responseCallback(userInfo);
+    }];
 }
+
+
+#pragma mark - loginSuccessNotifacation
+
 
 #pragma mark - setter && getter
 
@@ -165,7 +178,11 @@
     return _bridge;
 }
 
-
+- (void)bridgeCallHandler:(NSString *)handleName data:(id)data {
+    [self.bridge callHandler:handleName data:data responseCallback:^(id responseData) {
+        
+    }];
+}
 
 
 @end

@@ -8,6 +8,8 @@
 
 #import "AppDelegate.h"
 #import "AppDelegateManager.h"
+#import "ShareDelegateManager.h"
+#import "ZCWebViewController.h"
 
 @interface AppDelegate ()
 
@@ -18,10 +20,11 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-    
+    self.window.rootViewController = [[UINavigationController alloc]initWithRootViewController:[[ZCWebViewController alloc]init]];
+
 
     [[AppDelegateManager sharedAppDelegateManager] didFinishLaunchingWithOptions:launchOptions withWindow:self.window];
-
+    [[ShareDelegateManager shareDelegateManager] didFinishLaunchingWithOptions:launchOptions withWindow:self.window];
     
     return YES;
 }
@@ -54,4 +57,35 @@
 }
 
 
+- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey, id> *)options {
+    
+    return [ShareDelegateManager.shareDelegateManager openURL:url options:options];
+}
+
+// 通用链接
+- (BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void(^)(NSArray<id<UIUserActivityRestoring>> * __nullable restorableObjects))restorationHandler {
+    // 用户点击通用链接，导致APP启动，会进到这个里面
+    if ([userActivity.activityType isEqualToString:NSUserActivityTypeBrowsingWeb])
+    {
+        NSURL *url = userActivity.webpageURL;
+        if (url == nil)
+        {
+            return YES;
+        }
+        NSLog(@"url.host:%@ -- url:%@", url.host, url);
+        if ([url.host isEqualToString:@"mr-bango.cn"] ||[url.host isEqualToString:@"www.mr-bango.cn"]) {
+            // 是目标链接，调用Native代码，打开对应的页面
+            //navigation.root = a new webviewcontroller
+            UINavigationController *rootNavi = (UINavigationController *)self.window.rootViewController;
+            ZCWebViewController *webvc = (ZCWebViewController *)rootNavi.topViewController;
+            [webvc bridgeCallHandler:@"functionInJs" data:url];
+            
+        } else {
+            // 不是目标链接，用Safari打开
+            [[UIApplication sharedApplication] openURL:url];
+        }
+    }
+    
+    return YES;
+}
 @end

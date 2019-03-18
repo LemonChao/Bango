@@ -12,6 +12,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ShareDelegateManager : NSObject
 
++ (instancetype)shareDelegateManager;
+
+- (void)didFinishLaunchingWithOptions:(NSDictionary *)launchOptions withWindow:(UIWindow *)window;
+
+- (BOOL)openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey, id> *)options;
+
+
 @end
 
 NS_ASSUME_NONNULL_END

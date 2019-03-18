@@ -15,6 +15,11 @@ NS_ASSUME_NONNULL_BEGIN
 + (UIImage *)createImageWithColor:(UIColor *)color;
 
 
+#pragma mark - NSUserDefaules操作
++ (void)saveObject:(NSObject *)object withKey:(NSString *)key;
++ (id)readObjectWithKey:(NSString *)key;
++ (void)cleanObjectForKey:(NSString *)key;
+
 @end
 
 NS_ASSUME_NONNULL_END

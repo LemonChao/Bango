@@ -15,5 +15,6 @@
 #import <MBProgressHUD/MBProgressHUD.h>
 #import <MJRefresh/MJRefresh.h>
 #import "WXZTipView.h"
+#import <YYKit/YYKit.h>
 
 #endif /* PodsHeader_h */

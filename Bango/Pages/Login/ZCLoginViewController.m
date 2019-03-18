@@ -29,10 +29,23 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loginSuccessComplete:) name:loginSuccessNotification object:nil];
+}
+
+- (void)loginSuccessComplete:(NSNotification *)notif {
+    NSLog(@"notif_userInfo:%@", notif.userInfo);
+    [self dismissViewControllerAnimated:YES completion:^{
+        //保存用户登录信息
+        UserInfoModel *model = [notif.userInfo objectForKey:@"userModel"];
+        [BaseMethod saveObject:model withKey:UserInfo_UDSKEY];
+    }];
+    if (self.loginCallback) {
+        self.loginCallback([notif.userInfo objectForKey:@"userResp"]);
+    }
 }
 
 - (void)executeLoginCmd {
-    [[self.viewModel.loginCmd execute:@{@"username":self.phoneNumberField.text,@"send_param":self.authCodeField.text}] subscribeNext:^(id  _Nullable x) {
+    [[self.viewModel.phoneCmd execute:@{@"username":self.phoneNumberField.text,@"send_param":self.authCodeField.text}] subscribeNext:^(id  _Nullable x) {
         
     } error:^(NSError * _Nullable error) {
         
@@ -50,6 +63,23 @@
 
 }
 
+- (void)bindViewModel {
+    
+    //phoneLogin
+    [[self.viewModel.phoneCmd executionSignals] subscribeNext:^(id  _Nullable x) {
+        
+    }];
+    
+    //zhifubaoLogin
+    [[self.viewModel.zhifubaoCmd executionSignals] subscribeNext:^(id  _Nullable x) {
+    }];
+    
+    //wechatLogin
+    [[self.viewModel.wechatCmd executionSignals] subscribeNext:^(id  _Nullable x) {
+        
+    }];
+    
+}
 
 
 - (void)configCustomNav {
@@ -62,10 +92,10 @@
 - (void)configViews {
     [self.view addSubview:self.scrollView];
     UIImageView *imgView = [UITool imageViewImage:ImageNamed(@"login_illustration") contentMode:UIViewContentModeScaleAspectFill];
+
     [self.view addSubview:imgView];
     [imgView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.equalTo(self.view);
-//        make.bottom.equalTo(self.view).inset(HomeIndicatorHeight);
         make.bottom.equalTo(self.view);
         make.height.mas_equalTo(WidthRatio(30));
     }];
@@ -76,210 +106,14 @@
         make.top.equalTo(self.customNavBar.mas_bottom);
     }];
     
-
-# if 0
-    //快速登陆
-    UIView *fastContentView = [UIView new];
-    UIImageView *portraitView = [UITool imageViewPlaceHolder:ImageNamed(@"login_zhifubao") contentMode:UIViewContentModeScaleAspectFill cornerRadius:3 borderWidth:0 borderColor:[UIColor clearColor]];
-    UIButton *loginButton = [UITool wordButton:@"支付宝快捷登录" titleColor:[UIColor whiteColor] font:MediumFont(17) bgColor:HEX_COLOR(0xFD1617)];
-    MMViewBorderRadius(loginButton, WidthRatio(22), 0, [UIColor clearColor]);
-    [loginButton addTarget:self action:@selector(loginAction:) forControlEvents:UIControlEventTouchUpInside];
-
-    UIButton *agreeButton = [UITool richButton:UIButtonTypeCustom title:@" 我已阅读同意" titleColor:AssistColor font:MediumFont(14) bgColor:[UIColor clearColor] image:ImageNamed(@"login_disagree")];
-    [agreeButton setImage:ImageNamed(@"login_agree") forState:UIControlStateSelected];
-    [agreeButton addTarget:self action:@selector(agreeButtonAction:) forControlEvents:UIControlEventTouchUpInside];
-    UIButton *policyButton = [UITool wordButton:@"《服务条款与隐私政策》" titleColor:RGBA(252, 83, 87, 1) font:MediumFont(14) bgColor:[UIColor clearColor]];
-    UILabel *otherLoginLab = [UITool labelWithText:@" 快速登录 " textColor:AssistColor font:MediumFont(14)];
-    UIView *bottomLine = [UITool viewWithColor:LineColor];
-    UIImageView *zhifubaoImgView = [[UIImageView alloc] initWithImage:ImageNamed(@"login_zhifubao")];
-    UIImageView *phoneImgView = [[UIImageView alloc] initWithImage:ImageNamed(@"login_wechat")];
+    UIView *normalContent = [self setupNormalLoginContentView];
+    UIView *fastContent = [self setupFastLoginContentView];
     
-    
-    [self.scrollView addSubview:fastContentView];
-    [fastContentView addSubview:portraitView];
-    [fastContentView addSubview:loginButton];
-    [fastContentView addSubview:agreeButton];
-    [fastContentView addSubview:policyButton];
-    [fastContentView addSubview:bottomLine];
-    [fastContentView addSubview:otherLoginLab];
-    [fastContentView addSubview:zhifubaoImgView];
-    [fastContentView addSubview:phoneImgView];
-    
-    [fastContentView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo(self.scrollView);
-        make.width.equalTo(self.view);
+    [RACObserve(self.viewModel, loginType) subscribeNext:^(NSString * _Nullable x) {
+        normalContent.hidden = ![x isEqualToString:@"2"];
+        fastContent.hidden = [x isEqualToString:@"2"];
     }];
-
-    [portraitView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(fastContentView);
-        make.top.equalTo(fastContentView).inset(WidthRatio(60));
-        make.size.mas_equalTo(CGSizeMake(WidthRatio(74), WidthRatio(74)));
-    }];
-    
-    [loginButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(portraitView.mas_bottom).offset(WidthRatio(60));
-        make.left.right.equalTo(fastContentView).inset(50);
-        make.height.mas_equalTo(WidthRatio(44));
-//        make.bottom.equalTo(fastContentView).inset(WidthRatio(200));
-    }];
-    
-    [agreeButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(fastContentView).inset(WidthRatio(56));
-        make.top.equalTo(loginButton.mas_bottom).offset(WidthRatio(16));
-    }];
-
-    [policyButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(fastContentView).inset(WidthRatio(56));
-        make.centerY.equalTo(agreeButton);
-    }];
-
-    [bottomLine mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.right.equalTo(fastContentView).inset(WidthRatio(116));
-        make.height.mas_equalTo(0.5);
-        make.top.equalTo(agreeButton.mas_bottom).offset(WidthRatio(140));
-    }];
-
-    [otherLoginLab mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.center.equalTo(bottomLine);
-    }];
-
-    [zhifubaoImgView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(bottomLine.mas_bottom).offset(WidthRatio(20));
-        make.right.equalTo(fastContentView.mas_centerX).offset(-WidthRatio(27));
-        make.bottom.equalTo(fastContentView).inset(WidthRatio(20));
-    }];
-
-    [phoneImgView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(zhifubaoImgView);
-        make.left.equalTo(fastContentView.mas_centerX).offset(WidthRatio(27));
-    }];
-
-# else
-
-    self.contentView = [UIView new];
-    [self.scrollView addSubview:self.contentView];
-    self.phoneNumberField = [UITool textField:@"请输入手机号码(+86)" textColor:AssistColor font:MediumFont(14) borderStyle:UITextBorderStyleNone];
-    self.phoneNumberField.keyboardType = UIKeyboardTypeNumberPad;
-    UIView *lineView1 = [UITool viewWithColor:LineColor];
-    self.authCodeField = [UITool textField:@"请输入验证码" textColor:AssistColor font:MediumFont(14) borderStyle:UITextBorderStyleNone];
-    self.authCodeField.keyboardType = UIKeyboardTypeNumberPad;
-    UIView *lineView2 = [UITool viewWithColor:LineColor];
-    
-    JKCountDownButton *authCodeBtn = [JKCountDownButton buttonWithType:UIButtonTypeCustom];
-    authCodeBtn.titleLabel.font = MediumFont(12);
-    [authCodeBtn setTitle:@"获取验证码" forState:UIControlStateNormal];
-    [authCodeBtn setTitleColor:AssistColor forState:UIControlStateNormal];
-    [authCodeBtn setTitleColor:HEX_COLOR(0xFC5E62) forState:UIControlStateDisabled];
-    authCodeBtn.backgroundColor = [UIColor whiteColor];
-
-    [authCodeBtn addTarget:self action:@selector(authCodeBtnAction:) forControlEvents:UIControlEventTouchUpInside];
-    MMViewBorderRadius(authCodeBtn, WidthRatio(13), 0.5, AssistColor);
-    
-    UIButton *loginButton = [UITool wordButton:@"登陆" titleColor:[UIColor whiteColor] font:MediumFont(17) bgColor:[UIColor whiteColor]];
-    [loginButton setBackgroundImage:[BaseMethod createImageWithColor:HEX_COLOR(0xFC5E62)] forState:UIControlStateDisabled];
-    [loginButton setBackgroundImage:[BaseMethod createImageWithColor:HEX_COLOR(0xFD1617)] forState:UIControlStateNormal];
-    [loginButton addTarget:self action:@selector(loginAction:) forControlEvents:UIControlEventTouchUpInside];
-    MMViewBorderRadius(loginButton, WidthRatio(22), 0, [UIColor clearColor]);
-    
-    UIButton *agreeButton = [UITool richButton:UIButtonTypeCustom title:@" 我已阅读同意" titleColor:AssistColor font:MediumFont(14) bgColor:[UIColor clearColor] image:ImageNamed(@"login_disagree")];
-    UIButton *policyButton = [UITool wordButton:@"《服务条款与隐私政策》" titleColor:RGBA(252, 83, 87, 1) font:MediumFont(14) bgColor:[UIColor clearColor]];
-    UIView *bottomLine = [UITool viewWithColor:LineColor];
-    UILabel *fastLoginLab = [UITool labelWithText:@" 快速登录 " textColor:AssistColor font:MediumFont(14)];
-    UIImageView *zhifubaoImgView = [[UIImageView alloc] initWithImage:ImageNamed(@"login_zhifubao")];
-    UIImageView *wechatImgView = [[UIImageView alloc] initWithImage:ImageNamed(@"login_wechat")];
-    [[RACSignal merge:@[self.phoneNumberField.rac_textSignal,self.authCodeField.rac_textSignal]] subscribeNext:^(id  _Nullable x) {
-        if (![self.authCodeField.text isEmptyString] && [self.phoneNumberField.text isValidateMobile]) {
-            loginButton.enabled = YES;
-        }else {
-            loginButton.enabled = NO;
-        }
-    }];
-    
-    [self.contentView addSubview:self.phoneNumberField];
-    [self.contentView addSubview:lineView1];
-    [self.contentView addSubview:self.authCodeField];
-    [self.contentView addSubview:lineView2];
-    [self.contentView addSubview:authCodeBtn];
-    [self.contentView addSubview:loginButton];
-    [self.contentView addSubview:agreeButton];
-    [self.contentView addSubview:policyButton];
-    [self.contentView addSubview:bottomLine];
-    [self.contentView addSubview:fastLoginLab];
-    [self.contentView addSubview:zhifubaoImgView];
-    [self.contentView addSubview:wechatImgView];
-    
-
-    [self.contentView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo(self.scrollView);
-        make.width.equalTo(self.view);
-    }];
-
-    [self.phoneNumberField mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.right.equalTo(self.contentView).inset(WidthRatio(50));
-        make.top.equalTo(self.contentView).inset(WidthRatio(60));
-    }];
-    [lineView1 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.right.equalTo(self.phoneNumberField );
-        make.top.equalTo(self.phoneNumberField.mas_bottom).offset(WidthRatio(10));
-        make.height.mas_equalTo(0.5);
-    }];
-
-    [self.authCodeField mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.phoneNumberField);
-        make.top.equalTo(lineView1.mas_bottom).offset(WidthRatio(35));
-        make.right.equalTo(authCodeBtn.mas_left);
-    }];
-    
-    [authCodeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(self.authCodeField);
-        make.right.equalTo(self.phoneNumberField);
-        make.size.mas_equalTo(CGSizeMake(WidthRatio(90), WidthRatio(25)));
-    }];
-
-    [lineView2 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.right.equalTo(self.phoneNumberField);
-        make.top.equalTo(self.authCodeField.mas_bottom).offset(HeightRatio(10));
-        make.height.mas_equalTo(0.5);
-    }];
-
-    [loginButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.right.equalTo(self.phoneNumberField);
-        make.top.equalTo(lineView2.mas_bottom).offset(WidthRatio(40));
-        make.height.mas_equalTo(WidthRatio(44));
-    }];
-
-    [agreeButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.contentView).inset(WidthRatio(56));
-        make.top.equalTo(loginButton.mas_bottom).offset(WidthRatio(16));
-    }];
-
-    [policyButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(self.contentView).inset(WidthRatio(56));
-        make.centerY.equalTo(agreeButton);
-    }];
-    
-    [bottomLine mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.right.equalTo(self.contentView).inset(WidthRatio(116));
-        make.height.mas_equalTo(0.5);
-        make.top.equalTo(agreeButton.mas_bottom).offset(WidthRatio(140));
-    }];
-    
-    [fastLoginLab mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.center.equalTo(bottomLine);
-    }];
-    
-    [zhifubaoImgView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(bottomLine.mas_bottom).offset(WidthRatio(20));
-        make.right.equalTo(self.contentView.mas_centerX).offset(-WidthRatio(27));
-        make.bottom.equalTo(self.contentView).inset(WidthRatio(20));
-    }];
-    
-    [wechatImgView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(zhifubaoImgView);
-        make.left.equalTo(self.contentView.mas_centerX).offset(WidthRatio(27));
-    }];
-# endif
-    
+   
 }
 
 - (void)authCodeBtnAction:(JKCountDownButton*)button {
@@ -312,9 +146,238 @@
     [self executeLoginCmd];
 }
 
+// 切换你到手机号n吗登录
+- (void)switchToPhoneLoginAction:(UIButton *)button {
+    self.viewModel.loginType = @"2";
+    self.viewModel.loginBtnTitle = @"登录";
+}
+
+
+- (UIView *)setupFastLoginContentView {
+    //快速登陆
+    UIView *fastContentView = [UIView new];
+    UserInfoModel *model = [BaseMethod readObjectWithKey:UserInfo_UDSKEY];
+    UIImageView *portraitView = [UITool imageViewImage:model.avatar placeHolder:ImageNamed(@"placeHolder") contentMode:UIViewContentModeScaleAspectFill cornerRadius:3.0f borderWidth:0 borderColor:[UIColor clearColor]];
+
+    UIButton *loginButton = [UITool wordButton:self.viewModel.loginBtnTitle titleColor:[UIColor whiteColor] font:MediumFont(17) bgColor:HEX_COLOR(0xFD1617)];
+    MMViewBorderRadius(loginButton, WidthRatio(22), 0, [UIColor clearColor]);
+    
+    UIButton *agreeButton = [UITool richButton:UIButtonTypeCustom title:@" 我已阅读同意" titleColor:AssistColor font:MediumFont(14) bgColor:[UIColor clearColor] image:ImageNamed(@"login_disagree")];
+    [agreeButton setImage:ImageNamed(@"login_agree") forState:UIControlStateSelected];
+    agreeButton.selected = YES;
+    [agreeButton addTarget:self action:@selector(agreeButtonAction:) forControlEvents:UIControlEventTouchUpInside];
+    UIButton *policyButton = [UITool wordButton:@"《服务条款与隐私政策》" titleColor:RGBA(252, 83, 87, 1) font:MediumFont(14) bgColor:[UIColor clearColor]];
+    UILabel *otherLoginLab = [UITool labelWithText:@" 快速登录 " textColor:AssistColor font:MediumFont(14)];
+    UIView *bottomLine = [UITool viewWithColor:LineColor];
+    UIButton *thirdBtn = [UITool imageButton:self.viewModel.loginType.intValue?ImageNamed(@"login_wechat"): ImageNamed(@"login_zhifubao")];
+    UIButton *phoneBtn = [UITool imageButton:ImageNamed(@"login_phone")];
+    [phoneBtn addTarget:self action:@selector(switchToPhoneLoginAction:) forControlEvents:UIControlEventTouchUpInside];
+    
+    if (self.viewModel.loginType.intValue) {
+        loginButton.rac_command = self.viewModel.zhifubaoCmd;
+        thirdBtn.rac_command = self.viewModel.wechatCmd;
+    }else {
+        loginButton.rac_command = self.viewModel.wechatCmd;
+        thirdBtn.rac_command = self.viewModel.zhifubaoCmd;
+    }
+    
+    [self.scrollView addSubview:fastContentView];
+    [fastContentView addSubview:portraitView];
+    [fastContentView addSubview:loginButton];
+    [fastContentView addSubview:agreeButton];
+    [fastContentView addSubview:policyButton];
+    [fastContentView addSubview:bottomLine];
+    [fastContentView addSubview:otherLoginLab];
+    [fastContentView addSubview:thirdBtn];
+    [fastContentView addSubview:phoneBtn];
+    
+    [fastContentView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(self.scrollView);
+        make.width.equalTo(self.view);
+    }];
+    
+    [portraitView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(fastContentView);
+        make.top.equalTo(fastContentView).inset(WidthRatio(60));
+        make.size.mas_equalTo(CGSizeMake(WidthRatio(74), WidthRatio(74)));
+    }];
+    
+    [loginButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(portraitView.mas_bottom).offset(WidthRatio(60));
+        make.left.right.equalTo(fastContentView).inset(50);
+        make.height.mas_equalTo(WidthRatio(44));
+    }];
+    
+    [agreeButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(fastContentView).inset(WidthRatio(56));
+        make.top.equalTo(loginButton.mas_bottom).offset(WidthRatio(16));
+        make.height.mas_equalTo(WidthRatio(29));
+    }];
+    
+    [policyButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(fastContentView).inset(WidthRatio(56));
+        make.centerY.equalTo(agreeButton);
+    }];
+    
+    [bottomLine mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.equalTo(fastContentView).inset(WidthRatio(116));
+        make.height.mas_equalTo(0.5);
+        make.top.equalTo(agreeButton.mas_bottom).offset(WidthRatio(140));
+    }];
+    
+    [otherLoginLab mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.center.equalTo(bottomLine);
+    }];
+    
+    [thirdBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(bottomLine.mas_bottom).offset(WidthRatio(20));
+        make.right.equalTo(fastContentView.mas_centerX).offset(-WidthRatio(27));
+        make.bottom.equalTo(fastContentView).inset(WidthRatio(20));
+    }];
+    
+    [phoneBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(thirdBtn);
+        make.left.equalTo(fastContentView.mas_centerX).offset(WidthRatio(27));
+    }];
+
+    return fastContentView;
+}
+
+// 普通登录
+- (UIView *) setupNormalLoginContentView {
+    
+    self.contentView = [UIView new];
+    self.phoneNumberField = [UITool textField:@"请输入手机号码(+86)" textColor:AssistColor font:MediumFont(14) borderStyle:UITextBorderStyleNone];
+    self.phoneNumberField.keyboardType = UIKeyboardTypeNumberPad;
+    UIView *lineView1 = [UITool viewWithColor:LineColor];
+    self.authCodeField = [UITool textField:@"请输入验证码" textColor:AssistColor font:MediumFont(14) borderStyle:UITextBorderStyleNone];
+    self.authCodeField.keyboardType = UIKeyboardTypeNumberPad;
+    UIView *lineView2 = [UITool viewWithColor:LineColor];
+    
+    JKCountDownButton *authCodeBtn = [JKCountDownButton buttonWithType:UIButtonTypeCustom];
+    authCodeBtn.titleLabel.font = MediumFont(12);
+    [authCodeBtn setTitle:@"获取验证码" forState:UIControlStateNormal];
+    [authCodeBtn setTitleColor:AssistColor forState:UIControlStateNormal];
+    [authCodeBtn setTitleColor:HEX_COLOR(0xFC5E62) forState:UIControlStateDisabled];
+    authCodeBtn.backgroundColor = [UIColor whiteColor];
+    
+    [authCodeBtn addTarget:self action:@selector(authCodeBtnAction:) forControlEvents:UIControlEventTouchUpInside];
+    MMViewBorderRadius(authCodeBtn, WidthRatio(13), 0.5, AssistColor);
+    
+    UIButton *loginButton = [UITool wordButton:@"登录" titleColor:[UIColor whiteColor] font:MediumFont(17) bgColor:[UIColor whiteColor]];
+    [loginButton setBackgroundImage:[BaseMethod createImageWithColor:HEX_COLOR(0xFC5E62)] forState:UIControlStateDisabled];
+    [loginButton setBackgroundImage:[BaseMethod createImageWithColor:HEX_COLOR(0xFD1617)] forState:UIControlStateNormal];
+    MMViewBorderRadius(loginButton, WidthRatio(22), 0, [UIColor clearColor]);
+    [loginButton addTarget:self action:@selector(loginAction:) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIButton *agreeButton = [UITool richButton:UIButtonTypeCustom title:@" 我已阅读同意" titleColor:AssistColor font:MediumFont(14) bgColor:[UIColor clearColor] image:ImageNamed(@"login_disagree")];
+    agreeButton.selected = YES;
+    UIButton *policyButton = [UITool wordButton:@"《服务条款与隐私政策》" titleColor:RGBA(252, 83, 87, 1) font:MediumFont(14) bgColor:[UIColor clearColor]];
+    UIView *bottomLine = [UITool viewWithColor:LineColor];
+    UILabel *fastLoginLab = [UITool labelWithText:@" 快速登录 " textColor:AssistColor font:MediumFont(14)];
+    UIButton *zhifubaoBtn = [UITool imageButton:ImageNamed(@"login_zhifubao")];
+    UIButton *wechatBtn = [UITool imageButton:ImageNamed(@"login_wechat")];
+    
+    @weakify(self);
+    RAC(loginButton, enabled) = [RACSignal combineLatest:@[self.authCodeField.rac_textSignal, self.phoneNumberField.rac_textSignal] reduce:^(NSString *authCode, NSString *phoneNumber){
+        @strongify(self);
+        return @(authCode.length > 0 && [self.phoneNumberField.text isValidateMobile]);
+    }];
+    
+    RAC(self.viewModel,phoneNumber) = RACObserve(self.phoneNumberField, text);
+    RAC(self.viewModel,authCodeString) = RACObserve(self.authCodeField, text);
+
+    zhifubaoBtn.rac_command = self.viewModel.zhifubaoCmd;
+    wechatBtn.rac_command = self.viewModel.wechatCmd;
+    
+    [self.scrollView addSubview:self.contentView];
+    [self.contentView addSubview:self.phoneNumberField];
+    [self.contentView addSubview:lineView1];
+    [self.contentView addSubview:self.authCodeField];
+    [self.contentView addSubview:lineView2];
+    [self.contentView addSubview:authCodeBtn];
+    [self.contentView addSubview:loginButton];
+    [self.contentView addSubview:agreeButton];
+    [self.contentView addSubview:policyButton];
+    [self.contentView addSubview:bottomLine];
+    [self.contentView addSubview:fastLoginLab];
+    [self.contentView addSubview:zhifubaoBtn];
+    [self.contentView addSubview:wechatBtn];
+    
+    [self.contentView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(self.scrollView);
+        make.width.equalTo(self.view);
+    }];
+    
+    [self.phoneNumberField mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.equalTo(self.contentView).inset(WidthRatio(50));
+        make.top.equalTo(self.contentView).inset(WidthRatio(60));
+    }];
+    [lineView1 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.equalTo(self.phoneNumberField );
+        make.top.equalTo(self.phoneNumberField.mas_bottom).offset(WidthRatio(10));
+        make.height.mas_equalTo(0.5);
+    }];
+    
+    [self.authCodeField mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.phoneNumberField);
+        make.top.equalTo(lineView1.mas_bottom).offset(WidthRatio(35));
+        make.right.equalTo(authCodeBtn.mas_left);
+    }];
+    
+    [authCodeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(self.authCodeField);
+        make.right.equalTo(self.phoneNumberField);
+        make.size.mas_equalTo(CGSizeMake(WidthRatio(90), WidthRatio(25)));
+    }];
+    
+    [lineView2 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.equalTo(self.phoneNumberField);
+        make.top.equalTo(self.authCodeField.mas_bottom).offset(HeightRatio(10));
+        make.height.mas_equalTo(0.5);
+    }];
+    
+    [loginButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.equalTo(self.phoneNumberField);
+        make.top.equalTo(lineView2.mas_bottom).offset(WidthRatio(40));
+        make.height.mas_equalTo(WidthRatio(44));
+    }];
+    
+    [agreeButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.contentView).inset(WidthRatio(56));
+        make.top.equalTo(loginButton.mas_bottom).offset(WidthRatio(16));
+    }];
+    
+    [policyButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(self.contentView).inset(WidthRatio(56));
+        make.centerY.equalTo(agreeButton);
+    }];
+    
+    [bottomLine mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.equalTo(self.contentView).inset(WidthRatio(116));
+        make.height.mas_equalTo(0.5);
+        make.top.equalTo(agreeButton.mas_bottom).offset(WidthRatio(140));
+    }];
+    
+    [fastLoginLab mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.center.equalTo(bottomLine);
+    }];
+    
+    [zhifubaoBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(bottomLine.mas_bottom).offset(WidthRatio(20));
+        make.right.equalTo(self.contentView.mas_centerX).offset(-WidthRatio(27));
+        make.bottom.equalTo(self.contentView).inset(WidthRatio(20));
+    }];
+    
+    [wechatBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(zhifubaoBtn);
+        make.left.equalTo(self.contentView.mas_centerX).offset(WidthRatio(27));
+    }];
+    
+    return self.contentView;
+}
 
 #pragma mark - setter && getter
-
 
 - (UIScrollView *)scrollView {
     if (!_scrollView) {
@@ -331,6 +394,12 @@
         _viewModel = [ZCLoginViewModel new];
     }
     return _viewModel;
+}
+
+
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:loginSuccessNotification object:nil];
 }
 
 @end

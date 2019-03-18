@@ -7,7 +7,6 @@
 //
 
 #import "AppDelegateManager.h"
-#import "ZCWebViewController.h"
 /** 导航栏 */
 #import <WRNavigationBar/WRNavigationBar.h>
 #import <IQKeyboardManager/IQKeyboardManager.h>
@@ -28,9 +27,32 @@
 //    [self setNavBarAppearence];
 }
 
+// 通用链接
+- (BOOL)continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void(^)(NSArray<id<UIUserActivityRestoring>> * __nullable restorableObjects))restorationHandler {
+    // 用户点击通用链接，导致APP启动，会进到这个里面
+    if ([userActivity.activityType isEqualToString:NSUserActivityTypeBrowsingWeb])
+    {
+        NSURL *url = userActivity.webpageURL;
+        if (url == nil)
+        {
+            return YES;
+        }
+        NSLog(@"url.host:%@ -- url:%@", url.host, url);
+        if ([url.host isEqualToString:@"mr-bango.cn"] ||[url.host isEqualToString:@"www.mr-bango.cn"]) {
+            // 是目标链接，调用Native代码，打开对应的页面
+            //navigation.root = a new webviewcontroller
+            
+        } else {
+            // 不是目标链接，用Safari打开
+            [[UIApplication sharedApplication] openURL:url];
+        }
+    }
+    
+    return YES;
+}
+
 #pragma mark - PrivateMethod
 - (void)handleFunction:(NSDictionary *)launchOptions withWindow:(UIWindow *)window {
-    window.rootViewController = [[UINavigationController alloc]initWithRootViewController:[[ZCWebViewController alloc]init]];
     [self setupIQKeyBoard];
     
 }

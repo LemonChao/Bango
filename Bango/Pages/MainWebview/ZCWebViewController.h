@@ -13,6 +13,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ZCWebViewController : ZCBaseViewController
 
+- (void)bridgeCallHandler:(NSString *)handleName data:(id)data;
+
 @end
 
 NS_ASSUME_NONNULL_END

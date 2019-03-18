@@ -15,6 +15,9 @@
 /** 获取图片资源 */
 #define ImageNamed(imageName) [UIImage imageNamed:[NSString stringWithFormat:@"%@",imageName]]
 
+//response返回的判断
+#define kStatusTrue   ([responseObject[@"status"] integerValue] == 0)
+
 
 
 /** 设置view圆角和边框 */

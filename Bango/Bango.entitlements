@@ -3,6 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>com.apple.developer.associated-domains</key>
-	<array/>
+	<array>
+		<string>applinks:mr-bango.cn</string>
+		<string>applinks:www.mr-bango.cn</string>
+	</array>
 </dict>
 </plist>

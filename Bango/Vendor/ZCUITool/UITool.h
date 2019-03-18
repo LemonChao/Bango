@@ -44,8 +44,10 @@ NS_ASSUME_NONNULL_BEGIN
 /// UITextView
 + (UITextView *)textViewText:(nullable NSString *)text font:(UIFont *)font textColor:(UIColor *)color placeHolder:(NSString *)placeHolder placeholderColor:(UIColor *)placeHolderColor;
 /// UIImageView
-+ (UIImageView *)imageViewImage:(nullable UIImage *)image contentMode:(UIViewContentMode)mode;
-+ (UIImageView *)imageViewPlaceHolder:(nullable UIImage *)image contentMode:(UIViewContentMode)mode cornerRadius:(CGFloat)radius borderWidth:(CGFloat)width borderColor:(UIColor*)color;
++ (UIImageView *)imageViewImage:(nullable UIImage*)image contentMode:(UIViewContentMode)mode;
++ (UIImageView *)imageViewImage:(NSString *)imageUrl placeHolder:(nullable UIImage *)image contentMode:(UIViewContentMode)mode;
++ (UIImageView *)imageViewImage:(nullable UIImage *)image contentMode:(UIViewContentMode)mode cornerRadius:(CGFloat)radius borderWidth:(CGFloat)width borderColor:(UIColor*)color;
++ (UIImageView *)imageViewImage:(NSString *)imageUrl placeHolder:(nullable UIImage *)image contentMode:(UIViewContentMode)mode cornerRadius:(CGFloat)radius borderWidth:(CGFloat)width borderColor:(UIColor*)color;
 
 @end
 

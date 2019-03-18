@@ -12,6 +12,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ZCLoginViewController : ZCBaseViewController
 
+
+/** 登录结果回调*/
+@property (nonatomic,copy) void (^loginCallback)(NSDictionary *userInfo);
+
 @end
 
 NS_ASSUME_NONNULL_END

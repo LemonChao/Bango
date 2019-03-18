@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		146C1F2042784AEEACBF3767 /* libPods-Bango.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E1935CC31FCE1C1E3EA340B5 /* libPods-Bango.a */; };
 		51316DFFEB56F256EBF9ED7C /* libPods-BangoTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C476503427888DB3749F8E7 /* libPods-BangoTests.a */; };
+		6C0477AA223C908100B32A4D /* ShareObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C0477A9223C908100B32A4D /* ShareObject.m */; };
+		6C0477AC223C9D0300B32A4D /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C0477AB223C9D0300B32A4D /* libsqlite3.tbd */; };
 		6C04DB22223B53B700F27501 /* ZCBaseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C04DB21223B53B700F27501 /* ZCBaseModel.m */; };
 		6C04DB25223B540000F27501 /* ZCBaseViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C04DB24223B540000F27501 /* ZCBaseViewModel.m */; };
 		6C04DB28223B542A00F27501 /* ZCLoginViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C04DB27223B542A00F27501 /* ZCLoginViewModel.m */; };
@@ -196,6 +198,9 @@
 		20BB77D3DA225FC01A186F9F /* Pods-BangoUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BangoUITests.debug.xcconfig"; path = "Target Support Files/Pods-BangoUITests/Pods-BangoUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		5B35BB6749A039AFC1ADE751 /* libPods-BangoUITests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-BangoUITests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5DDEFD661CB1EB275D1090A9 /* Pods-BangoUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BangoUITests.release.xcconfig"; path = "Target Support Files/Pods-BangoUITests/Pods-BangoUITests.release.xcconfig"; sourceTree = "<group>"; };
+		6C0477A8223C908100B32A4D /* ShareObject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShareObject.h; sourceTree = "<group>"; };
+		6C0477A9223C908100B32A4D /* ShareObject.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ShareObject.m; sourceTree = "<group>"; };
+		6C0477AB223C9D0300B32A4D /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		6C04DB20223B53B700F27501 /* ZCBaseModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZCBaseModel.h; sourceTree = "<group>"; };
 		6C04DB21223B53B700F27501 /* ZCBaseModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZCBaseModel.m; sourceTree = "<group>"; };
 		6C04DB23223B540000F27501 /* ZCBaseViewModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZCBaseViewModel.h; sourceTree = "<group>"; };
@@ -606,6 +611,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6C0477AC223C9D0300B32A4D /* libsqlite3.tbd in Frameworks */,
 				6C3D3EC02232572E00932F4B /* libssl.a in Frameworks */,
 				6C3D3EC52232572E00932F4B /* AlipaySDK.framework in Frameworks */,
 				146C1F2042784AEEACBF3767 /* libPods-Bango.a in Frameworks */,
@@ -635,6 +641,7 @@
 		2DE65A7D104C3F0DF602690A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				6C0477AB223C9D0300B32A4D /* libsqlite3.tbd */,
 				E1935CC31FCE1C1E3EA340B5 /* libPods-Bango.a */,
 				1C476503427888DB3749F8E7 /* libPods-BangoTests.a */,
 				5B35BB6749A039AFC1ADE751 /* libPods-BangoUITests.a */,
@@ -1215,12 +1222,14 @@
 		6CB2A20F22310B5A00CEC1CB /* 分享相关 */ = {
 			isa = PBXGroup;
 			children = (
-				6CB2A21022310B5A00CEC1CB /* ShareProductInfoView.m */,
-				6CB2A21122310B5A00CEC1CB /* HXShareScrollView.h */,
-				6CB2A21222310B5A00CEC1CB /* HXEasyCustomShareView.h */,
 				6CB2A21322310B5A00CEC1CB /* ShareProductInfoView.h */,
+				6CB2A21022310B5A00CEC1CB /* ShareProductInfoView.m */,
+				6CB2A21222310B5A00CEC1CB /* HXEasyCustomShareView.h */,
 				6CB2A21422310B5A00CEC1CB /* HXEasyCustomShareView.m */,
+				6CB2A21122310B5A00CEC1CB /* HXShareScrollView.h */,
 				6CB2A21522310B5A00CEC1CB /* HXShareScrollView.m */,
+				6C0477A8223C908100B32A4D /* ShareObject.h */,
+				6C0477A9223C908100B32A4D /* ShareObject.m */,
 			);
 			path = "分享相关";
 			sourceTree = "<group>";
@@ -1651,6 +1660,7 @@
 				6CB2A2A522310B5C00CEC1CB /* UIView+Extension.m in Sources */,
 				6C53231E223A311A00FB7FCC /* CornerShadowView.m in Sources */,
 				6CB2A2BA22310B5C00CEC1CB /* HXDatePhotoViewPresentTransition.m in Sources */,
+				6C0477AA223C908100B32A4D /* ShareObject.m in Sources */,
 				6CB2A2C522310B5C00CEC1CB /* HXAlbumModel.m in Sources */,
 				6CB2A2A222310B5C00CEC1CB /* NSArray+JSON.m in Sources */,
 				6CB2A2EB22310B5C00CEC1CB /* HXShareScrollView.m in Sources */,

@@ -8,6 +8,7 @@
 
 #import "UITool.h"
 #import "UITextView+ZWPlaceHolder.h"
+#import <UIImageView+WebCache.h>
 
 @implementation UITool
 /// UIView
@@ -141,8 +142,16 @@
 }
 
 /// UIImageView
-+ (UIImageView *)imageViewImage:(nullable UIImage *)image contentMode:(UIViewContentMode)mode {
+
++ (UIImageView *)imageViewImage:(nullable UIImage*)image contentMode:(UIViewContentMode)mode {
     UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+    imageView.contentMode = mode;
+    return imageView;
+}
+
++ (UIImageView *)imageViewImage:(NSString *)imageUrl placeHolder:(nullable UIImage *)image contentMode:(UIViewContentMode)mode {
+    UIImageView *imageView = [[UIImageView alloc] init];
+    [imageView sd_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:image];
     imageView.contentMode = mode;
     return imageView;
 }
@@ -154,8 +163,21 @@
     imageView.layer.cornerRadius = radius;
     imageView.layer.borderWidth = width;
     imageView.layer.borderColor = [color CGColor];
+    imageView.clipsToBounds = YES;
     
     return imageView;
 }
++ (UIImageView *)imageViewImage:(NSString *)imageUrl placeHolder:(nullable UIImage *)image contentMode:(UIViewContentMode)mode cornerRadius:(CGFloat)radius borderWidth:(CGFloat)width borderColor:(UIColor*)color {
+    UIImageView *imageView = [[UIImageView alloc] init];
+    [imageView sd_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:image];
+    imageView.contentMode = mode;
+    imageView.layer.cornerRadius = radius;
+    imageView.layer.borderWidth = width;
+    imageView.layer.borderColor = [color CGColor];
+    imageView.clipsToBounds = YES;
+    
+    return imageView;
+}
+
 
 @end

@@ -10,7 +10,7 @@ target 'Bango' do
   pod 'YYKit', '~> 1.0.9'
   pod 'Masonry', '~> 1.1.0'
   pod 'SDCycleScrollView', '~> 1.75'
-  pod 'MLeaksFinder', '~> 1.0.0'
+#  pod 'MLeaksFinder', '~> 1.0.0'
   pod 'MBProgressHUD', '~> 1.1.0'
   pod 'MJRefresh', '~> 3.1.15.7'
   
