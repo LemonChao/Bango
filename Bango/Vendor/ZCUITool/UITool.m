@@ -81,6 +81,16 @@
     return button;
 }
 
++ (UIButton *)wordButton:(NSString *)title titleColor:(UIColor *)titleColor font:(UIFont *)font bgImage:(UIImage *)backgroundImage {
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    button.titleLabel.font = font;
+    
+    [button setTitle:title forState:UIControlStateNormal];
+    [button setTitleColor:titleColor forState:UIControlStateNormal];
+    [button setBackgroundImage:backgroundImage forState:UIControlStateNormal];
+    return button;
+}
+
 + (UIButton *)wordButton:(UIButtonType)type title:(NSString *)title titleColor:(UIColor *)titleColor font:(UIFont *)font bgColor:(UIColor *)backgroundColor {
     UIButton *button = [UIButton buttonWithType:type];
     button.titleLabel.font = font;

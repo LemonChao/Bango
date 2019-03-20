@@ -8,7 +8,7 @@
 
 #import "AppDelegate.h"
 #import "AppDelegateManager.h"
-#import "ShareDelegateManager.h"
+#import "PaymentDelegateManager.h"
 #import "ZCWebViewController.h"
 
 @interface AppDelegate ()
@@ -23,8 +23,8 @@
     self.window.rootViewController = [[UINavigationController alloc]initWithRootViewController:[[ZCWebViewController alloc]init]];
 
 
-    [[AppDelegateManager sharedAppDelegateManager] didFinishLaunchingWithOptions:launchOptions withWindow:self.window];
-    [[ShareDelegateManager shareDelegateManager] didFinishLaunchingWithOptions:launchOptions withWindow:self.window];
+    [AppDelegateManager.sharedAppDelegateManager didFinishLaunchingWithOptions:launchOptions withWindow:self.window];
+    [PaymentDelegateManager.sharedPaymentManager didFinishLaunchingWithOptions:launchOptions withWindow:self.window];
     
     return YES;
 }
@@ -59,7 +59,7 @@
 
 - (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey, id> *)options {
     
-    return [ShareDelegateManager.shareDelegateManager openURL:url options:options];
+    return [PaymentDelegateManager.sharedPaymentManager openURL:url options:options];
 }
 
 // 通用链接
@@ -67,22 +67,25 @@
     // 用户点击通用链接，导致APP启动，会进到这个里面
     if ([userActivity.activityType isEqualToString:NSUserActivityTypeBrowsingWeb])
     {
-        NSURL *url = userActivity.webpageURL;
-        if (url == nil)
-        {
-            return YES;
-        }
-        NSLog(@"url.host:%@ -- url:%@", url.host, url);
-        if ([url.host isEqualToString:@"mr-bango.cn"] ||[url.host isEqualToString:@"www.mr-bango.cn"]) {
+        NSURL *webPageUrl = userActivity.webpageURL;
+//        NSURL *webPageUrl = [NSURL URLWithString:@"https://mr-bango.cn/openapp?goods_id=82"];
+
+        if (webPageUrl == nil) return YES;
+        NSURLComponents *components = [NSURLComponents componentsWithURL:webPageUrl resolvingAgainstBaseURL:YES];
+        
+        if ([webPageUrl.host isEqualToString:@"mr-bango.cn"] ||[webPageUrl.host isEqualToString:@"www.mr-bango.cn"]) {
             // 是目标链接，调用Native代码，打开对应的页面
-            //navigation.root = a new webviewcontroller
             UINavigationController *rootNavi = (UINavigationController *)self.window.rootViewController;
             ZCWebViewController *webvc = (ZCWebViewController *)rootNavi.topViewController;
-            [webvc bridgeCallHandler:@"functionInJs" data:url];
+            for (NSURLQueryItem *item in components.queryItems) {
+                if ([item.name isEqualToString:@"goods_id"]) {
+                    [webvc bridgeCallHandler:@"navigationToGoodsDetail" data:@{@"goods_id":item.value}];
+                }
+            }
             
         } else {
             // 不是目标链接，用Safari打开
-            [[UIApplication sharedApplication] openURL:url];
+            [[UIApplication sharedApplication] openURL:webPageUrl];
         }
     }
     

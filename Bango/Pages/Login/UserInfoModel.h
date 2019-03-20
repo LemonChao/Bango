@@ -27,6 +27,26 @@ NS_ASSUME_NONNULL_BEGIN
 /** 头像 */
 @property(nonatomic, copy) NSString *avatar;
 
+//--------个人资料接口获取
+/** 头像 推荐用这个 */
+@property(nonatomic, copy) NSString *avatarhead;
+
+/** 用户名 */
+@property(nonatomic, copy) NSString *userName;
+
+/** 用户手机号 */
+@property(nonatomic, copy) NSString *userTel;
+
+/** 是否绑定手机号 0:未绑定 1:已绑定 */
+@property(nonatomic, copy) NSString *userTelIsset;
+
+/** 昵称 */
+@property(nonatomic, copy) NSString *nickName;
+
+/**  密码设置状态 0：未设置登陆密码  1：已设置 */
+@property(nonatomic, copy) NSString *userPasswordStatus;
+
+
 @end
 
 NS_ASSUME_NONNULL_END

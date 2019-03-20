@@ -16,7 +16,7 @@ target 'Bango' do
   
   pod 'IQKeyboardManager'
   pod 'WRNavigationBar'
-  pod 'ZXingObjC', '~> 3.2.2'
+  pod 'ZXingObjC', '~> 3.6.5'
   pod 'WebViewJavascriptBridge', '~> 6.0'
   pod 'SDAutoLayout'
   pod 'SDWebImage'

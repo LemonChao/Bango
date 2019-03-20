@@ -24,6 +24,9 @@ NS_ASSUME_NONNULL_BEGIN
 /** 微信登陆Cmd */
 @property(nonatomic, strong) RACCommand *wechatCmd;
 
+/** 用户个人资料 */
+@property(nonatomic, strong) RACCommand *personDataCmd;
+
 /** 验证码 */
 @property(nonatomic, copy) NSString *authCodeString;
 

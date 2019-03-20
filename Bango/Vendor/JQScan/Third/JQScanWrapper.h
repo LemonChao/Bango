@@ -65,7 +65,7 @@
 /*!
  *  修改扫码类型
  *
- *  @param objType 扫码类型: AVMetadataObjectTypeQRCode：二维码   AVMetadataObjectTypeEAN13Code：条形码
+ *  @param barCodeType 扫码类型: AVMetadataObjectTypeQRCode：二维码   AVMetadataObjectTypeEAN13Code：条形码
  */
 - (void)changeScanObjType:(NSArray*)barCodeType;
 

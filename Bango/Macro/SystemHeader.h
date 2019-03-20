@@ -111,6 +111,8 @@
 
 // Medium字体
 #define MediumFont(sizePX) [UIFont systemFontOfSize:WidthRatio(sizePX) weight:UIFontWeightMedium]
+// Medium字体
+#define BoldFont(sizePX) [UIFont boldSystemFontOfSize:sizePX]
 
 
 // log 日志

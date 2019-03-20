@@ -34,6 +34,7 @@
 
 - (void)loginSuccessComplete:(NSNotification *)notif {
     NSLog(@"notif_userInfo:%@", notif.userInfo);
+
     [self dismissViewControllerAnimated:YES completion:^{
         //保存用户登录信息
         UserInfoModel *model = [notif.userInfo objectForKey:@"userModel"];
@@ -271,7 +272,9 @@
     [loginButton addTarget:self action:@selector(loginAction:) forControlEvents:UIControlEventTouchUpInside];
     
     UIButton *agreeButton = [UITool richButton:UIButtonTypeCustom title:@" 我已阅读同意" titleColor:AssistColor font:MediumFont(14) bgColor:[UIColor clearColor] image:ImageNamed(@"login_disagree")];
+    [agreeButton setImage:ImageNamed(@"login_agree") forState:UIControlStateSelected];
     agreeButton.selected = YES;
+    [agreeButton addTarget:self action:@selector(agreeButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     UIButton *policyButton = [UITool wordButton:@"《服务条款与隐私政策》" titleColor:RGBA(252, 83, 87, 1) font:MediumFont(14) bgColor:[UIColor clearColor]];
     UIView *bottomLine = [UITool viewWithColor:LineColor];
     UILabel *fastLoginLab = [UITool labelWithText:@" 快速登录 " textColor:AssistColor font:MediumFont(14)];
@@ -346,6 +349,7 @@
     [agreeButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.contentView).inset(WidthRatio(56));
         make.top.equalTo(loginButton.mas_bottom).offset(WidthRatio(16));
+        make.height.mas_equalTo(WidthRatio(29));
     }];
     
     [policyButton mas_makeConstraints:^(MASConstraintMaker *make) {

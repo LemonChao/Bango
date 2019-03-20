@@ -31,6 +31,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// UIButton
 + (UIButton *)wordButton:(NSString *)title titleColor:(UIColor *)titleColor font:(UIFont *)font bgColor:(UIColor *)backgroundColor;
++ (UIButton *)wordButton:(NSString *)title titleColor:(UIColor *)titleColor font:(UIFont *)font bgImage:(UIImage *)backgroundImage;
 + (UIButton *)wordButton:(UIButtonType)type title:(NSString *)title titleColor:(UIColor *)titleColor font:(UIFont *)font bgColor:(UIColor *)backgroundColor;
 + (UIButton *)imageButton:(UIImage *)image;
 + (UIButton *)imageButton:(UIImage *)image cornerRadius:(CGFloat)cornerRadius borderWidth:(CGFloat)borderWidth borderColor:(UIColor *)borderColor;

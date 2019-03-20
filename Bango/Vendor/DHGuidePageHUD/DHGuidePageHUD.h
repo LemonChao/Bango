@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-#define BOOLFORKEY @"dhGuidePage"
+#define showGuodePageKey @"showdhGuidePage_Key"
 
 @interface DHGuidePageHUD : UIView
 /**

@@ -9,7 +9,7 @@
 #import "ZCLoginViewModel.h"
 #import <ShareSDK/ShareSDK.h>
 #import <AlipaySDK/AlipaySDK.h>
-
+#import "PaymentDelegateManager.h"
 
 @implementation ZCLoginViewModel
 
@@ -89,6 +89,7 @@
                     
                     if (kStatusTrue) {
                         [self aliPayUserInfoWithAutncode:responseObject[@"data"]];
+                        [PaymentDelegateManager.sharedPaymentManager loginAlipayPaycompleteParams:responseObject[@"data"] loginFinish:nil];
                         [subscriber sendNext:@(1)];
                     }else {
                         [WXZTipView showTopWithText:responseObject[@"message"]];
@@ -156,6 +157,44 @@
     }
     return _wechatCmd;
 }
+
+// 用户个人资料
+- (RACCommand *)personDataCmd {
+    if (!_personDataCmd) {
+        _personDataCmd = [[RACCommand alloc] initWithSignalBlock:^RACSignal * _Nonnull(id  _Nullable input) {
+            return [RACSignal createSignal:^RACDisposable * _Nullable(id<RACSubscriber>  _Nonnull subscriber) {
+                UserInfoModel *origModel = [BaseMethod readObjectWithKey:UserInfo_UDSKEY];
+                
+                if ([origModel.asstoken isEmptyString]) {
+                    [subscriber sendCompleted];
+                    return nil;
+                }
+                
+                [NetWorkManager.sharedManager requestWithUrl:kMember_personData withParameters:input withRequestType:POSTTYPE withSuccess:^(id  _Nonnull responseObject) {
+                    if (kStatusTrue) {
+                        UserInfoModel *model = [UserInfoModel modelWithDictionary:responseObject];
+                        model.asstoken = origModel.asstoken;
+                        model.txPwdStatus = origModel.txPwdStatus;
+                        model.loginType = origModel.loginType;
+                        model.loginNum = origModel.loginNum;
+                        model.avatar = origModel.avatar;
+                        [BaseMethod saveObject:model withKey:UserInfo_UDSKEY];
+                        [subscriber sendNext:@(1)];
+                    }else {
+                        [subscriber sendNext:@(0)];
+                    }
+                    
+                    [subscriber sendCompleted];
+                } withFailure:^(NSError * _Nonnull error) {
+                    [subscriber sendError:error];
+                }];
+                return nil;
+            }];
+        }];
+    }
+    return _personDataCmd;
+}
+
 
 
 @end

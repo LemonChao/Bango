@@ -33,4 +33,7 @@
 #pragma mark - NSUserDefaultsKey
 #define UserInfo_UDSKEY             @"UserInfo_NSUserDefaultsKey"
 
+
+#define mark - JSBridgeFunctionName
+
 #endif /* AppKeyHeader_h */

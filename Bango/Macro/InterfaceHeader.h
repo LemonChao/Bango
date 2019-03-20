@@ -22,7 +22,7 @@
 #define AppKeChengBaseUrl                       @"http://oa.mgogo.com/kecheng/"
 #endif
 
-
+#define AppIconUrl                              @"https://mr-bango.cn/template/wap/default_new/public/css/qianrui/images/logo.png"
 
 #pragma mark - 登陆注册
 
@@ -36,6 +36,11 @@
 #define kLogin_alipay_auth      @"?s=/wap/Login/get_auth_code"
 // 第三方登陆(微信，支付宝)
 #define kLogin_third            @"?s=/wap/Login/wc_alipay_Login"
-
+// 获取用户个人资料
+#define kMember_personData      @"?s=/wap/Member/personalData"
+// 微信支付
+#define kOrderinfo_weixinpay    @"?s=/wap/paywx/wx_pay"
+// 支付宝支付
+#define kOrderinfo_alipay       @"?s=/wap/paywx/order_info_alipay"
 
 #endif /* InterfaceHeader_h */
