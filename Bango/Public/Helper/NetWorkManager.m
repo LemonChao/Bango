@@ -40,8 +40,7 @@
 //        [dic setValue:[FCUUID uuidForDevice] forKey:@"model"];
 //        [parameter setValue:aesEncryptString([dic jsonStringEncoded], @"09a7614dba5cd876") forKey:@"param"];
 //    }
-    NSLog(@"URL:%@-->parameter:%@",url, parameter);
-    NSLog(@"baseURL:%@-->request:%@",self.baseURL, self.requestSerializer);
+    NSLog(@"URL:%@%@-->parameter:%@",AppBaseUrl,url, parameter);
     switch (requestType) {
         case GETTYPE:
         {

@@ -144,7 +144,7 @@
     
     UIButton *baseRightImageButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, WidthRatio(27), HeightRatio(50))];
     
-    [baseRightImageButton setBackgroundImage:[[MMGetImage(@"back") imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] imageWithColor:[UIColor whiteColor]] forState:UIControlStateNormal];
+    [baseRightImageButton setBackgroundImage:[[MMGetImage(@"back") imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] redrawImageWithColor:[UIColor whiteColor]] forState:UIControlStateNormal];
     [baseRightImageButton addTarget:self action:@selector(LeftImageBtn:) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithCustomView:baseRightImageButton];
     

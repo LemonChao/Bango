@@ -454,7 +454,7 @@
 
     
     UIButton *backBtn = [UIButton new];
-    [backBtn setImage:[[self imageWithOriImageName:@"back"] imageWithColor:[UIColor whiteColor]] forState:UIControlStateNormal];
+    [backBtn setImage:[[self imageWithOriImageName:@"back"] redrawImageWithColor:[UIColor whiteColor]] forState:UIControlStateNormal];
     backBtn.imageView.contentMode = UIViewContentModeScaleAspectFit;
     [backBtn addTarget:self action:@selector(axcBaseClickBaseLeftImageBtn:) forControlEvents:UIControlEventTouchUpInside];
     [self.navigationBarView addSubview:backBtn];

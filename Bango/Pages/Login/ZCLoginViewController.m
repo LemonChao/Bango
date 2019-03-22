@@ -9,10 +9,13 @@
 #import "ZCLoginViewController.h"
 #import "ZCLoginViewModel.h"
 #import "JKCountDownButton.h"
+#import "ZCFallingAnimationView.h"
 
 @interface ZCLoginViewController ()
 
 @property(nonatomic, strong) ZCLoginViewModel *viewModel;
+
+@property(nonatomic, strong) ZCFallingAnimationView *failingBtnView;
 
 @property(nonatomic, strong) UIScrollView *scrollView;
 
@@ -114,7 +117,8 @@
         normalContent.hidden = ![x isEqualToString:@"2"];
         fastContent.hidden = [x isEqualToString:@"2"];
     }];
-   
+    
+    self.failingBtnView = [[ZCFallingAnimationView alloc] initWithFrame:CGRectMake(0, topDiff, SCREEN_WIDTH, SCREEN_HEIGHT-topDiff)];
 }
 
 - (void)authCodeBtnAction:(JKCountDownButton*)button {
@@ -147,7 +151,7 @@
     [self executeLoginCmd];
 }
 
-// 切换你到手机号n吗登录
+// 切换到手机号吗登录
 - (void)switchToPhoneLoginAction:(UIButton *)button {
     self.viewModel.loginType = @"2";
     self.viewModel.loginBtnTitle = @"登录";
@@ -404,6 +408,9 @@
 
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:loginSuccessNotification object:nil];
+    
+    [self.failingBtnView removeFromSuperview];
+    
 }
 
 @end

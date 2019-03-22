@@ -48,9 +48,8 @@ NS_ASSUME_NONNULL_BEGIN
  支付宝第三方登录
  
  @param auth_V2WithInfo 授权码
- @param loginFinish 回调
  */
--(void)loginAlipayPaycompleteParams:(NSString *)auth_V2WithInfo loginFinish:(void (^)(id))loginFinish;
+-(void)loginAlipayPaycompleteParams:(NSString *)auth_V2WithInfo;
 
 @end
 

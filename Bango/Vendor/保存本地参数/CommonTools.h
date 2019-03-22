@@ -27,7 +27,6 @@
 /**
  获取有效期内的toke，当字符串长度为0时，需要重写获取
 
- @return
  */
 +(NSString *)getAccessToken;
 
@@ -126,14 +125,13 @@
 /**
  存储版本信息
 
- @param index 
  */
 +(void)setUpdateDescription:(NSString *)description;
 
 /**
  返回版本信息
 
- @return
+ @return string
  */
 +(NSString *)getUpdateDescription;
 
@@ -147,7 +145,7 @@
 /**
  获取当前点击的页面
 
- @return
+ @return String
  */
 +(NSString *)getClickView;
 
@@ -161,7 +159,7 @@
 /**
  获取数据库版本号
 
- @return
+ @return String
  */
 +(NSString *)getDataDaseVersions;
 

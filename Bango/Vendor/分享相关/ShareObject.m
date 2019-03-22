@@ -92,14 +92,6 @@
                        @(SSDKPlatformTypeQQ),
                        @(SSDKPlatformSubTypeQZone)];
     
-//    SSUIShareSheetConfiguration *config = [[SSUIShareSheetConfiguration alloc] init];
-//    config.style = SSUIActionSheetStyleSystem;
-//    config.columnPortraitCount = 3;
-//    config.menuBackgroundColor = [UIColor whiteColor];
-//    config.cancelButtonHidden = YES;
-//    config.itemTitleFont = MediumFont(WidthRatio(12));
-//    config.itemTitleColor = MinorColor;
-    
     [ShareSDK showShareActionSheet:nil
                        customItems:items
                        shareParams:shareParams

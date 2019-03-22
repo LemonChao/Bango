@@ -21,10 +21,16 @@
 #import "ShareObject.h"
 #import "RealNameAuthenticationVC.h"
 #import "UIViewController+LKBubbleView.h"
+#import "CommonTools.h"
+#import "SELUpdateAlert.h"
 
-
+static BOOL IsUpdateRemind = YES;
 
 @interface ZCWebViewController ()<WKScriptMessageHandler,WKNavigationDelegate, WKUIDelegate>
+{
+    SELUpdateAlert *updateAlert;
+    
+}
 
 @property (strong, nonatomic) WKWebView *webView;
 
@@ -38,7 +44,7 @@
     [super viewDidLoad];
     [self webViewLoadRequest];
     [self.bridge setWebViewDelegate:self];
-    
+    [self versionUpdateRequest];
 }
 
 - (void)configViews {
@@ -49,7 +55,6 @@
         DHGuidePageHUD *guidePage = [[DHGuidePageHUD alloc] dh_initWithFrame:self.view.frame imageNameArray:@[@"guide_1",@"guide_2",@"guide_3"] buttonIsHidden:NO];
         [[UIApplication sharedApplication].keyWindow addSubview:guidePage];
     }
-    
 
 }
 
@@ -63,6 +68,7 @@
 #else
 //    self.baseUrlString = AppBaseUrl;
     NSString *url = @"http://ceshi.mr-bango.cn/html-src/dist/";
+//    NSString *url = @"192.168.0.139:10001";
 //    NSString *url = @"https://mr-bango.cn/html-src/dist/";
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url] cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:60];
     [_webView loadRequest:request];
@@ -70,9 +76,25 @@
 #endif
 }
 
-
-
--(void)LoginWeChatCallback:(WVJBResponseCallback)responseCallback{
+-(void)versionUpdateRequest{
+    
+    NSDictionary *params = @{@"appname":@"搬果将",
+                             @"type": @"2",
+                             @"version":AppVersion};
+    
+    [NetWorkManager.sharedManager requestWithUrl:kIndex_version withParameters:params withRequestType:POSTTYPE withSuccess:^(id  _Nonnull responseObject) {
+        NSDictionary *data = responseObject[@"data"];
+        if (!DictIsEmpty(data)) {
+            [self setUpVersion:data];
+        }else {
+            if (self->updateAlert) {
+                [self->updateAlert removeFromSuperview];
+            }
+        }
+        
+    } withFailure:^(NSError * _Nonnull error) {
+        [WXZTipView showCenterWithText:error.localizedDescription];
+    }];
     
 }
 
@@ -145,8 +167,6 @@
         [self.bridge registerHandler:@"getBlogNameFromObjC" handler:^(id data, WVJBResponseCallback responseCallback) {
             //接收JS传参data，根据参数调用OC方法，完成后执行回调(可选)
             
-            
-            
             NSDictionary *dict =(NSDictionary *)data;
             if ([dict isKindOfClass:[NSDictionary class]]) {
                 id array = dict[@"param"];
@@ -156,7 +176,7 @@
                 WVJBResponseCallback response = ^(id results){
                     responseCallback(results);
                 };
-                if (!ObjectIsEmpty(array)&&[selectorStr isEqualToString:@"realNameAuthenticationParam:"]) {
+                if (ObjectIsEmpty(array)) {
                     SEL selector = NSSelectorFromString(selectorStr);
                     IMP imp = [self methodForSelector:selector];
                     id (*func)(id, SEL, WVJBResponseCallback) = (void *)imp;
@@ -240,8 +260,8 @@
 -(void)getVersionNumberResponseCallback:(WVJBResponseCallback)responseCallback {
     if (responseCallback) {
         NSDictionary *dict = @{@"status":@"1",
-                               @"data"  :@{@"value":AppVersion},
-                               @"msg"    :@"操作成功"
+                               @"data"  :@{@"value":[NSString stringWithFormat:@"%@", AppVersion]},
+                               @"msg"   :@"操作成功"
                                };
         responseCallback(dict);
     }
@@ -454,6 +474,91 @@
     [self.webView loadRequest:request];
     
 }
+
+//版本设置
+-(void)setUpVersion:(NSDictionary *)dataDict{
+    if (dataDict != nil) {
+        NSString *description = dataDict[@"remark"];
+        if (![NSString isNOTNull:description]) {
+            [CommonTools setUpdateDescription:description];
+        }else{
+            [CommonTools setUpdateDescription:@"有新版版本需要更新"];
+        }
+        BOOL isForce = [dataDict[@"force_update"] boolValue];
+        [CommonTools setIsForce:isForce];
+        BOOL hasNewVersion = [dataDict[@"is_update"] boolValue];
+        [CommonTools setIsHasNewVersion:hasNewVersion];
+        NSString *version = [NSString stringWithFormat:@"%@",dataDict[@"ver_nod"]];
+        [CommonTools setVersionString:version];
+        if (![NSString isNOTNull:[NSString stringWithFormat:@"%@",dataDict[@"url"]]]) {
+            [CommonTools setUpdateVersionAddress:[NSString stringWithFormat:@"%@",dataDict[@"url"]]];
+        }
+        if (hasNewVersion) {
+            if (updateAlert == nil) {
+                [self VersionBounced];
+            }
+            
+        }else{
+            if (updateAlert != nil) {
+                [updateAlert removeFromSuperview];
+            }
+        }
+        
+    }
+    
+}
+-(void)VersionBounced{
+    __weak __typeof(&*self)weakSelf = self;
+    NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+    CFShow((__bridge CFTypeRef)(infoDictionary));
+    // app版本
+    NSString *app_Version = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
+    if (![NSString isNOTNull:[CommonTools getVersionString]]&&![app_Version isEqualToString:[CommonTools getVersionString]]) {
+        BOOL hasNewVersion = [CommonTools IsHasNewVersion] ;
+        BOOL isForce =  [CommonTools IsForce] ;
+        if (hasNewVersion) {
+            if (isForce) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    // UI更新代码
+                    self->updateAlert = [SELUpdateAlert showUpdateAlertWithVersion:[CommonTools getVersionString] Description:[CommonTools getUpdateDescription]];
+                    self->updateAlert.isMandatory = YES;
+                    [self->updateAlert setUpdateNow:^{
+                        
+                        NSString *versionAdd = [CommonTools getVersionAddress];
+                        if (![NSString isNOTNull:versionAdd]) {
+                            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:versionAdd]];
+                        }else{
+                            [WXZTipView showCenterWithText:@"更新地址错误"];
+                        }
+                    }];
+                    
+                });
+                
+            }else{
+                
+                if (IsUpdateRemind) {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        // UI更新代码
+                        self->updateAlert = [SELUpdateAlert showUpdateAlertWithVersion:[CommonTools getVersionString] Description:[CommonTools getUpdateDescription]];
+                        [self->updateAlert setUpdateNow:^{
+                            IsUpdateRemind = YES;
+                            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[CommonTools getVersionAddress]]];
+                        }];
+                        [self->updateAlert setDismissBlock:^{
+                            IsUpdateRemind = NO;
+                        }];
+                    });
+                    
+                    
+                }
+                
+            }
+        }
+    }
+    
+}
+
+
 
 
 - (UIImage *)captureScrollView:(UIScrollView *)scrollView {

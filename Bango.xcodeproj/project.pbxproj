@@ -194,6 +194,8 @@
 		6CE96E072241F83B0028CA0E /* JQIDCardScaningView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CE96DEE2241F83B0028CA0E /* JQIDCardScaningView.m */; };
 		6CE96E082241F83B0028CA0E /* LHSIDCardScaningView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CE96DEF2241F83B0028CA0E /* LHSIDCardScaningView.m */; };
 		6CE96E092241F83B0028CA0E /* RectManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CE96DF42241F83B0028CA0E /* RectManager.m */; };
+		6CFE2B8D224345C000C37333 /* ZCFallingAnimationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CFE2B8C224345C000C37333 /* ZCFallingAnimationView.m */; };
+		6CFE2B902243BE9700C37333 /* UIImage+Developer.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CFE2B8F2243BE9700C37333 /* UIImage+Developer.m */; };
 		CD48FC185B3C060275B9572C /* libPods-BangoUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B35BB6749A039AFC1ADE751 /* libPods-BangoUITests.a */; };
 /* End PBXBuildFile section */
 
@@ -661,6 +663,10 @@
 		6CE96DF12241F83B0028CA0E /* LHSIDCardScaningView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LHSIDCardScaningView.h; sourceTree = "<group>"; };
 		6CE96DF32241F83B0028CA0E /* RectManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RectManager.h; sourceTree = "<group>"; };
 		6CE96DF42241F83B0028CA0E /* RectManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RectManager.m; sourceTree = "<group>"; };
+		6CFE2B8B224345C000C37333 /* ZCFallingAnimationView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZCFallingAnimationView.h; sourceTree = "<group>"; };
+		6CFE2B8C224345C000C37333 /* ZCFallingAnimationView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZCFallingAnimationView.m; sourceTree = "<group>"; };
+		6CFE2B8E2243BE9700C37333 /* UIImage+Developer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Developer.h"; sourceTree = "<group>"; };
+		6CFE2B8F2243BE9700C37333 /* UIImage+Developer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Developer.m"; sourceTree = "<group>"; };
 		E08E7EAA66D4B623A9DD06A9 /* Pods-Bango.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bango.debug.xcconfig"; path = "Target Support Files/Pods-Bango/Pods-Bango.debug.xcconfig"; sourceTree = "<group>"; };
 		E1935CC31FCE1C1E3EA340B5 /* libPods-Bango.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Bango.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F189BE823C4CE4E7E6B90DEE /* Pods-BangoTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BangoTests.release.xcconfig"; path = "Target Support Files/Pods-BangoTests/Pods-BangoTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -919,6 +925,8 @@
 				6C04DB2A223B5A8E00F27501 /* UserInfoModel.m */,
 				6C04DB2F223B7AF100F27501 /* IphoneInfo.h */,
 				6C04DB30223B7AF100F27501 /* IphoneInfo.m */,
+				6CFE2B8B224345C000C37333 /* ZCFallingAnimationView.h */,
+				6CFE2B8C224345C000C37333 /* ZCFallingAnimationView.m */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -1025,6 +1033,8 @@
 				6CB2A32822310B7A00CEC1CB /* UIButton+EdgeInsets.m */,
 				6CB2A32622310B7900CEC1CB /* UIViewController+Extension.h */,
 				6CB2A32522310B7800CEC1CB /* UIViewController+Extension.m */,
+				6CFE2B8E2243BE9700C37333 /* UIImage+Developer.h */,
+				6CFE2B8F2243BE9700C37333 /* UIImage+Developer.m */,
 			);
 			path = Categroy;
 			sourceTree = "<group>";
@@ -1902,7 +1912,9 @@
 				6CAE0A672240951B004D4A68 /* ZCBaseView.m in Sources */,
 				6CB2A2ED22310B5C00CEC1CB /* HeaderToken.m in Sources */,
 				6C6979FF22390CF600DDC639 /* PaymentDelegateManager.m in Sources */,
+				6CFE2B902243BE9700C37333 /* UIImage+Developer.m in Sources */,
 				6CB2A29C22310B5C00CEC1CB /* UITableView+Refresh.m in Sources */,
+				6CFE2B8D224345C000C37333 /* ZCFallingAnimationView.m in Sources */,
 				6CB2A2D122310B5C00CEC1CB /* YTKChainRequestAgent.m in Sources */,
 				6CB2A2F422310B5C00CEC1CB /* WB_UploadImageRequest.m in Sources */,
 				6CB2A2B222310B5C00CEC1CB /* HXAlbumListViewController.m in Sources */,

@@ -88,8 +88,7 @@
                 [NetWorkManager.sharedManager requestWithUrl:kLogin_alipay withParameters:@{} withRequestType:POSTTYPE withSuccess:^(id  _Nonnull responseObject) {
                     
                     if (kStatusTrue) {
-                        [self aliPayUserInfoWithAutncode:responseObject[@"data"]];
-                        [PaymentDelegateManager.sharedPaymentManager loginAlipayPaycompleteParams:responseObject[@"data"] loginFinish:nil];
+                        [PaymentDelegateManager.sharedPaymentManager loginAlipayPaycompleteParams:responseObject[@"data"]];
                         [subscriber sendNext:@(1)];
                     }else {
                         [WXZTipView showTopWithText:responseObject[@"message"]];
@@ -105,14 +104,6 @@
     }
     return _zhifubaoCmd;
 }
-
-// 支付宝登陆步骤2 authcode换token以及d用户信息
-- (void)aliPayUserInfoWithAutncode:(nonnull NSString*)authCode {
-    // this callback is invaild 需要调用方在appDelegate中调用processAuth_V2Result:standbyCallback:方法获取授权结果
-    [[AlipaySDK defaultService] auth_V2WithInfo:authCode fromScheme:@"BanGuoAlipay" callback:nil];
-
-}
-
 
 - (RACCommand *)wechatCmd {
     if (!_wechatCmd) {

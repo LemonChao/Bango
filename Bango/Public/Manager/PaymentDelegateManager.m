@@ -8,6 +8,7 @@
 
 #import "PaymentDelegateManager.h"
 #import "UserInfoModel.h"
+#import "UIImage+Developer.h"
 
 @interface PaymentDelegateManager ()<WXApiDelegate>
 
@@ -36,6 +37,9 @@
     [ShareSDK registPlatforms:^(SSDKRegister *platformsRegister) {
         //微信
         [platformsRegister setupWeChatWithAppId:WX_APP_ID appSecret:WX_APP_SECRET];
+        //QQ
+        [platformsRegister setupQQWithAppId:QQ_APP_ID appkey:QQ_APP_SECRET];
+
     }];
 }
 
@@ -153,7 +157,7 @@
 
 // 支付宝登陆步骤2 唤起支付宝 authcode换token以及d用户信息
 
--(void)loginAlipayPaycompleteParams:(NSString *)auth_V2WithInfo loginFinish:(void (^)(id))loginFinish  {
+-(void)loginAlipayPaycompleteParams:(NSString *)auth_V2WithInfo {
     isLogin = YES;
     // this callback is invaild 需要调用方在appDelegate中调用processAuth_V2Result:standbyCallback:方法获取授权结果
     [[AlipaySDK defaultService] auth_V2WithInfo:auth_V2WithInfo fromScheme:@"BanGuoAlipay" callback:nil];

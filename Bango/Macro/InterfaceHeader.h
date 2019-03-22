@@ -17,7 +17,7 @@
 #define AppKeChengBaseUrl                       @"http://kecheng.toushijinfu.com/"
 #else
 //测试环境
-#define AppBaseUrl                              @"https://mr-bango.cn/"
+#define AppBaseUrl                              @"http://ceshi.mr-bango.cn/"
 #define AppPictureBaseUrl                       @"http://admin1.toushizhiku.com/"
 #define AppKeChengBaseUrl                       @"http://oa.mgogo.com/kecheng/"
 #endif
@@ -42,5 +42,9 @@
 #define kOrderinfo_weixinpay    @"?s=/wap/paywx/wx_pay"
 // 支付宝支付
 #define kOrderinfo_alipay       @"?s=/wap/paywx/order_info_alipay"
+// app版本更新
+#define kIndex_version          @"?s=/wap/Index/version"
+
+
 
 #endif /* InterfaceHeader_h */

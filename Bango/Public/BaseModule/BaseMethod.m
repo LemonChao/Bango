@@ -7,6 +7,7 @@
 //
 
 #import "BaseMethod.h"
+#import <Photos/Photos.h>
 
 @implementation BaseMethod
 
@@ -44,5 +45,34 @@
 + (void)cleanObjectForKey:(NSString *)key {
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:key];
 }
+
+
+#pragma mark - PhotoLibrary
+
++ (void)writeImageToPhotoLibrary:(UIImage *)image {
+    
+    [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
+        if (status !=PHAuthorizationStatusAuthorized) return; //
+        
+        // 保存相片到相机胶卷
+        __block PHObjectPlaceholder *createdAsset = nil;
+        //异步执行
+        [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
+            
+            createdAsset = [PHAssetCreationRequest creationRequestForAssetFromImage:image].placeholderForCreatedAsset;
+        } completionHandler:^(BOOL success, NSError * _Nullable error) {
+            
+            if (success) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [WXZTipView showBottomWithText:@"保存成功"];
+                });
+            }else {
+                NSLog(@"Error: %@", [error localizedDescription]);
+            }
+            
+        }];
+    }];
+}
+
 
 @end

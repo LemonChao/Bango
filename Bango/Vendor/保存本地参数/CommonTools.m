@@ -167,11 +167,12 @@
 }
 +(NSString *)getVersionAddress{
     NSString *str = [[NSUserDefaults standardUserDefaults] stringForKey:VersionAddress];
-    if ([str hasPrefix:@"http"]) {
-        return [[NSUserDefaults standardUserDefaults] stringForKey:VersionAddress];
+    if ([str hasPrefix:@"https://"] || [str hasPrefix:@"http://"]) {
+        return str;
     }else{
         return @"";
     }
+
 }
 
 +(void)setVersionString:(NSString *)version{

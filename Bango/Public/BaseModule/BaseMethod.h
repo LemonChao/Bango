@@ -20,6 +20,14 @@ NS_ASSUME_NONNULL_BEGIN
 + (id)readObjectWithKey:(NSString *)key;
 + (void)cleanObjectForKey:(NSString *)key;
 
+#pragma mark - PhotoLibrary
+
+/**
+ 保存相片到相机胶卷
+
+ @param image 要保存的图片
+ */
++ (void)writeImageToPhotoLibrary:(UIImage *)image;
 @end
 
 NS_ASSUME_NONNULL_END
