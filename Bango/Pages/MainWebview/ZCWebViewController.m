@@ -24,7 +24,6 @@
 #import "CommonTools.h"
 #import "SELUpdateAlert.h"
 
-static BOOL IsUpdateRemind = YES;
 
 @interface ZCWebViewController ()<WKScriptMessageHandler,WKNavigationDelegate, WKUIDelegate>
 {
@@ -59,21 +58,12 @@ static BOOL IsUpdateRemind = YES;
 }
 
 - (void)webViewLoadRequest {
-    
-#if kOnLine
-    
-//    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:self.baseUrlString] cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:60];
-//    [_webView loadRequest:request];
-    
-#else
-//    self.baseUrlString = AppBaseUrl;
-    NSString *url = @"http://ceshi.mr-bango.cn/html-src/dist/";
+//    NSString *url = @"http://ceshi.mr-bango.cn/html-src/dist/";
 //    NSString *url = @"192.168.0.139:10001";
 //    NSString *url = @"https://mr-bango.cn/html-src/dist/";
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url] cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:60];
-    [_webView loadRequest:request];
-    
-#endif
+
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:[AppBaseUrl stringByAppendingString:@"html-src/dist/"]] cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:60];
+    [self.webView loadRequest:request];
 }
 
 -(void)versionUpdateRequest{
@@ -91,7 +81,6 @@ static BOOL IsUpdateRemind = YES;
                 [self->updateAlert removeFromSuperview];
             }
         }
-        
     } withFailure:^(NSError * _Nonnull error) {
         [WXZTipView showCenterWithText:error.localizedDescription];
     }];
@@ -109,13 +98,59 @@ static BOOL IsUpdateRemind = YES;
     }];
     
 }
+- (void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message {
+    
+}
+#pragma mark ====分享朋友圈 v1.0.1====
+-(void)shareParamResponseCallback:(WVJBResponseCallback)responseCallback{
+    NSDictionary *params = @{@"nick_name":@"s1o6jdxeQXKO",
+                             @"shareAddress":@"https://mr-bango.cn/index.php/wap/login/tui_regeist?invite_uid=920&source=1",
+                             @"erweima":@"https://mr-bango.cn/public/uploads/qrcode/20190325/H.png",
+                             @"title":@"搬果将",
+                             @"descript":@"带给你初恋的味道",
+                             @"user_headimg":@"https://mr-bango.cn/upload/web_common/default_head.png",
+                             @"logo":@"https://mr-bango.cn/template/wap/default_new/public/css/qianrui/images/logo.png",
+                             };
+    
+    [ShareObject.sharedObject appShareWithParams:params];
 
-#pragma mark ====分享朋友圈====
-//-(void)shareParamResponseCallback:(WVJBResponseCallback)responseCallback{
-//}
+}
+
+- (void)LoginAlipay:(NSArray *)parm ResponseCallback:(WVJBResponseCallback)responseCallback {
+    if (parm.count <= 0) return;
+    [PaymentDelegateManager.sharedPaymentManager v_1LoginAlipayPaycompleteParams:parm[0] loginFinish:^(id response) {
+        responseCallback(response);
+    }];
+}
+
+- (void)LoginWeChatCallback:(WVJBResponseCallback)responseCallback {
+    [ShareSDK authorize:SSDKPlatformTypeWechat settings:nil onStateChanged:^(SSDKResponseState state, SSDKUser *user, NSError *error) {
+        if (state == SSDKResponseStateSuccess){
+            NSDictionary *dataDict = @{@"type":@"0",
+                                       @"uid":user.uid,
+                                       @"nickname":user.nickname,
+                                       @"user_headimg":user.icon,
+                                       @"sex":[NSString stringWithFormat:@"%ld",(long)user.gender]
+                                       };
+            NSDictionary *dict = @{@"status":@"1",
+                                   @"data"  :dataDict,
+                                   @"msg"    :@"操作成功"
+                                   };
+            responseCallback(dict);
+        }else{
+            NSLog(@"error = %@",error);
+            NSDictionary *dict = @{@"status":@"0",
+                                   @"data"  :@{},
+                                   @"msg"    :@"s授权失败"
+                                   };
+            responseCallback(dict);
+            [WXZTipView showCenterWithText:@"微信授权失败"];
+        }
+    }];
+
+}
 
 
-#pragma mark - loginSuccessNotifacation
 
 
 #pragma mark - setter && getter
@@ -142,7 +177,13 @@ static BOOL IsUpdateRemind = YES;
         [config.userContentController addUserScript:noneSelectScript];
         
         //CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-HomeIndicatorHeight)
-        _webView = [[WKWebView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-HomeIndicatorHeight) configuration:config];
+        _webView = [[WKWebView alloc] initWithFrame:CGRectMake(0, StatusBarHeight, SCREEN_WIDTH, SCREEN_HEIGHT-HomeIndicatorHeight-StatusBarHeight) configuration:config];
+        if (@available(iOS 11.0, *)) {
+            _webView.scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+        } else {
+            [self setAutomaticallyAdjustsScrollViewInsets:NO];
+        }
+        self.navigationController.edgesForExtendedLayout = UIRectEdgeTop;
         _webView.scrollView.showsVerticalScrollIndicator = NO;
         _webView.UIDelegate = self;
         _webView.navigationDelegate = self;
@@ -226,14 +267,51 @@ static BOOL IsUpdateRemind = YES;
 }
 
 
+#pragma mark - WKUIDelegate
+
+- (void)webView:(WKWebView *)webView runJavaScriptAlertPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(void))completionHandler{
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"提示" message:message?:@"" preferredStyle:UIAlertControllerStyleAlert];
+    [alertController addAction:([UIAlertAction actionWithTitle:@"确认" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        completionHandler();
+    }])];
+    [self presentViewController:alertController animated:YES completion:nil];
+}
+
+- (void)webView:(WKWebView *)webView runJavaScriptConfirmPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(BOOL))completionHandler{
+    //    DLOG(@"msg = %@ frmae = %@",message,frame);
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"提示" message:message?:@"" preferredStyle:UIAlertControllerStyleAlert];
+    [alertController addAction:([UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        completionHandler(NO);
+    }])];
+    [alertController addAction:([UIAlertAction actionWithTitle:@"确认" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        completionHandler(YES);
+    }])];
+    [self presentViewController:alertController animated:YES completion:nil];
+}
+
+- (void)webView:(WKWebView *)webView runJavaScriptTextInputPanelWithPrompt:(NSString *)prompt defaultText:(NSString *)defaultText initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(NSString * _Nullable))completionHandler{
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:prompt message:@"" preferredStyle:UIAlertControllerStyleAlert];
+    [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+        textField.text = defaultText;
+    }];
+    [alertController addAction:([UIAlertAction actionWithTitle:@"完成" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        completionHandler(alertController.textFields[0].text?:@"");
+    }])];
+    
+    
+    [self presentViewController:alertController animated:YES completion:nil];
+}
+
+#pragma mark - 原生调用JS
+
 - (void)bridgeCallHandler:(NSString *)handleName data:(id)data {
     [self.bridge callHandler:handleName data:data responseCallback:^(id responseData) {
     }];
     
 }
-#pragma mark - JS 调用原生
 
-#pragma mark ====复制==== unused
+
+#pragma mark JS 调用原生 unused
 -(void)copyParam:(NSArray *)parm ResponseCallback:(WVJBResponseCallback)responseCallback{
     NSString *str = parm[0];
     if ([self copyText:str]) {
@@ -501,6 +579,7 @@ static BOOL IsUpdateRemind = YES;
         }else{
             if (updateAlert != nil) {
                 [updateAlert removeFromSuperview];
+                updateAlert = nil;
             }
         }
         
@@ -535,29 +614,26 @@ static BOOL IsUpdateRemind = YES;
                 });
                 
             }else{
-                
-                if (IsUpdateRemind) {
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        // UI更新代码
-                        self->updateAlert = [SELUpdateAlert showUpdateAlertWithVersion:[CommonTools getVersionString] Description:[CommonTools getUpdateDescription]];
-                        [self->updateAlert setUpdateNow:^{
-                            IsUpdateRemind = YES;
-                            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[CommonTools getVersionAddress]]];
-                        }];
-                        [self->updateAlert setDismissBlock:^{
-                            IsUpdateRemind = NO;
-                        }];
-                    });
-                    
-                    
-                }
-                
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    // UI更新代码
+                    self->updateAlert = [SELUpdateAlert showUpdateAlertWithVersion:[CommonTools getVersionString] Description:[CommonTools getUpdateDescription]];
+                    [self->updateAlert setUpdateNow:^{
+                        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[CommonTools getVersionAddress]]];
+                    }];
+                    [self->updateAlert setDismissBlock:^{
+                        self->updateAlert = nil;
+                    }];
+                });
+
             }
         }
     }
     
 }
 
+- (void)checkAppVersion {
+    [self versionUpdateRequest];
+}
 
 
 

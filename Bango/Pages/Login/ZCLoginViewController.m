@@ -64,7 +64,6 @@
     } error:^(NSError * _Nullable error) {
         
     }];
-
 }
 
 - (void)bindViewModel {
@@ -88,7 +87,7 @@
 
 - (void)configCustomNav {
     [super setupNavBar];
-    self.customNavBar.title = @"登陆";
+    self.customNavBar.title = @"登录";
     [self.customNavBar wr_setLeftButtonWithImage:ImageNamed(@"close")];
     [self.customNavBar wr_setBottomLineHidden:YES];
 }
@@ -162,7 +161,7 @@
     //快速登陆
     UIView *fastContentView = [UIView new];
     UserInfoModel *model = [BaseMethod readObjectWithKey:UserInfo_UDSKEY];
-    UIImageView *portraitView = [UITool imageViewImage:model.avatar placeHolder:ImageNamed(@"placeHolder") contentMode:UIViewContentModeScaleAspectFill cornerRadius:3.0f borderWidth:0 borderColor:[UIColor clearColor]];
+    UIImageView *portraitView = [UITool imageViewImage:model.avatar placeHolder:ImageNamed(@"placeHolder") contentMode:UIViewContentModeScaleAspectFill cornerRadius:WidthRatio(37) borderWidth:0 borderColor:[UIColor clearColor]];
 
     UIButton *loginButton = [UITool wordButton:self.viewModel.loginBtnTitle titleColor:[UIColor whiteColor] font:MediumFont(17) bgColor:HEX_COLOR(0xFD1617)];
     MMViewBorderRadius(loginButton, WidthRatio(22), 0, [UIColor clearColor]);
@@ -172,7 +171,8 @@
     agreeButton.selected = YES;
     [agreeButton addTarget:self action:@selector(agreeButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     UIButton *policyButton = [UITool wordButton:@"《服务条款与隐私政策》" titleColor:RGBA(252, 83, 87, 1) font:MediumFont(14) bgColor:[UIColor clearColor]];
-    UILabel *otherLoginLab = [UITool labelWithText:@" 快速登录 " textColor:AssistColor font:MediumFont(14)];
+    UILabel *otherLoginLab = [UITool labelWithText:@"  快速登录  " textColor:AssistColor font:MediumFont(14)];
+    otherLoginLab.backgroundColor = [UIColor whiteColor];
     UIView *bottomLine = [UITool viewWithColor:LineColor];
     UIButton *thirdBtn = [UITool imageButton:self.viewModel.loginType.intValue?ImageNamed(@"login_wechat"): ImageNamed(@"login_zhifubao")];
     UIButton *phoneBtn = [UITool imageButton:ImageNamed(@"login_phone")];
@@ -252,10 +252,10 @@
 - (UIView *) setupNormalLoginContentView {
     
     self.contentView = [UIView new];
-    self.phoneNumberField = [UITool textField:@"请输入手机号码(+86)" textColor:AssistColor font:MediumFont(14) borderStyle:UITextBorderStyleNone];
+    self.phoneNumberField = [UITool textField:@"请输入手机号码(+86)" textColor:AssistColor font:MediumFont(15) borderStyle:UITextBorderStyleNone];
     self.phoneNumberField.keyboardType = UIKeyboardTypeNumberPad;
     UIView *lineView1 = [UITool viewWithColor:LineColor];
-    self.authCodeField = [UITool textField:@"请输入验证码" textColor:AssistColor font:MediumFont(14) borderStyle:UITextBorderStyleNone];
+    self.authCodeField = [UITool textField:@"请输入验证码" textColor:AssistColor font:MediumFont(15) borderStyle:UITextBorderStyleNone];
     self.authCodeField.keyboardType = UIKeyboardTypeNumberPad;
     UIView *lineView2 = [UITool viewWithColor:LineColor];
     
@@ -281,7 +281,8 @@
     [agreeButton addTarget:self action:@selector(agreeButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     UIButton *policyButton = [UITool wordButton:@"《服务条款与隐私政策》" titleColor:RGBA(252, 83, 87, 1) font:MediumFont(14) bgColor:[UIColor clearColor]];
     UIView *bottomLine = [UITool viewWithColor:LineColor];
-    UILabel *fastLoginLab = [UITool labelWithText:@" 快速登录 " textColor:AssistColor font:MediumFont(14)];
+    UILabel *fastLoginLab = [UITool labelWithText:@"  快速登录  " textColor:AssistColor font:MediumFont(14)];
+    fastLoginLab.backgroundColor = [UIColor whiteColor];
     UIButton *zhifubaoBtn = [UITool imageButton:ImageNamed(@"login_zhifubao")];
     UIButton *wechatBtn = [UITool imageButton:ImageNamed(@"login_wechat")];
     

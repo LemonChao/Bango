@@ -49,7 +49,11 @@ NS_ASSUME_NONNULL_BEGIN
  
  @param auth_V2WithInfo 授权码
  */
--(void)loginAlipayPaycompleteParams:(NSString *)auth_V2WithInfo;
+- (void)loginAlipayPaycompleteParams:(NSString *)auth_V2WithInfo;
+
+// v1.0.1 后续版本可删除
+- (void)v_1LoginAlipayPaycompleteParams:(NSString *)auth_V2WithInfo loginFinish:(void (^)(id))loginFinish;
+
 
 @end
 

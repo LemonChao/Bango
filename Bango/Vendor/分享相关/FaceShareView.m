@@ -122,12 +122,12 @@
 /** 生成保存视图view */
 - (UIView *)savedView {
     
-    UIView *backgroundView = [UITool viewWithColor:[UIColor clearColor]];
+    UIView *backgroundView = [UITool viewWithColor:[UIColor blackColor]];
     backgroundView.frame = CGRectMake(0, 0, WidthRatio(278), WidthRatio(314));
-    MMViewBorderRadius(backgroundView, WidthRatio(17), 0.f, [UIColor clearColor]);
     UIView *cornerView = [UITool viewCornerRadius:WidthRatio(17)];
-    cornerView.backgroundColor = HEX_COLOR(0xFCD0D1);
+    cornerView.backgroundColor = RGBA(252, 83, 87, 1);
     UIView *topCornerView = [UITool viewCornerRadius:WidthRatio(17)];
+    topCornerView.backgroundColor = [UIColor blackColor];
     UIImageView *shareBg = [[UIImageView alloc] initWithImage:ImageNamed(@"face_invite_box")];
     UIImageView *logoView = [[UIImageView alloc] initWithImage:ImageNamed(@"face_invite_title")];
     UILabel *titleLab = [UITool labelWithText:@"新鲜  品质  超值" textColor:[UIColor whiteColor] font:MediumFont(15)];
@@ -146,10 +146,10 @@
     [backgroundView addSubview:shareBg];
     
     [topCornerView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.mas_equalTo(UIEdgeInsetsMake(WidthRatio(2), 0, WidthRatio(244), 0));
+        make.edges.mas_equalTo(UIEdgeInsetsMake(0, 0, WidthRatio(244), 0));
     }];
     [cornerView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.mas_equalTo(UIEdgeInsetsMake(WidthRatio(68), 0, WidthRatio(2), 0));
+        make.edges.mas_equalTo(UIEdgeInsetsMake(WidthRatio(68), 0, 0, 0));
     }];
     [logoView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(backgroundView).inset(WidthRatio(12));

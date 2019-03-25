@@ -22,8 +22,7 @@
     [self bindViewModel];
 }
 
-- (void)configCustomNav {
-}
+- (void)configCustomNav {}
 - (void)configViews {}
 - (void)bindViewModel {}
 

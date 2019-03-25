@@ -1116,8 +1116,8 @@
 				6CB2A10F22310B5600CEC1CB /* VersionUpdate_Icon@3x.png */,
 				6CB2A11022310B5600CEC1CB /* VersionUpdate_Icon@2x.png */,
 				6CB2A11122310B5600CEC1CB /* VersionUpdate_Cancel@3x.png */,
-				6CB2A11222310B5600CEC1CB /* SELUpdateAlertConst.m */,
 				6CB2A11322310B5600CEC1CB /* VersionUpdate_Cancel@2x.png */,
+				6CB2A11222310B5600CEC1CB /* SELUpdateAlertConst.m */,
 				6CB2A11422310B5600CEC1CB /* SELUpdateAlert.h */,
 			);
 			path = UpdateAlert;

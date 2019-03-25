@@ -63,6 +63,15 @@
                 
                 //支付宝SDK返回result 从服务器换userinfo
                 if (DictIsEmpty(resultDic)) return;
+                if (self.loginFinish) {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        // UI更新代码
+                        if (self.loginFinish) {
+                            self.loginFinish(resultDic);
+                        }
+                    });
+                    return;//v1.0.1 之前h5调用支付宝SDK登陆
+                }
                 [NetWorkManager.sharedManager requestWithUrl:kLogin_alipay_auth withParameters:@{@"auth_code":resultDic[@"result"]} withRequestType:POSTTYPE withSuccess:^(id  _Nonnull responseObject) {
                     if (kStatusTrue) {
                         UserInfoModel *model = [UserInfoModel modelWithDictionary:responseObject[@"data"]];
@@ -160,6 +169,14 @@
 -(void)loginAlipayPaycompleteParams:(NSString *)auth_V2WithInfo {
     isLogin = YES;
     // this callback is invaild 需要调用方在appDelegate中调用processAuth_V2Result:standbyCallback:方法获取授权结果
+    [[AlipaySDK defaultService] auth_V2WithInfo:auth_V2WithInfo fromScheme:@"BanGuoAlipay" callback:nil];
+
+}
+
+// v1.0.1 后续版本可删除
+- (void)v_1LoginAlipayPaycompleteParams:(NSString *)auth_V2WithInfo loginFinish:(void (^)(id))loginFinish {
+    self.loginFinish  = loginFinish;
+    isLogin = YES;
     [[AlipaySDK defaultService] auth_V2WithInfo:auth_V2WithInfo fromScheme:@"BanGuoAlipay" callback:nil];
 
 }

@@ -18,7 +18,7 @@
 /** 版本号 */
 @property (nonatomic, copy) NSString *version;
 /** 版本更新内容 */
-@property (nonatomic, copy) NSString *desc;
+@property (nonatomic, strong) NSMutableAttributedString *attDesc;
 
 @end
 
@@ -76,7 +76,7 @@ description 格式如 @"1.xxxxxx\n2.xxxxxx"
     self = [super init];
     if (self) {
         self.version = version;
-        self.desc = description;
+        self.attDesc = [[NSMutableAttributedString alloc] initWithData:[description dataUsingEncoding:NSUnicodeStringEncoding] options:@{NSDocumentTypeDocumentAttribute:NSHTMLTextDocumentType} documentAttributes:nil error:nil];
         
         [self _setupUI];
     }
@@ -89,7 +89,7 @@ description 格式如 @"1.xxxxxx\n2.xxxxxx"
     self.backgroundColor = [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:0.3/1.0];
     
     //获取更新内容高度
-    CGFloat descHeight = [self _sizeofString:self.desc font:[UIFont systemFontOfSize:SELDescriptionFont] maxSize:CGSizeMake(self.frame.size.width - Ratio(80) - Ratio(56), 1000)].height;
+    CGFloat descHeight = [self _sizeofString:self.attDesc font:[UIFont systemFontOfSize:SELDescriptionFont] maxSize:CGSizeMake(self.frame.size.width - Ratio(80) - Ratio(56), 1000)].height;
     
     //bgView实际高度
     CGFloat realHeight = descHeight + Ratio(314);
@@ -128,17 +128,19 @@ description 格式如 @"1.xxxxxx\n2.xxxxxx"
     
     //版本号
     UILabel *versionLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, Ratio(10) + CGRectGetMaxY(updateIcon.frame), updateView.frame.size.width, Ratio(28))];
-    versionLabel.font = [UIFont boldSystemFontOfSize:18];
+    versionLabel.font = [UIFont systemFontOfSize:Ratio(17)];
     versionLabel.textAlignment = NSTextAlignmentCenter;
+    versionLabel.textColor = SELColor(252,94,98);
     versionLabel.text = [NSString stringWithFormat:@"发现新版本 V%@",self.version];
     [updateView addSubview:versionLabel];
     
     //更新内容
+
     UITextView *descTextView = [[UITextView alloc]initWithFrame:CGRectMake(Ratio(28), Ratio(10) + CGRectGetMaxY(versionLabel.frame), updateView.frame.size.width - Ratio(56), descHeight)];
-    descTextView.font = [UIFont systemFontOfSize:SELDescriptionFont];
+//    descTextView.font = [UIFont systemFontOfSize:SELDescriptionFont];
     descTextView.textContainer.lineFragmentPadding = 0;
     descTextView.textContainerInset = UIEdgeInsetsMake(0, 0, 0, 0);
-    descTextView.text = self.desc;
+    descTextView.attributedText = self.attDesc;
     descTextView.editable = NO;
     descTextView.selectable = NO;
     descTextView.scrollEnabled = scrollEnabled;
@@ -153,7 +155,7 @@ description 格式如 @"1.xxxxxx\n2.xxxxxx"
     
     //更新按钮
     UIButton *updateButton = [UIButton buttonWithType:UIButtonTypeSystem];
-    updateButton.backgroundColor = SELColor(34, 153, 238);
+    updateButton.backgroundColor = SELColor(252, 83, 87);
     updateButton.frame = CGRectMake(Ratio(25), CGRectGetMaxY(descTextView.frame) + Ratio(20), updateView.frame.size.width - Ratio(50), Ratio(40));
     updateButton.clipsToBounds = YES;
     updateButton.layer.cornerRadius = 2.0f;
@@ -164,11 +166,13 @@ description 格式如 @"1.xxxxxx\n2.xxxxxx"
     
     //取消按钮
     cancelButton = [UIButton buttonWithType:UIButtonTypeSystem];
-    cancelButton.center = CGPointMake(CGRectGetMaxX(updateView.frame), CGRectGetMinY(updateView.frame));
+//    cancelButton.center = CGPointMake(CGRectGetMaxX(updateView.frame), CGRectGetMinY(updateView.frame));
     cancelButton.bounds = CGRectMake(0, 0, Ratio(36), Ratio(36));
+    cancelButton.center = CGPointMake(CGRectGetMidX(self.frame),(SCREEN_HEIGHT+CGRectGetHeight(bgView.frame))/2+Ratio(70));
     [cancelButton setImage:[[UIImage imageNamed:@"VersionUpdate_Cancel"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] forState:UIControlStateNormal];
     [cancelButton addTarget:self action:@selector(cancelAction) forControlEvents:UIControlEventTouchUpInside];
-    [bgView addSubview:cancelButton];
+//    [bgView addSubview:cancelButton];
+    [self addSubview:cancelButton];
     
     //显示更新
     [self showWithAlert:bgView];
@@ -232,14 +236,14 @@ description 格式如 @"1.xxxxxx\n2.xxxxxx"
 
 /**
  计算字符串高度
- @param string 字符串
+ @param attString 字符串
  @param font 字体大小
  @param maxSize 最大Size
  @return 计算得到的Size
  */
-- (CGSize)_sizeofString:(NSString *)string font:(UIFont *)font maxSize:(CGSize)maxSize
+- (CGSize)_sizeofString:(NSMutableAttributedString *)attString font:(UIFont *)font maxSize:(CGSize)maxSize
 {
-    return [string boundingRectWithSize:maxSize options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:@{NSFontAttributeName:font} context:nil].size;
+    return [attString boundingRectWithSize:maxSize options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading context:nil].size;
 }
 
 
