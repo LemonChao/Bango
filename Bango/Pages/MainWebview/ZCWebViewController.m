@@ -98,60 +98,14 @@
     }];
     
 }
+
 - (void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message {
-    
-}
-#pragma mark ====分享朋友圈 v1.0.1====
--(void)shareParamResponseCallback:(WVJBResponseCallback)responseCallback{
-    NSDictionary *params = @{@"nick_name":@"s1o6jdxeQXKO",
-                             @"shareAddress":@"https://mr-bango.cn/index.php/wap/login/tui_regeist?invite_uid=920&source=1",
-                             @"erweima":@"https://mr-bango.cn/public/uploads/qrcode/20190325/H.png",
-                             @"title":@"搬果将",
-                             @"descript":@"带给你初恋的味道",
-                             @"user_headimg":@"https://mr-bango.cn/upload/web_common/default_head.png",
-                             @"logo":@"https://mr-bango.cn/template/wap/default_new/public/css/qianrui/images/logo.png",
-                             };
-    
-    [ShareObject.sharedObject appShareWithParams:params];
+    NSDictionary * parameter = message.body;
+    if ([message.name isEqualToString:gameShareImmediately]) { //立即分享
+        [ShareObject.sharedObject shareImmediatelyWithParams:parameter];
+    }
 
 }
-
-- (void)LoginAlipay:(NSArray *)parm ResponseCallback:(WVJBResponseCallback)responseCallback {
-    if (parm.count <= 0) return;
-    [PaymentDelegateManager.sharedPaymentManager v_1LoginAlipayPaycompleteParams:parm[0] loginFinish:^(id response) {
-        responseCallback(response);
-    }];
-}
-
-- (void)LoginWeChatCallback:(WVJBResponseCallback)responseCallback {
-    [ShareSDK authorize:SSDKPlatformTypeWechat settings:nil onStateChanged:^(SSDKResponseState state, SSDKUser *user, NSError *error) {
-        if (state == SSDKResponseStateSuccess){
-            NSDictionary *dataDict = @{@"type":@"0",
-                                       @"uid":user.uid,
-                                       @"nickname":user.nickname,
-                                       @"user_headimg":user.icon,
-                                       @"sex":[NSString stringWithFormat:@"%ld",(long)user.gender]
-                                       };
-            NSDictionary *dict = @{@"status":@"1",
-                                   @"data"  :dataDict,
-                                   @"msg"    :@"操作成功"
-                                   };
-            responseCallback(dict);
-        }else{
-            NSLog(@"error = %@",error);
-            NSDictionary *dict = @{@"status":@"0",
-                                   @"data"  :@{},
-                                   @"msg"    :@"s授权失败"
-                                   };
-            responseCallback(dict);
-            [WXZTipView showCenterWithText:@"微信授权失败"];
-        }
-    }];
-
-}
-
-
-
 
 #pragma mark - setter && getter
 
@@ -160,10 +114,7 @@
         WKUserContentController * wkUController = [[WKUserContentController alloc] init];
         WeakWebViewScriptMessageDelegate *weakScriptMessageDelegate = [[WeakWebViewScriptMessageDelegate alloc] initWithDelegate:self];
         //注册一个name为jsToOcNoPrams的js方法 设置处理接收JS方法的对象
-        [wkUController addScriptMessageHandler:weakScriptMessageDelegate name:@"LoginWeChatCallback:"];
-        [wkUController addScriptMessageHandler:weakScriptMessageDelegate name:@"LoginWeChatCallback"];
-        [wkUController addScriptMessageHandler:weakScriptMessageDelegate name:@"getBlogNameFromObjC"];
-        [wkUController addScriptMessageHandler:weakScriptMessageDelegate name:@"jumpToShare"];
+        [wkUController addScriptMessageHandler:weakScriptMessageDelegate name:gameShareImmediately];
         
         /*
          禁止长按(超链接、图片、文本...)弹出效果
@@ -658,4 +609,61 @@
     }
     return nil;
 }
+
+//#pragma mark ====分享朋友圈 v1.0.1====
+//-(void)shareParamResponseCallback:(WVJBResponseCallback)responseCallback{
+//    NSDictionary *params = @{@"nick_name":@"s1o6jdxeQXKO",
+//                             @"shareAddress":@"https://mr-bango.cn/index.php/wap/login/tui_regeist?invite_uid=920&source=1",
+//                             @"erweima":@"https://mr-bango.cn/public/uploads/qrcode/20190325/H.png",
+//                             @"title":@"搬果将",
+//                             @"descript":@"带给你初恋的味道",
+//                             @"user_headimg":@"https://mr-bango.cn/upload/web_common/default_head.png",
+//                             @"logo":@"https://mr-bango.cn/template/wap/default_new/public/css/qianrui/images/logo.png",
+//                             };
+//
+//    [ShareObject.sharedObject appShareWithParams:params];
+//
+//}
+//
+//- (void)LoginAlipay:(NSArray *)parm ResponseCallback:(WVJBResponseCallback)responseCallback {
+//    if (parm.count <= 0) return;
+//    [PaymentDelegateManager.sharedPaymentManager v_1LoginAlipayPaycompleteParams:parm[0] loginFinish:^(id response) {
+//        responseCallback(response);
+//    }];
+//}
+//
+//- (void)LoginWeChatCallback:(WVJBResponseCallback)responseCallback {
+//    [ShareSDK authorize:SSDKPlatformTypeWechat settings:nil onStateChanged:^(SSDKResponseState state, SSDKUser *user, NSError *error) {
+//        if (state == SSDKResponseStateSuccess){
+//            NSDictionary *dataDict = @{@"type":@"0",
+//                                       @"uid":user.uid,
+//                                       @"nickname":user.nickname,
+//                                       @"user_headimg":user.icon,
+//                                       @"sex":[NSString stringWithFormat:@"%ld",(long)user.gender]
+//                                       };
+//            NSDictionary *dict = @{@"status":@"1",
+//                                   @"data"  :dataDict,
+//                                   @"msg"    :@"操作成功"
+//                                   };
+//            responseCallback(dict);
+//        }else{
+//            NSLog(@"error = %@",error);
+//            NSDictionary *dict = @{@"status":@"0",
+//                                   @"data"  :@{},
+//                                   @"msg"    :@"s授权失败"
+//                                   };
+//            responseCallback(dict);
+//            [WXZTipView showCenterWithText:@"微信授权失败"];
+//        }
+//    }];
+//
+//}
+//
+//
+//
+
+
+
+
+
 @end

@@ -8,6 +8,7 @@
 
 #import "ShareObject.h"
 #import <ShareSDKUI/ShareSDKUI.h>
+#import <ShareSDK/ShareSDK.h>
 #import "FaceShareView.h"
 @implementation ShareObject
 
@@ -125,36 +126,51 @@
 }
 
 
+/** 游戏的无分享面板分享 */
+- (void)shareImmediatelyWithParams:(NSDictionary *)params {
+    NSLog(@"params:%@", params);
+    if (![params containsObjectForKey:@"platform"]) return;
+    
+    SSDKPlatformType platform;
+    if ([params[@"platform"] isEqualToString:@"WechatSession"]) {
+        platform = SSDKPlatformSubTypeWechatSession;
+    }
+    else if ([params[@"platform"] isEqualToString:@"WechatTimeline"]){
+        platform = SSDKPlatformSubTypeWechatTimeline;
+    }
+    else if ([params[@"platform"] isEqualToString:@"QZone"]){
+        platform = SSDKPlatformSubTypeQZone;
+    }
+    else if ([params[@"platform"] isEqualToString:@"QQFriend"]){
+        platform = SSDKPlatformTypeQQ;
+    }else return;
 
-- (void)asdfdsaf {
-    //      直接分享
-    //    NSMutableDictionary *params = [NSMutableDictionary dictionary];
-    //
-    //    [params SSDKSetupShareParamsByText:@"test" images:[UIImage imageNamed:@"login_phone"] url:[NSURL URLWithString:@"http://www.mob.com/"] title:@"title" type:SSDKContentTypeAuto];
-    //
-    //    [ShareSDK share:SSDKPlatformTypeWechat parameters:params onStateChanged:^(SSDKResponseState state, NSDictionary *userData, SSDKContentEntity *contentEntity, NSError *error) {
-    //
-    //        switch (state) {
-    //            case SSDKResponseStateUpload:
-    //                // 分享视频的时候上传回调，进度信息在 userData
-    //                break;
-    //            case SSDKResponseStateSuccess:
-    //                //成功
-    //                break;
-    //            case SSDKResponseStateFail:
-    //            {
-    //                NSLog(@"--%@",error.description);
-    //                //失败
-    //                break;
-    //            }
-    //            case SSDKResponseStateCancel:
-    //                //取消
-    //                break;
-    //
-    //            default:
-    //                break;
-    //        }
-    //    }];
+    //1、创建分享参数
+    NSMutableDictionary *shareParams = [NSMutableDictionary dictionary];
+    [shareParams SSDKSetupShareParamsByText:params[@"text"]
+                                     images:params[@"images"] ? params[@"images"] :@[AppIconUrl]
+                                        url:params[@"url"]
+                                      title:params[@"title"]
+                                       type:SSDKContentTypeImage];
+    
+    //进行分享
+    [ShareSDK share:platform parameters:shareParams onStateChanged:^(SSDKResponseState state, NSDictionary *userData, SSDKContentEntity *contentEntity, NSError *error) {
+         
+         switch (state) {
+             case SSDKResponseStateFail:
+             {
+                 UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"分享失败" message:[error localizedDescription] preferredStyle:(UIAlertControllerStyleAlert)];
+                 [alert addAction:[UIAlertAction actionWithTitle:@"确定" style:(UIAlertActionStyleCancel) handler:nil]];
+                 [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:alert animated:YES completion:nil];
+                 
+                 NSLog(@"error:%@", error);
+             }
+             break;
+             
+             default:
+             break;
+         }
+     }];
 }
 
 

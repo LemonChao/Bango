@@ -23,7 +23,9 @@ NS_ASSUME_NONNULL_BEGIN
 /** 拼团分享 */
 - (void)groupShareWithText:(NSString *)text images:(id)images url:(NSURL *)url title:(NSString *)title;
 
-
+/** 游戏的无分享直接面板分享 */
+- (void)shareImmediatelyWithParams:(NSDictionary *)params;
+    
 @end
 
 NS_ASSUME_NONNULL_END

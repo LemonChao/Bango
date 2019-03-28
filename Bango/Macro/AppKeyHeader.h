@@ -35,5 +35,7 @@
 
 
 #define mark - JSBridgeFunctionName
+#define gameShareImmediately            @"shareImmediatelyWithParams"
+
 
 #endif /* AppKeyHeader_h */

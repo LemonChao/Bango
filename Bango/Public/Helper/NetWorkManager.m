@@ -18,7 +18,7 @@
         _manager = [[self alloc] initWithBaseURL:[NSURL URLWithString:AppBaseUrl]];
         AFJSONResponseSerializer *responseSerializer = [AFJSONResponseSerializer serializer];
         responseSerializer.removesKeysWithNullValues = YES;
-        responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript", @"text/html", nil];
+        responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript", @"text/html", @"text/plain", nil];
         _manager.responseSerializer = responseSerializer;
         _manager.requestSerializer.timeoutInterval = 60.f;
         _manager.securityPolicy = [AFSecurityPolicy defaultPolicy];
