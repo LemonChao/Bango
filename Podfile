@@ -26,6 +26,7 @@ target 'Bango' do
   pod 'mob_sharesdk/ShareSDKPlatforms/QQ'
   #    pod 'mob_sharesdk/ShareSDKPlatforms/SinaWeibo'
   pod 'mob_sharesdk/ShareSDKPlatforms/WeChatFull'
+  pod 'JPush', '3.1.2'
   # pod 'JXBWebKit'
 
   target 'BangoTests' do

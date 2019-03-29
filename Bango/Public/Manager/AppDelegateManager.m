@@ -10,6 +10,16 @@
 /** 导航栏 */
 #import <WRNavigationBar/WRNavigationBar.h>
 #import <IQKeyboardManager/IQKeyboardManager.h>
+// 引入 JPush 功能所需头文件
+#import "JPUSHService.h"
+// iOS10 注册 APNs 所需头文件
+#ifdef NSFoundationVersionNumber_iOS_9_x_Max
+#import <UserNotifications/UserNotifications.h>
+#endif
+
+@interface AppDelegateManager ()<JPUSHRegisterDelegate>
+
+@end
 
 @implementation AppDelegateManager
 
@@ -26,6 +36,80 @@
     [self handleFunction:launchOptions withWindow:window];
 //    [self setNavBarAppearence];
 }
+
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+    /// Required - 注册 DeviceToken
+    [JPUSHService registerDeviceToken:deviceToken];
+    //设置别名推送
+    [JPUSHService setAlias:@"zhengchao" completion:^(NSInteger iResCode, NSString *iAlias, NSInteger seq) {
+        if (iResCode == 0) {
+            NSLog(@"~~~~~~极光推送设置别名(%@)成功,您可以正常使用极光推送啦~~~~~~",iAlias);
+        }else{
+             NSLog(@"~~~~~~~~~~~~~~~极光推送设置别名失败~~~~~~~~~~~~");
+        }
+    } seq:0];
+    
+    // 删除别名只对别名推送有效，广播推送跟别名没有关系，自然无法通过这个方法屏蔽。
+//    [JPUSHService deleteAlias:^(NSInteger iResCode, NSString *iAlias, NSInteger seq) {
+//        if (iResCode == 0) {
+//            NSLog(@"~~~~~~%@极光推送退出成功~~~~~~",iAlias);
+//        }else{
+//            NSLog(@"~~~~~~~~~~~~~~~极光推送退出失败~~~~~~~~~~~~");
+//        }
+//    } seq:0];
+}
+
+//Optional
+- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
+    NSLog(@"did Fail To Register For Remote Notifications With Error: %@", error);
+}
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
+    
+    // Required, iOS 7 Support
+    [JPUSHService handleRemoteNotification:userInfo];
+    completionHandler(UIBackgroundFetchResultNewData);
+}
+
+- (void)applicationDidBecomeActive:(UIApplication *)application {
+    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    [UIApplication sharedApplication].applicationIconBadgeNumber = -1;
+    [JPUSHService resetBadge];
+}
+
+#pragma mark- JPUSHRegisterDelegate
+
+// iOS 12 Support
+//- (void)jpushNotificationCenter:(UNUserNotificationCenter *)center openSettingsForNotification:(UNNotification *)notification{
+//    if (notification && [notification.request.trigger isKindOfClass:[UNPushNotificationTrigger class]]) {
+//        //从通知界面直接进入应用
+//    }else{
+//        //从通知设置界面进入应用
+//    }
+//}
+#ifdef NSFoundationVersionNumber_iOS_9_x_Max
+
+// iOS 10 Support
+- (void)jpushNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(NSInteger))completionHandler {
+    // Required
+    NSDictionary * userInfo = notification.request.content.userInfo;
+    if([notification.request.trigger isKindOfClass:[UNPushNotificationTrigger class]]) {
+        [JPUSHService handleRemoteNotification:userInfo];
+    }
+    completionHandler(UNNotificationPresentationOptionAlert); // 需要执行这个方法，选择是否提醒用户，有 Badge、Sound、Alert 三种类型可以选择设置
+}
+
+// iOS 10 Support
+- (void)jpushNotificationCenter:(UNUserNotificationCenter *)center didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler:(void (^)())completionHandler {
+    // Required
+    NSDictionary * userInfo = response.notification.request.content.userInfo;
+    if([response.notification.request.trigger isKindOfClass:[UNPushNotificationTrigger class]]) {
+        [JPUSHService handleRemoteNotification:userInfo];
+    }
+    completionHandler();  // 系统要求执行这个方法
+}
+#endif
+
+
 
 // 通用链接
 - (BOOL)continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void(^)(NSArray<id<UIUserActivityRestoring>> * __nullable restorableObjects))restorationHandler {
@@ -54,7 +138,20 @@
 #pragma mark - PrivateMethod
 - (void)handleFunction:(NSDictionary *)launchOptions withWindow:(UIWindow *)window {
     [self setupIQKeyBoard];
-    
+    //Required
+    //notice: 3.0.0 及以后版本注册可以这样写，也可以继续用之前的注册方式
+    JPUSHRegisterEntity * entity = [[JPUSHRegisterEntity alloc] init];
+    entity.types = JPAuthorizationOptionAlert|JPAuthorizationOptionBadge|JPAuthorizationOptionSound;
+//    if ([[UIDevice currentDevice].systemVersion floatValue] >= 8.0) {
+        // 可以添加自定义 categories
+        // NSSet<UNNotificationCategory *> *categories for iOS10 or later
+        // NSSet<UIUserNotificationCategory *> *categories for iOS8 and iOS9
+//    }
+    [JPUSHService registerForRemoteNotificationConfig:entity delegate:self];
+
+    [JPUSHService setupWithOption:launchOptions appKey:JPush_AppKey
+                          channel:@"App Store"
+                 apsForProduction:YES];
 }
 
 -(void)setNavBarAppearence

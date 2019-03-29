@@ -49,6 +49,7 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    [AppDelegateManager.sharedAppDelegateManager applicationDidBecomeActive:application];
 }
 
 
@@ -91,4 +92,19 @@
     
     return YES;
 }
+
+
+#pragma mark - RemoteNotifications
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+    [AppDelegateManager.sharedAppDelegateManager application:application didRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
+}
+
+- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
+    [AppDelegateManager.sharedAppDelegateManager application:application didFailToRegisterForRemoteNotificationsWithError:error];
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
+    [AppDelegateManager.sharedAppDelegateManager application:application didReceiveRemoteNotification:userInfo fetchCompletionHandler:completionHandler];
+}
+
 @end

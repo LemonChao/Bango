@@ -25,6 +25,9 @@
 //融云
 #define RY_APP_KEY  @"qd46yzrfqigrf"
 
+#define JPush_AppKey        @"106e5777a3d95345ab87da5c"
+#define JPush_AppSecret     @"540655c9740d52446468f54d"
+
 
 #pragma mark - notificationKey
 #define loginSuccessNotification    @"loginSuccessNotification_key"

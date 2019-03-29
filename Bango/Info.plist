@@ -91,8 +91,10 @@
 	<string>是否允许此搬果将保存图片到相册</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>搬果将需要您的同意,才能访问相册</string>
-	<key>kTCCServiceMediaLibrary</key>
-	<string>使用音乐功能进行音乐播放功能</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>remote-notification</string>
+	</array>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
 	<key>UIRequiredDeviceCapabilities</key>
@@ -110,5 +112,7 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>kTCCServiceMediaLibrary</key>
+	<string>使用音乐功能进行音乐播放功能</string>
 </dict>
 </plist>
