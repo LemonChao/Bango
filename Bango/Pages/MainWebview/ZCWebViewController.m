@@ -49,6 +49,10 @@
 - (void)configViews {
     [self.view addSubview:self.webView];
     
+    [self.webView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.mas_equalTo(UIEdgeInsetsZero);
+    }];
+    
     if (![[NSUserDefaults standardUserDefaults] boolForKey:showGuodePageKey]) {
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:showGuodePageKey];
         DHGuidePageHUD *guidePage = [[DHGuidePageHUD alloc] dh_initWithFrame:self.view.frame imageNameArray:@[@"guide_1",@"guide_2",@"guide_3"] buttonIsHidden:NO];
@@ -128,7 +132,8 @@
         [config.userContentController addUserScript:noneSelectScript];
         
         //CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-HomeIndicatorHeight)
-        _webView = [[WKWebView alloc] initWithFrame:CGRectMake(0, StatusBarHeight, SCREEN_WIDTH, SCREEN_HEIGHT-HomeIndicatorHeight-StatusBarHeight) configuration:config];
+//        _webView = [[WKWebView alloc] initWithFrame:CGRectMake(0, StatusBarHeight, SCREEN_WIDTH, SCREEN_HEIGHT-HomeIndicatorHeight-StatusBarHeight) configuration:config];
+        _webView = [[WKWebView alloc] initWithFrame:CGRectZero configuration:config];
         if (@available(iOS 11.0, *)) {
             _webView.scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
         } else {

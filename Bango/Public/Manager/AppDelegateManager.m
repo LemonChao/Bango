@@ -7,6 +7,8 @@
 //
 
 #import "AppDelegateManager.h"
+#import "ZCBaseTabBarController.h"
+
 /** 导航栏 */
 #import <WRNavigationBar/WRNavigationBar.h>
 #import <IQKeyboardManager/IQKeyboardManager.h>
@@ -33,6 +35,8 @@
 }
 
 - (void)didFinishLaunchingWithOptions:(NSDictionary *)launchOptions withWindow:(UIWindow *)window {
+    window.rootViewController = [[UINavigationController alloc]initWithRootViewController:[[ZCBaseTabBarController alloc]init]];
+    
     [self handleFunction:launchOptions withWindow:window];
 //    [self setNavBarAppearence];
 }

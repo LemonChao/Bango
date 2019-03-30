@@ -20,12 +20,14 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-    self.window.rootViewController = [[UINavigationController alloc]initWithRootViewController:[[ZCWebViewController alloc]init]];
+//    self.window.rootViewController = [[UINavigationController alloc]initWithRootViewController:[[ZCWebViewController alloc]init]];
 
+    self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    self.window.backgroundColor = [UIColor whiteColor];
 
     [AppDelegateManager.sharedAppDelegateManager didFinishLaunchingWithOptions:launchOptions withWindow:self.window];
     [PaymentDelegateManager.sharedPaymentManager didFinishLaunchingWithOptions:launchOptions withWindow:self.window];
-    
+    [self.window makeKeyAndVisible];
     return YES;
 }
 
