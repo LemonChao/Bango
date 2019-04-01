@@ -47,7 +47,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// UIImageView
 + (UIImageView *)imageViewImage:(nullable UIImage*)image contentMode:(UIViewContentMode)mode;
 + (UIImageView *)imageViewImage:(NSString *)imageUrl placeHolder:(nullable UIImage *)image contentMode:(UIViewContentMode)mode;
-+ (UIImageView *)imageViewImage:(nullable UIImage *)image contentMode:(UIViewContentMode)mode cornerRadius:(CGFloat)radius borderWidth:(CGFloat)width borderColor:(UIColor*)color;
++ (UIImageView *)imageViewPlaceHolder:(nullable UIImage *)image contentMode:(UIViewContentMode)mode cornerRadius:(CGFloat)radius borderWidth:(CGFloat)width borderColor:(UIColor*)color;
 + (UIImageView *)imageViewImage:(NSString *)imageUrl placeHolder:(nullable UIImage *)image contentMode:(UIViewContentMode)mode cornerRadius:(CGFloat)radius borderWidth:(CGFloat)width borderColor:(UIColor*)color;
 
 @end

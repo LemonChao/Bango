@@ -17,13 +17,42 @@
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="0.99215686274509807" green="0.64313725490196072" blue="0.65490196078431373" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="dty-5l-cM5">
+                                <rect key="frame" x="0.0" y="67" width="375" height="126"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fAp-k8-oed">
+                                        <rect key="frame" x="0.0" y="0.0" width="86.5" height="126"/>
+                                        <color key="backgroundColor" red="0.92549019610000005" green="0.62352941179999999" blue="0.1058823529" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IUO-RJ-fWI">
+                                        <rect key="frame" x="96.5" y="0.0" width="86" height="126"/>
+                                        <color key="backgroundColor" red="0.98823529409999999" green="0.36862745099999999" blue="0.38431372549999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4NK-D6-wNp">
+                                        <rect key="frame" x="192.5" y="0.0" width="86.5" height="126"/>
+                                        <color key="backgroundColor" red="0.92549019610000005" green="0.62352941179999999" blue="0.1058823529" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="txG-fF-6kg">
+                                        <rect key="frame" x="289" y="0.0" width="86" height="126"/>
+                                        <color key="backgroundColor" red="0.96118433920000002" green="1" blue="0.73481994360000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="dty-5l-cM5" secondAttribute="bottom" constant="474" id="2nl-IN-30Z"/>
+                            <constraint firstItem="dty-5l-cM5" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="4HW-Vd-gAQ"/>
+                            <constraint firstItem="dty-5l-cM5" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Wf6-Iu-CRK"/>
+                            <constraint firstItem="dty-5l-cM5" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="47" id="kcj-YP-sCI"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="52" y="374.66266866566718"/>
+            <point key="canvasLocation" x="-143.19999999999999" y="350.37481259370315"/>
         </scene>
     </scenes>
 </document>

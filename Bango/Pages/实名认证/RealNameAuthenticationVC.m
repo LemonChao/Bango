@@ -123,7 +123,8 @@
     [title setImage:MMGetImage(@"*") forState:(UIControlStateNormal)];
     [title setTitle:@"拍摄并上传你的身份证" forState:(UIControlStateNormal)];
     [title setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
-    [title setImagePositionWithType:(ImagePositionTypeLeft) spacing:WidthRatio(28) leftSpacing:0];
+    [title setImagePosition:ZCImagePositionLeft spacing:WidthRatio(28)];
+//    [title setImagePositionWithType:(ImagePositionTypeLeft) spacing:WidthRatio(28) leftSpacing:0];
     [oneView addSubview:title];
     title.sd_layout
     .leftSpaceToView(oneView, WidthRatio(30))
@@ -223,7 +224,8 @@
     [title setImage:MMGetImage(@"*") forState:(UIControlStateNormal)];
     [title setTitle:@"拍摄并上传你的手持身份证" forState:(UIControlStateNormal)];
     [title setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
-    [title setImagePositionWithType:(ImagePositionTypeLeft) spacing:WidthRatio(28) leftSpacing:0];
+    [title setImagePosition:ZCImagePositionLeft spacing:WidthRatio(28)];
+//    [title setImagePositionWithType:(ImagePositionTypeLeft) spacing:WidthRatio(28) leftSpacing:0];
     [twoView addSubview:title];
     title.sd_layout
     .leftSpaceToView(twoView, WidthRatio(30))
@@ -283,7 +285,8 @@
     [title setImage:MMGetImage(@"*") forState:(UIControlStateNormal)];
     [title setTitle:@"拍摄身份证要求" forState:(UIControlStateNormal)];
     [title setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
-    [title setImagePositionWithType:(ImagePositionTypeLeft) spacing:WidthRatio(28) leftSpacing:0];
+    [title setImagePosition:ZCImagePositionLeft spacing:WidthRatio(28)];
+//    [title setImagePositionWithType:(ImagePositionTypeLeft) spacing:WidthRatio(28) leftSpacing:0];
     [rulesView addSubview:title];
     title.sd_layout
     .leftSpaceToView(rulesView, WidthRatio(30))
@@ -416,7 +419,8 @@
     [title setImage:MMGetImage(@"*") forState:(UIControlStateNormal)];
     [title setTitle:@"个人信息" forState:(UIControlStateNormal)];
     [title setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
-    [title setImagePositionWithType:(ImagePositionTypeLeft) spacing:WidthRatio(28) leftSpacing:0];
+    [title setImagePosition:ZCImagePositionLeft spacing:WidthRatio(28)];
+//    [title setImagePositionWithType:(ImagePositionTypeLeft) spacing:WidthRatio(28) leftSpacing:0];
     [informationView addSubview:title];
     title.sd_layout
     .leftSpaceToView(informationView, WidthRatio(30))

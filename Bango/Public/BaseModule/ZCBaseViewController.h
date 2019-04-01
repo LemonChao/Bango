@@ -17,7 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setupNavBar;
 
 /**
- 自定义导航栏用
+ 自定义导航栏
  */
 @property (nonatomic, strong) WRCustomNavigationBar *customNavBar;
 

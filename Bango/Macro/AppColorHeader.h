@@ -21,8 +21,8 @@
 /** 线条 - f5f5f5 */
 #define LineColor RGBA(245,245,245,1)
 
-/** 重要 - 333333 */
-#define ImportantColor RGBA(51,51,51,1)
+/** 重要 默认色 - 0C0B0B */
+#define ImportantColor RGBA(12,11,11,1)
 
 /** 一级 - 4a4a4a */
 #define PrimaryColor RGBA(74,74,74,1)
@@ -30,11 +30,11 @@
 /** 次要 - 666666 */
 #define MinorColor RGBA(102,102,102,1)
 
-/** 辅助 - 999999 */
-#define AssistColor RGBA(153,153,153,1)
+/** 辅助 - aaaaaa */
+#define AssistColor RGBA(170,170,170,1)
 
 /** 通用红 FC5E62 */
-#define GeneralRedColor RGBA(252,94,98)
+#define GeneralRedColor RGBA(252,94,98,1)
 
 
 #endif /* AppColorHeader_h */

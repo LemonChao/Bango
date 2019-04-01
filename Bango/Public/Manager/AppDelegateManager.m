@@ -35,10 +35,13 @@
 }
 
 - (void)didFinishLaunchingWithOptions:(NSDictionary *)launchOptions withWindow:(UIWindow *)window {
-    window.rootViewController = [[UINavigationController alloc]initWithRootViewController:[[ZCBaseTabBarController alloc]init]];
+    UINavigationController *rootNav = [[UINavigationController alloc] initWithRootViewController:[[ZCBaseTabBarController alloc]init]];
+    rootNav.navigationBar.hidden = YES;
+    
+    window.rootViewController = rootNav;
     
     [self handleFunction:launchOptions withWindow:window];
-//    [self setNavBarAppearence];
+    [self setNavBarAppearence];
 }
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
