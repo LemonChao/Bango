@@ -7,10 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ZCHomeModel.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
+typedef void(^ButtonClick)(ZCHomeCategoryModel *);
+
 @interface ZCHomeCategoryCell : UITableViewCell
+
+@property(nonatomic, copy) NSArray<__kindof ZCHomeCategoryModel *> *categoryList;
+
+@property(nonatomic, copy) ButtonClick buttonBlock;
 
 @end
 

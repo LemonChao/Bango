@@ -34,12 +34,24 @@ static NSString *cellid = @"ZCHomeRecommendCollectionCell_id";
 }
 
 
+- (void)setTuijianList:(NSArray<ZCHomeTuijianModel *> *)tuijianList {
+    if (_tuijianList == tuijianList) return;
+    _tuijianList = tuijianList;
+    
+    [self.collectionView reloadData];
+}
+
+
+
+
+
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return 10;
+    return self.tuijianList.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     ZCHomeRecommendCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellid forIndexPath:indexPath];
+    cell.model = self.tuijianList[indexPath.row];
     return cell;
 }
 
@@ -54,6 +66,8 @@ static NSString *cellid = @"ZCHomeRecommendCollectionCell_id";
         
         _collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
         [_collectionView registerClass:[ZCHomeRecommendCollectionCell class] forCellWithReuseIdentifier:cellid];
+        _collectionView.backgroundColor = [UIColor whiteColor];
+        _collectionView.showsHorizontalScrollIndicator = NO;
         _collectionView.dataSource = self;
         _collectionView.delegate = self;
     }

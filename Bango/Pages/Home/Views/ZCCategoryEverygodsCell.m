@@ -25,8 +25,17 @@
 /** 购物车 */
 @property(nonatomic, strong) UIButton *cartButton;
 
+/** 添加 */
+@property(nonatomic, strong) UIButton *addButton;
 
+/** 减法 */
+@property(nonatomic, strong) UIButton *divisionButton;
 
+/** 购买数量 */
+@property(nonatomic, strong) UILabel *countLab;
+
+/** 购物车内容view */
+@property(nonatomic, strong) UIView *cartContentView;
 @end
 
 
@@ -38,11 +47,12 @@
     if (self) {
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         [self.contentView addSubview:self.godsImgView];
-        [self.contentView addSubview:self.nameLab];
         [self.contentView addSubview:self.descriptLab];
+        [self.contentView addSubview:self.cartContentView];
+        [self.contentView addSubview:self.cartButton];
+        [self.contentView addSubview:self.nameLab];
         [self.contentView addSubview:self.promotionPriceLab];
         [self.contentView addSubview:self.marketPriceLab];
-        [self.contentView addSubview:self.cartButton];
         
         [self setNeedsUpdateConstraints];
     }
@@ -76,6 +86,11 @@
         make.top.equalTo(self.contentView.mas_centerY).offset(WidthRatio(8));
     }];
     
+    [self.cartContentView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(self.contentView).inset(WidthRatio(margin));
+        make.top.equalTo(self.contentView.mas_centerY).offset(WidthRatio(8));
+    }];
+    
     
     [self.promotionPriceLab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.cartButton);
@@ -85,6 +100,22 @@
     [self.marketPriceLab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.descriptLab);
         make.top.equalTo(self.promotionPriceLab.mas_bottom).offset(WidthRatio(10));
+    }];
+    
+    [self.addButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(self.cartContentView);
+        make.top.bottom.equalTo(self.cartContentView);
+    }];
+    
+    [self.countLab mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(self.cartContentView);
+        make.right.equalTo(self.addButton.mas_left).inset(WidthRatio(12));
+    }];
+    
+    [self.divisionButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(self.cartContentView);
+        make.right.equalTo(self.countLab.mas_left).inset(WidthRatio(12));
+        make.left.equalTo(self.cartContentView);
     }];
     
     [super updateConstraints];
@@ -132,6 +163,41 @@
         _cartButton = [UITool imageButton:ImageNamed(@"tabBar3_select")];
     }
     return _cartButton;
+}
+
+//- (UIButton *)addButton {
+//    if (!_addButton) {
+//        _addButton = [UITool imageButton:ImageNamed(@"home_add")];
+//    }
+//    return _addButton;
+//}
+//
+//- (UIButton *)divisionButton {
+//    if (!_divisionButton) {
+//        _divisionButton = [UITool imageButton:ImageNamed(@"home_division")];
+//    }
+//    return _divisionButton;
+//}
+//
+//- (UILabel *)countLab {
+//    if (!_countLab) {
+//        _countLab = [UITool labelWithTextColor:ImportantColor font:MediumFont(WidthRatio(14))];
+//    }
+//    return _countLab;
+//}
+
+
+- (UIView *)cartContentView {
+    if (!_cartContentView) {
+        _cartContentView = [[UIView alloc] init];
+        self.addButton = [UITool imageButton:ImageNamed(@"home_add")];
+        self.divisionButton = [UITool imageButton:ImageNamed(@"home_division")];
+        self.countLab = [UITool labelWithTextColor:ImportantColor font:MediumFont(WidthRatio(14))];
+        [_cartContentView addSubview:self.addButton];
+        [_cartContentView addSubview:self.divisionButton];
+        [_cartContentView addSubview:self.countLab];
+    }
+    return _cartContentView;
 }
 
 @end

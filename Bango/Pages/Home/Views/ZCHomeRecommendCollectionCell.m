@@ -20,7 +20,6 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        self.backgroundColor = [UIColor cyanColor];
         
         [self.contentView addSubview:self.imageView];
         [self.imageView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -29,6 +28,13 @@
     }
     return self;
 }
+
+- (void)setModel:(ZCHomeTuijianModel *)model {
+    _model = model;
+    
+    [self.imageView setImageWithURL:[NSURL URLWithString:model.pic_cover_mid] options:YYWebImageOptionShowNetworkActivity];
+}
+
 
 - (UIImageView *)imageView {
     if (!_imageView) {

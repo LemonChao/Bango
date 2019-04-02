@@ -13,11 +13,13 @@
 #import "ZCHomeTuanCell.h"
 #import "ZCHomeBangoCell.h"
 #import "ZCCategoryEverygodsCell.h"
-
+#import "ScrollTopButton.h"
+#import "ZCHomeViewModel.h"
 
 @interface ZCHomeViewController ()<UITableViewDataSource,UITableViewDelegate>
 
 @property(nonatomic, strong) UITableView *tableView;
+@property(nonatomic, strong) ZCHomeViewModel *viewModel;
 
 @end
 
@@ -32,18 +34,19 @@ static NSString *everygodsCellid = @"ZCCategoryEverygodsCell_id";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    
+    
+    [MBProgressHUD showActivityText:nil];
+    [self getData];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:YES];
-    
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    
     [self.navigationController setNavigationBarHidden:YES animated:YES];
 }
 
@@ -58,28 +61,67 @@ static NSString *everygodsCellid = @"ZCCategoryEverygodsCell_id";
 - (void)configViews {
     self.view.backgroundColor = [UIColor cyanColor];
     [self.view addSubview:self.tableView];
+    CGFloat DefaultW = WidthRatio(40);
+    ScrollTopButton *button = [[ScrollTopButton alloc] initWithFrame:CGRectMake(self.view.width-DefaultW-WidthRatio(10), self.view.height-TabBarHeight-NavBarHeight-WidthRatio(100), DefaultW, DefaultW) ScrollView:self.tableView];
+    [self.view addSubview:button];
     
+    @weakify(self);
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo(self.view);
+       make.edges.equalTo(self.view);
+    }];
+    
+    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        @strongify(self);
+        [self getData];
+    }];
+    
+    self.tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:nil];
+    
+}
+
+- (void)getData {
+    
+    @weakify(self);
+    [[self.viewModel.homeCmd execute:nil] subscribeNext:^(id  _Nullable x) {
+        @strongify(self);
+        if ([x boolValue]) {
+            [MBProgressHUD hideHud];
+            [self.tableView reloadData];
+            [self.tableView.mj_footer endRefreshingWithNoMoreData];
+        }else {
+            [self.tableView.mj_footer resetNoMoreData];
+        }
+        
+        [self.tableView.mj_header endRefreshing];
+    } error:^(NSError * _Nullable error) {
+        
     }];
     
 }
+
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 5;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (section == 0 || section == 1 || section == 2) {
+    ZCHomeModel *home = self.viewModel.home;
+    if (section == 0 && home.categoryList.count) {
+        return 1;
+    }
+    else if (section == 1 && home.tuijianList.count) {
+        return 1;
+    }
+    else if (section == 2 && home.pintuanList.count == 4) {
         return 1;
     }
     else if (section == 3) {
-        return 3;
+        return home.bango.goods_list.count;
     }
     else if (section == 4) {
-        return 3;
+        return home.everyGods.count;
     }
-    return 5;
+    return 0;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -102,16 +144,20 @@ static NSString *everygodsCellid = @"ZCCategoryEverygodsCell_id";
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    ZCHomeModel *home = self.viewModel.home;
     if (indexPath.section == 0) {
         ZCHomeCategoryCell *cell = [tableView dequeueReusableCellWithIdentifier:categoryCellid];
+        cell.categoryList = home.categoryList;
         return cell;
     }
     else if (indexPath.section == 1) {
         ZCHomeRecommendCell *cell = [tableView dequeueReusableCellWithIdentifier:recommendCellid];
+        cell.tuijianList = home.tuijianList;
         return cell;
     }
     else if (indexPath.section == 2) {
         ZCHomeTuanCell *cell = [tableView dequeueReusableCellWithIdentifier:tuanCellid];
+        cell.pintuanList = home.pintuanList;
         return cell;
     }
     else if (indexPath.section == 3) {
@@ -124,8 +170,6 @@ static NSString *everygodsCellid = @"ZCCategoryEverygodsCell_id";
     
     return nil;
 }
-
-
 
 
 
@@ -158,6 +202,13 @@ static NSString *everygodsCellid = @"ZCCategoryEverygodsCell_id";
     return _tableView;
 }
 
+
+- (ZCHomeViewModel *)viewModel {
+    if (!_viewModel) {
+        _viewModel = [[ZCHomeViewModel alloc] init];
+    }
+    return _viewModel;
+}
 
 - (UIButton *)buttonItemWithImage:(UIImage *)image title:(NSString *)title target:(nullable id)target action:(nullable SEL)action {
     UIButton *button = [UITool richButton:UIButtonTypeCustom title:title titleColor:HEX_COLOR(0xaaaaaa) font:[UIFont systemFontOfSize:11] bgColor:[UIColor whiteColor] image:image];

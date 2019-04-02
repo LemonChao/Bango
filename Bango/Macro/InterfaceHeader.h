@@ -44,7 +44,7 @@
 #define kOrderinfo_alipay       @"?s=/wap/paywx/order_info_alipay"
 // app版本更新
 #define kIndex_version          @"?s=/wap/Index/version"
-
-
+// 首页
+#define kIndex_home             @"?s=/wap/Index/index"
 
 #endif /* InterfaceHeader_h */

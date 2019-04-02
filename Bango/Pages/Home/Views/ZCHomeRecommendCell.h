@@ -7,10 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ZCHomeModel.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface ZCHomeRecommendCell : UITableViewCell
+
+@property(nonatomic, copy) NSArray<ZCHomeTuijianModel *> *tuijianList;
 
 @end
 
