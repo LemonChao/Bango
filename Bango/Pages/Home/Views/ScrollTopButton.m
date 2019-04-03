@@ -29,7 +29,7 @@
 
     
     self.backgroundColor = [UIColor clearColor];
-    [self setBackgroundImage:[UIImage imageNamed:@"toTopButton"] forState:UIControlStateNormal];
+    [self setBackgroundImage:[UIImage imageNamed:@"home_toTopButton"] forState:UIControlStateNormal];
 //    self.frame = CGRectMake(CGRectGetMaxX(scrollView.frame) - DefaultW - WidthRatio(15), CGRectGetHeight(scrollView.frame) - WidthRatio(100), DefaultW, DefaultW);
 
 //    self.frame = CGRectMake(SCREEN_WIDTH - DefaultW - WidthRatio(15), SCREEN_HEIGHT - WidthRatio(100), DefaultW, DefaultW);

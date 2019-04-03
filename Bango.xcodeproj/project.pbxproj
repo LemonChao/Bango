@@ -175,6 +175,11 @@
 		6CB2A33422310CC200CEC1CB /* WeChatPayNetApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CB2A32F22310CC200CEC1CB /* WeChatPayNetApi.m */; };
 		6CB2A33522310CC200CEC1CB /* VersionControlNetApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CB2A33022310CC200CEC1CB /* VersionControlNetApi.m */; };
 		6CB2A33622310CC200CEC1CB /* AlipayPaymentNetApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CB2A33122310CC200CEC1CB /* AlipayPaymentNetApi.m */; };
+		6CD407CE2254451300120310 /* ZCTuanCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CD407CD2254451300120310 /* ZCTuanCollectionCell.m */; };
+		6CD407D12254561500120310 /* ZCHomeNoticeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CD407D02254561500120310 /* ZCHomeNoticeCell.m */; };
+		6CD407D72254922C00120310 /* TXScrollLabelView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CD407D52254922C00120310 /* TXScrollLabelView.m */; };
+		6CD407D82254922C00120310 /* UIView+TXFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CD407D62254922C00120310 /* UIView+TXFrame.m */; };
+		6CD407DB2254A87000120310 /* ZCHomeTableHeaderFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CD407DA2254A87000120310 /* ZCHomeTableHeaderFooterView.m */; };
 		6CE6E3662252F87900D1F046 /* ScrollTopButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CE6E3652252F87900D1F046 /* ScrollTopButton.m */; };
 		6CE6E369225304D700D1F046 /* ZCHomeViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CE6E368225304D700D1F046 /* ZCHomeViewModel.m */; };
 		6CE6E36C22530D1000D1F046 /* ZCNetworkCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CE6E36B22530D1000D1F046 /* ZCNetworkCache.m */; };
@@ -650,6 +655,16 @@
 		6CB2A33E22310E6800CEC1CB /* AppKeyHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppKeyHeader.h; sourceTree = "<group>"; };
 		6CB2A34022310E9D00CEC1CB /* PodsHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PodsHeader.h; sourceTree = "<group>"; };
 		6CB2A34122310EB600CEC1CB /* InterfaceHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InterfaceHeader.h; sourceTree = "<group>"; };
+		6CD407CC2254451300120310 /* ZCTuanCollectionCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZCTuanCollectionCell.h; sourceTree = "<group>"; };
+		6CD407CD2254451300120310 /* ZCTuanCollectionCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZCTuanCollectionCell.m; sourceTree = "<group>"; };
+		6CD407CF2254561500120310 /* ZCHomeNoticeCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZCHomeNoticeCell.h; sourceTree = "<group>"; };
+		6CD407D02254561500120310 /* ZCHomeNoticeCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZCHomeNoticeCell.m; sourceTree = "<group>"; };
+		6CD407D32254922C00120310 /* TXScrollLabelView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TXScrollLabelView.h; sourceTree = "<group>"; };
+		6CD407D42254922C00120310 /* UIView+TXFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+TXFrame.h"; sourceTree = "<group>"; };
+		6CD407D52254922C00120310 /* TXScrollLabelView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TXScrollLabelView.m; sourceTree = "<group>"; };
+		6CD407D62254922C00120310 /* UIView+TXFrame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+TXFrame.m"; sourceTree = "<group>"; };
+		6CD407D92254A87000120310 /* ZCHomeTableHeaderFooterView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZCHomeTableHeaderFooterView.h; sourceTree = "<group>"; };
+		6CD407DA2254A87000120310 /* ZCHomeTableHeaderFooterView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZCHomeTableHeaderFooterView.m; sourceTree = "<group>"; };
 		6CE6E3642252F87900D1F046 /* ScrollTopButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScrollTopButton.h; sourceTree = "<group>"; };
 		6CE6E3652252F87900D1F046 /* ScrollTopButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ScrollTopButton.m; sourceTree = "<group>"; };
 		6CE6E367225304D700D1F046 /* ZCHomeViewModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZCHomeViewModel.h; sourceTree = "<group>"; };
@@ -1073,6 +1088,7 @@
 		6CB2A0F62230B7F300CEC1CB /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				6CD407D22254922C00120310 /* TXScrollLabelView */,
 				6CE96DCB2241F83A0028CA0E /* IDCardRecognition */,
 				6C532319223A311A00FB7FCC /* ZCUITool */,
 				6C6979F0223902FD00DDC639 /* DHGuidePageHUD */,
@@ -1540,6 +1556,17 @@
 			path = "数据请求";
 			sourceTree = "<group>";
 		};
+		6CD407D22254922C00120310 /* TXScrollLabelView */ = {
+			isa = PBXGroup;
+			children = (
+				6CD407D32254922C00120310 /* TXScrollLabelView.h */,
+				6CD407D52254922C00120310 /* TXScrollLabelView.m */,
+				6CD407D42254922C00120310 /* UIView+TXFrame.h */,
+				6CD407D62254922C00120310 /* UIView+TXFrame.m */,
+			);
+			path = TXScrollLabelView;
+			sourceTree = "<group>";
+		};
 		6CE96DC72241F7BA0028CA0E /* 实名认证 */ = {
 			isa = PBXGroup;
 			children = (
@@ -1665,6 +1692,8 @@
 		6CF8E76B224F6F9600C45220 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				6CD407CF2254561500120310 /* ZCHomeNoticeCell.h */,
+				6CD407D02254561500120310 /* ZCHomeNoticeCell.m */,
 				6CF8E76E224F70FA00C45220 /* ZCHomeCategoryCell.h */,
 				6CF8E76F224F70FA00C45220 /* ZCHomeCategoryCell.m */,
 				6CE6E37322536CF600D1F046 /* ZCCategoryCollectionCell.h */,
@@ -1675,10 +1704,14 @@
 				6C7546172251EBDD000C9554 /* ZCHomeRecommendCollectionCell.m */,
 				6CF8E774224F72DA00C45220 /* ZCHomeTuanCell.h */,
 				6CF8E775224F72DA00C45220 /* ZCHomeTuanCell.m */,
+				6CD407CC2254451300120310 /* ZCTuanCollectionCell.h */,
+				6CD407CD2254451300120310 /* ZCTuanCollectionCell.m */,
 				6CF8E777224F732300C45220 /* ZCHomeBangoCell.h */,
 				6CF8E778224F732300C45220 /* ZCHomeBangoCell.m */,
 				6C754619225203F2000C9554 /* ZCCategoryEverygodsCell.h */,
 				6C75461A225203F2000C9554 /* ZCCategoryEverygodsCell.m */,
+				6CD407D92254A87000120310 /* ZCHomeTableHeaderFooterView.h */,
+				6CD407DA2254A87000120310 /* ZCHomeTableHeaderFooterView.m */,
 				6CE6E3642252F87900D1F046 /* ScrollTopButton.h */,
 				6CE6E3652252F87900D1F046 /* ScrollTopButton.m */,
 			);
@@ -2045,6 +2078,7 @@
 				6CB2A31B22310B5C00CEC1CB /* JQScanViewStyle.m in Sources */,
 				6CB2A2A922310B5C00CEC1CB /* HXPhotoConfiguration.m in Sources */,
 				6C497DF8222FC72200C592D0 /* main.m in Sources */,
+				6CD407D82254922C00120310 /* UIView+TXFrame.m in Sources */,
 				6CB2A2A122310B5C00CEC1CB /* NSObject+Extension.m in Sources */,
 				6CB2A29922310B5C00CEC1CB /* UITabBar+TBBadge.m in Sources */,
 				6C04DB3D223BB83C00F27501 /* BaseMethod.m in Sources */,
@@ -2073,12 +2107,14 @@
 				6CFE2B8D224345C000C37333 /* ZCFallingAnimationView.m in Sources */,
 				6CB2A2D122310B5C00CEC1CB /* YTKChainRequestAgent.m in Sources */,
 				6CF8E402224F2B3B00C45220 /* ZCFindViewController.m in Sources */,
+				6CD407DB2254A87000120310 /* ZCHomeTableHeaderFooterView.m in Sources */,
 				6CB2A2F422310B5C00CEC1CB /* WB_UploadImageRequest.m in Sources */,
 				6CB2A2B222310B5C00CEC1CB /* HXAlbumListViewController.m in Sources */,
 				6C75461B225203F2000C9554 /* ZCCategoryEverygodsCell.m in Sources */,
 				6C53231F223A311A00FB7FCC /* UITool.m in Sources */,
 				6CB2A29D22310B5C00CEC1CB /* CustomRefreshGifHeader.m in Sources */,
 				6CB2A31822310B5C00CEC1CB /* JQZXScanViewController.m in Sources */,
+				6CD407CE2254451300120310 /* ZCTuanCollectionCell.m in Sources */,
 				6CB2A32C22310B7C00CEC1CB /* NSString+Helper.m in Sources */,
 				6CB2A2BF22310B5C00CEC1CB /* HXPhotoView.m in Sources */,
 				6C3D3E4022324C1800932F4B /* SFHFKeychainUtils.m in Sources */,
@@ -2115,6 +2151,7 @@
 				6CB2A33422310CC200CEC1CB /* WeChatPayNetApi.m in Sources */,
 				6CB2A2D422310B5C00CEC1CB /* WXZTipView.m in Sources */,
 				6CB2A2AA22310B5C00CEC1CB /* HXDownloadProgressView.m in Sources */,
+				6CD407D12254561500120310 /* ZCHomeNoticeCell.m in Sources */,
 				6CB2A33622310CC200CEC1CB /* AlipayPaymentNetApi.m in Sources */,
 				6CF8E408224F577100C45220 /* UIButton+EdgeInsets.m in Sources */,
 				6CB2A31A22310B5C00CEC1CB /* JQScanWrapper.m in Sources */,
@@ -2125,6 +2162,7 @@
 				6CB2A2CA22310B5C00CEC1CB /* HXDatePhotoEditViewController.m in Sources */,
 				6CE96E022241F83B0028CA0E /* IDAuthViewController.m in Sources */,
 				6C04DB3A223B9F9400F27501 /* JKCountDownButton.m in Sources */,
+				6CD407D72254922C00120310 /* TXScrollLabelView.m in Sources */,
 				6C3D3EBD2232572E00932F4B /* base64.m in Sources */,
 				6C04DB28223B542A00F27501 /* ZCLoginViewModel.m in Sources */,
 				6CE96E072241F83B0028CA0E /* JQIDCardScaningView.m in Sources */,

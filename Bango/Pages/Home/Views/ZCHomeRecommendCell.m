@@ -26,7 +26,7 @@ static NSString *cellid = @"ZCHomeRecommendCollectionCell_id";
     if (self) {
         [self.contentView addSubview:self.collectionView];
         [self.collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.edges.mas_equalTo(UIEdgeInsetsMake(0, WidthRatio(12), 0, 0));
+            make.edges.mas_equalTo(UIEdgeInsetsMake(WidthRatio(5), WidthRatio(12), WidthRatio(5), 0));
         }];
     }
     

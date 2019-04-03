@@ -25,7 +25,9 @@
     return @{@"categoryList":[ZCHomeCategoryModel class],
              @"tuijianList":[ZCHomeTuijianModel class],
              @"pintuanList":[ZCHomePintuanModel class],
-             @"everyGods":[ZCHomeEverygodsModel class]
+             @"everyGods":[ZCHomeEverygodsModel class],
+             @"noticeList":[ZCHomeNoticeModel class],
+             @"lunbo":[ZCHomeAdvModel class],
              };
 }
 
@@ -80,6 +82,10 @@
 
 @implementation ZCHomeEverygodsModel
 
++ (NSDictionary *)modelContainerPropertyGenericClass {
+    return @{@"goods_list":[ZCHomeGodsModel class],
+             };
+}
 
 
 @end

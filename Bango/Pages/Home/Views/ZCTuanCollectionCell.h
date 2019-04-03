@@ -1,8 +1,8 @@
 //
-//  ZCHomeBangoCell.h
+//  ZCTuanCollectionCell.h
 //  Bango
 //
-//  Created by zchao on 2019/3/30.
+//  Created by zchao on 2019/4/3.
 //  Copyright © 2019 zchao. All rights reserved.
 //
 
@@ -11,9 +11,9 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface ZCHomeBangoCell : UITableViewCell
+@interface ZCTuanCollectionCell : UICollectionViewCell
 
-@property(nonatomic, strong) ZCHomeGodsModel *model;
+@property(nonatomic, strong) ZCHomePintuanModel *model;
 
 @end
 

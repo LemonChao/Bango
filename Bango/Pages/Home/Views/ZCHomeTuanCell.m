@@ -7,28 +7,24 @@
 //
 
 #import "ZCHomeTuanCell.h"
+#import "ZCTuanCollectionCell.h"
 
-@interface ZCHomeTuanCell ()
+@interface ZCHomeTuanCell ()<UICollectionViewDelegateFlowLayout,UICollectionViewDataSource>
 
-@property(nonatomic, strong) UIStackView *stack;
+@property(nonatomic, strong) UICollectionView *collectionView;
 
 @end
+
+static NSString *cellid = @"ZCTuanCollectionCell_id";
 
 @implementation ZCHomeTuanCell
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        
-        self.stack = [[UIStackView alloc] initWithArrangedSubviews:[self subStacks]];
-        self.stack.axis = UILayoutConstraintAxisVertical;
-        self.stack.alignment = UIStackViewAlignmentFill;
-        self.stack.distribution = UIStackViewDistributionFillEqually;
-        self.stack.spacing = WidthRatio(5);
-        [self.contentView addSubview:self.stack];
-        
-        [self.stack mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.edges.mas_equalTo(UIEdgeInsetsZero);
+        [self.contentView addSubview:self.collectionView];
+        [self.collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.edges.mas_equalTo(UIEdgeInsetsMake(WidthRatio(5), WidthRatio(12), WidthRatio(5), WidthRatio(12)));
         }];
     }
     return self;
@@ -37,77 +33,37 @@
 - (void)setPintuanList:(NSArray<__kindof ZCHomePintuanModel *> *)pintuanList {
     _pintuanList = pintuanList;
     
-//    for (UIStackView *subStack in self.stack.subviews) {
-//        [subStack.subviews enumerateObjectsUsingBlock:^(__kindof UIButton * _Nonnull button, NSUInteger idx, BOOL * _Nonnull stop) {
-//            ZCHomePintuanModel *model =pintuanList[idx];
-//
-//            [button setImageWithURL:[NSURL URLWithString:model.pic_cover_mid] forState:UIControlStateNormal options:YYWebImageOptionShowNetworkActivity];
-//        }];
-//    }
-    
-    [self.stack.subviews enumerateObjectsUsingBlock:^(__kindof UIStackView * _Nonnull subStack, NSUInteger idx, BOOL * _Nonnull stop) {
+    [self.collectionView reloadData];
+}
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    return self.pintuanList.count;
+}
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    ZCTuanCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellid forIndexPath:indexPath];
+    cell.model = self.pintuanList[indexPath.row];
+    return cell;
+}
+
+
+- (UICollectionView *)collectionView {
+    if (!_collectionView) {
         
-        [subStack.subviews enumerateObjectsUsingBlock:^(__kindof UIButton * _Nonnull button, NSUInteger index, BOOL * _Nonnull stop) {
-            NSLog(@"index:%lu", 2*idx + index);
-            ZCHomePintuanModel *model = pintuanList[2*idx + index];
-            
-            [button setImageWithURL:[NSURL URLWithString:model.pic_cover_mid] forState:UIControlStateNormal options:YYWebImageOptionShowNetworkActivity];
-        }];
-    }];
-
-}
-
-- (void)tuanButtonAction:(UIButton *)button {
-    
-//    for (UIStackView *subStack in self.stack.subviews) {
-//        [subStack.subviews enumerateObjectsUsingBlock:^(__kindof UIButton * _Nonnull button, NSUInteger idx, BOOL * _Nonnull stop) {
-//            ZCHomePintuanModel *model =pintuanList[idx];
-//
-//            [button setImageWithURL:[NSURL URLWithString:model.pic_cover_mid] forState:UIControlStateNormal options:YYWebImageOptionShowNetworkActivity];
-//        }];
-//    }
-    
-    [self.stack.subviews enumerateObjectsUsingBlock:^(__kindof UIStackView * _Nonnull subStack, NSUInteger idx, BOOL * _Nonnull stop) {
+        UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
+        layout.itemSize = CGSizeMake((SCREEN_WIDTH-WidthRatio(24+5))/2, WidthRatio(110));
+        layout.minimumInteritemSpacing = WidthRatio(5);
+        layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
         
-        [subStack.subviews enumerateObjectsUsingBlock:^(__kindof UIButton * _Nonnull button, NSUInteger index, BOOL * _Nonnull stop) {
-            
-            if (self.buttonBlock) {
-                ZCHomePintuanModel *model =self.pintuanList[2*idx + index];
-                self.buttonBlock(model);
-            }
-            
-        }];
-    }];
-    
-    
-    
-    
-}
-
-- (NSArray *)buttons {
-    NSMutableArray *array = [NSMutableArray array];
-    for (int i = 0; i < 2; i++) {
-        UIButton *button = [UITool imageButton:ImageNamed(@"list_placeholder_normal") cornerRadius:WidthRatio(4) borderWidth:0.f borderColor:[UIColor clearColor]];
-        [button addTarget:self action:@selector(tuanButtonAction:) forControlEvents:UIControlEventTouchUpInside];
-        [array addObject:button];
+        _collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
+        [_collectionView registerClass:[ZCTuanCollectionCell class] forCellWithReuseIdentifier:cellid];
+        _collectionView.backgroundColor = [UIColor whiteColor];
+        _collectionView.showsHorizontalScrollIndicator = NO;
+        _collectionView.showsVerticalScrollIndicator = NO;
+        _collectionView.dataSource = self;
+        _collectionView.delegate = self;
     }
-    
-    return array.copy;
+    return _collectionView;
 }
-
-- (NSArray *)subStacks {
-    NSMutableArray *array = [NSMutableArray array];
-
-    for (int i = 0; i < 2; i++) {
-        UIStackView *subStack = [[UIStackView alloc] initWithArrangedSubviews:[self buttons]];
-        subStack.axis = UILayoutConstraintAxisHorizontal;
-        subStack.alignment = UIStackViewAlignmentFill;
-        subStack.distribution = UIStackViewDistributionFillEqually;
-        subStack.spacing = WidthRatio(5);
-        [array addObject:subStack];
-    }
-    return array.copy;
-}
-
 
 @end

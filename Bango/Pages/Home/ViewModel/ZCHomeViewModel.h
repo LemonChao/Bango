@@ -18,6 +18,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property(nonatomic, strong) ZCHomeModel *home;
 
+@property(nonatomic, copy) NSArray *dataArray;
+
+@property(nonatomic, copy) NSArray *advImages;
+
 @end
 
 NS_ASSUME_NONNULL_END

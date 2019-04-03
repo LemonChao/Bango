@@ -12,6 +12,8 @@
 
 #pragma mark -- 按钮上图文混排
 - (void)setImagePosition:(ZCImagePosition)postion spacing:(CGFloat)spacing {
+    self.titleEdgeInsets = self.imageEdgeInsets = UIEdgeInsetsZero;
+    
     CGFloat imgW = self.imageView.image.size.width;
     CGFloat imgH = self.imageView.image.size.height;
     CGSize showLabSize = self.titleLabel.bounds.size;

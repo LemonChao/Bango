@@ -12,7 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ZCCategoryCollectionCell : UICollectionViewCell
 
-
+@property(nonatomic, strong) ZCHomeCategoryModel *model;
 
 @end
 

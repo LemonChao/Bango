@@ -7,6 +7,7 @@
 //
 
 #import "ZCCategoryEverygodsCell.h"
+#import "UIImageView+WebCache.h"
 
 @interface ZCCategoryEverygodsCell ()
 
@@ -53,6 +54,7 @@
         [self.contentView addSubview:self.nameLab];
         [self.contentView addSubview:self.promotionPriceLab];
         [self.contentView addSubview:self.marketPriceLab];
+        [self.contentView addSubview:self.lineView];
         
         [self setNeedsUpdateConstraints];
     }
@@ -77,7 +79,7 @@
     }];
     
     [self.nameLab mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.descriptLab);
+        make.left.right.equalTo(self.descriptLab);
         make.bottom.equalTo(self.descriptLab.mas_top).offset(-WidthRatio(10));
     }];
     
@@ -118,8 +120,26 @@
         make.left.equalTo(self.cartContentView);
     }];
     
+    [self.lineView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.equalTo(self.contentView).inset(margin);
+        make.bottom.equalTo(self.contentView).inset(1);
+        make.height.mas_equalTo(1);
+    }];
+    
     [super updateConstraints];
 }
+
+- (void)setModel:(ZCHomeGodsModel *)model {
+    _model = model;
+    
+    [self.godsImgView sd_setImageWithURL:[NSURL URLWithString:model.pic_cover_small]];
+    self.nameLab.text = model.goods_name;
+    self.descriptLab.text = model.introduction;
+    self.promotionPriceLab.text = model.promotion_price;
+    self.marketPriceLab.text = model.market_price;
+}
+
+
 
 #pragma mark - setter && getter
 
@@ -163,6 +183,13 @@
         _cartButton = [UITool imageButton:ImageNamed(@"tabBar3_select")];
     }
     return _cartButton;
+}
+
+- (UIView *)lineView {
+    if (!_lineView) {
+        _lineView = [UITool viewWithColor:LineColor];
+    }
+    return _lineView;
 }
 
 //- (UIButton *)addButton {

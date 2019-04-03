@@ -110,9 +110,9 @@
 #define Application [UIApplication sharedApplication]
 
 // Medium字体
-#define MediumFont(sizePX) [UIFont systemFontOfSize:WidthRatio(sizePX) weight:UIFontWeightMedium]
+#define MediumFont(sizePt) [UIFont systemFontOfSize:WidthRatio(sizePt) weight:UIFontWeightMedium]
 // Medium字体
-#define BoldFont(sizePX) [UIFont boldSystemFontOfSize:sizePX]
+#define BoldFont(sizePt) [UIFont boldSystemFontOfSize:sizePt]
 
 
 // log 日志

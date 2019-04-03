@@ -157,7 +157,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-
+//@interface ZCHomeSectionModel : NSObject
+//@property(nonatomic, copy) NSString *category_alias;
+//
+///** 分区内行高 */
+//@property(nonatomic, assign) CGFloat rowHeight;
+//
+//@property(nonatomic, copy) NSArray *goods_list;
+//@end
 /// 每个详细分类<搬果小将，水果区...>
 @interface ZCHomeEverygodsModel : NSObject
 //    "category_alias":"水果区",
@@ -185,8 +192,16 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, copy) NSString *category_alias;
 @property(nonatomic, copy) NSString *category_id;
 @property(nonatomic, copy) NSString *goods_sort_type;
-@property(nonatomic, copy) NSArray<__kindof ZCHomeGodsModel *> *goods_list;
+//@property(nonatomic, copy) NSArray<__kindof ZCHomeGodsModel *> *goods_list;
+@property(nonatomic, copy) NSArray *goods_list;
+
+/** 分区内行高 */
+@property(nonatomic, assign) CGFloat rowHeight;
+@property(nonatomic, assign) CGFloat headerHeight;
+@property(nonatomic, assign) CGFloat footerHeight;
+
 @end
+
 
 
 

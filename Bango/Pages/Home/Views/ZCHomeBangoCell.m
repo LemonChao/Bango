@@ -7,6 +7,7 @@
 //
 
 #import "ZCHomeBangoCell.h"
+#import "UIImageView+WebCache.h"
 
 @interface ZCHomeBangoCell ()
 
@@ -30,6 +31,11 @@
     
 }
 
+- (void)setModel:(ZCHomeGodsModel *)model {
+    _model = model;
+    
+    [self.contentImgView sd_setImageWithURL:[NSURL URLWithString:model.pic_cover_small]];
+}
 
 - (UIImageView *)contentImgView {
     if (!_contentImgView) {
