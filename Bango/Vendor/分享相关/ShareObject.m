@@ -144,14 +144,28 @@
     else if ([params[@"platform"] isEqualToString:@"QQFriend"]){
         platform = SSDKPlatformTypeQQ;
     }else return;
+    
+    NSArray *images = params[@"images"];
+    if (!images.count) {
+        images = @[AppIconUrl];
+    }
 
-    //1、创建分享参数
+    NSString *urlString = params[@"url"];
+    NSURL *url;
+    SSDKContentType type;
+    if (!StringIsEmpty(urlString)) {//网页链接存在
+        url = [NSURL URLWithString:urlString];
+        type = SSDKContentTypeWebPage;
+    }else {
+        url = nil;
+        type = SSDKContentTypeImage;
+    }
     NSMutableDictionary *shareParams = [NSMutableDictionary dictionary];
     [shareParams SSDKSetupShareParamsByText:params[@"text"]
-                                     images:params[@"images"] ? params[@"images"] :@[AppIconUrl]
-                                        url:params[@"url"]
+                                     images:images
+                                        url:url
                                       title:params[@"title"]
-                                       type:SSDKContentTypeImage];
+                                       type:type];
     
     //进行分享
     [ShareSDK share:platform parameters:shareParams onStateChanged:^(SSDKResponseState state, NSDictionary *userData, SSDKContentEntity *contentEntity, NSError *error) {
