@@ -53,6 +53,7 @@ static NSString *cellid = @"ZCTuanCollectionCell_id";
         UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
         layout.itemSize = CGSizeMake((SCREEN_WIDTH-WidthRatio(24+5))/2, WidthRatio(110));
         layout.minimumInteritemSpacing = WidthRatio(5);
+        layout.minimumLineSpacing = WidthRatio(5);
         layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
         
         _collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];

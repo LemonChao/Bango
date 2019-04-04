@@ -57,7 +57,7 @@ static NSString *cellid = @"ZCCategoryCollectionCell_id";
 - (UICollectionView *)collectionView {
     if (!_collectionView) {
         UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
-        layout.itemSize = CGSizeMake(WidthRatio(62), WidthRatio(95));
+        layout.itemSize = CGSizeMake(WidthRatio(62), WidthRatio(94));
         layout.minimumInteritemSpacing = WidthRatio(30);
         layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
         
@@ -65,6 +65,7 @@ static NSString *cellid = @"ZCCategoryCollectionCell_id";
         [_collectionView registerClass:[ZCCategoryCollectionCell class] forCellWithReuseIdentifier:cellid];
         _collectionView.backgroundColor = [UIColor whiteColor];
         _collectionView.showsHorizontalScrollIndicator = NO;
+        _collectionView.showsVerticalScrollIndicator = NO;
         _collectionView.dataSource = self;
         _collectionView.delegate = self;
     }

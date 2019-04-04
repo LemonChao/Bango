@@ -131,7 +131,9 @@
                 if (success) {
                     success(responseObject);
                     //对数据进行异步缓存
-                    [ZCNetworkCache setHttpCache:responseObject URL:url parameters:parameter];
+                    if (kStatusTrue) {
+                        [ZCNetworkCache setHttpCache:responseObject URL:url parameters:parameter];
+                    }
                 }
             } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
                 NSLog(@"%@",error);
@@ -148,7 +150,9 @@
                 if (success) {
                     success(responseObject);
                     //对数据进行异步缓存
-                    [ZCNetworkCache setHttpCache:responseObject URL:url parameters:parameter];
+                    if (kStatusTrue) {
+                        [ZCNetworkCache setHttpCache:responseObject URL:url parameters:parameter];
+                    }
                 }
             } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
                 NSLog(@"%@",error);
@@ -165,7 +169,9 @@
                 if (success) {
                     success(responseObject);
                     //对数据进行异步缓存
-                    [ZCNetworkCache setHttpCache:responseObject URL:url parameters:parameter];
+                    if (kStatusTrue) {
+                        [ZCNetworkCache setHttpCache:responseObject URL:url parameters:parameter];
+                    }
                 }
             } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
                 NSLog(@"%@",error);
@@ -182,7 +188,9 @@
                 if (success) {
                     success(responseObject);
                     //对数据进行异步缓存
-                    [ZCNetworkCache setHttpCache:responseObject URL:url parameters:parameter];
+                    if (kStatusTrue) {
+                        [ZCNetworkCache setHttpCache:responseObject URL:url parameters:parameter];
+                    }
                 }
             } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
                 NSLog(@"%@",error);

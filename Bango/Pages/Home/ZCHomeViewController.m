@@ -45,7 +45,7 @@ static NSString *homeFooterid = @"ZCHomeTableFooterView_id";
     
     
     [MBProgressHUD showActivityText:nil];
-    [self getData];
+    [self getDataWithCaches:@"1"];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -79,16 +79,22 @@ static NSString *homeFooterid = @"ZCHomeTableFooterView_id";
     
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         @strongify(self);
-        [self getData];
+        [self getDataWithCaches:@"0"];
     }];
     
     self.tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:nil];
 }
 
-- (void)getData {
+
+/**
+ 请求数据
+
+ @param caches 是否应用缓存 @"0"不应用
+ */
+- (void)getDataWithCaches:(NSString *)caches {
     
     @weakify(self);
-    [[self.viewModel.homeCmd execute:nil] subscribeNext:^(id  _Nullable x) {
+    [[self.viewModel.homeCmd execute:caches] subscribeNext:^(id  _Nullable x) {
         @strongify(self);
         if ([x boolValue]) {
             [MBProgressHUD hideHud];
@@ -121,7 +127,6 @@ static NSString *homeFooterid = @"ZCHomeTableFooterView_id";
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    
     if (section < 2) {
         ZCHomeBlankTableHeaderFooterView *header = [tableView dequeueReusableHeaderFooterViewWithIdentifier:blankHeaderid];
         return header;
@@ -150,7 +155,8 @@ static NSString *homeFooterid = @"ZCHomeTableFooterView_id";
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (section < 4) {
+    NSUInteger index = self.viewModel.hasTuan ? 4 : 3;
+    if (section < index) {
         return 1;
     }else {
         ZCHomeEverygodsModel *everyModel = self.viewModel.dataArray[section];
@@ -167,38 +173,72 @@ static NSString *homeFooterid = @"ZCHomeTableFooterView_id";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 
     ZCHomeEverygodsModel *model = self.viewModel.dataArray[indexPath.section];
-    if (indexPath.section == 0) {
-        ZCHomeNoticeCell *cell = [tableView dequeueReusableCellWithIdentifier:noticeCellid];
-        cell.notics = model.goods_list;
-        return cell;
-    }
-    else if (indexPath.section == 1) {
-        ZCHomeCategoryCell *cell = [tableView dequeueReusableCellWithIdentifier:categoryCellid];
-        cell.categoryList = model.goods_list;
-        return cell;
-    }
-    else if (indexPath.section == 2) {
-        
-        ZCHomeRecommendCell *cell = [tableView dequeueReusableCellWithIdentifier:recommendCellid];
-        cell.tuijianList = model.goods_list;
-        return cell;
-    }
-    else if (indexPath.section == 3) {
-        
-        ZCHomeTuanCell *cell = [tableView dequeueReusableCellWithIdentifier:tuanCellid];
-        cell.pintuanList = model.goods_list;
-        return cell;
-    }else if (indexPath.section == 4){
-        ZCHomeBangoCell *cell = [tableView dequeueReusableCellWithIdentifier:bangoCellid];
-        cell.model = model.goods_list[indexPath.row];
-        return cell;
+
+    if (self.viewModel.hasTuan) { //存在拼团
+        if (indexPath.section == 0) {
+            ZCHomeNoticeCell *cell = [tableView dequeueReusableCellWithIdentifier:noticeCellid];
+            cell.notics = model.goods_list;
+            return cell;
+        }
+        else if (indexPath.section == 1) {
+            ZCHomeCategoryCell *cell = [tableView dequeueReusableCellWithIdentifier:categoryCellid];
+            cell.categoryList = model.goods_list;
+            return cell;
+        }
+        else if (indexPath.section == 2) {
+            
+            ZCHomeRecommendCell *cell = [tableView dequeueReusableCellWithIdentifier:recommendCellid];
+            cell.tuijianList = model.goods_list;
+            return cell;
+        }
+        else if (indexPath.section == 3) {
+            
+            ZCHomeTuanCell *cell = [tableView dequeueReusableCellWithIdentifier:tuanCellid];
+            cell.pintuanList = model.goods_list;
+            return cell;
+        }else if (indexPath.section == 4){//4
+            ZCHomeBangoCell *cell = [tableView dequeueReusableCellWithIdentifier:bangoCellid];
+            cell.model = model.goods_list[indexPath.row];
+            return cell;
+        }
+        else {
+            ZCCategoryEverygodsCell *cell = [tableView dequeueReusableCellWithIdentifier:everygodsCellid];
+            cell.model = model.goods_list[indexPath.row];
+            cell.lineView.hidden = indexPath.row == model.goods_list.count-1;
+            return cell;
+        }
     }
     else {
-        ZCCategoryEverygodsCell *cell = [tableView dequeueReusableCellWithIdentifier:everygodsCellid];
-        cell.model = model.goods_list[indexPath.row];
-        cell.lineView.hidden = indexPath.row == model.goods_list.count-1;
-        return cell;
+        if (indexPath.section == 0) {
+            ZCHomeNoticeCell *cell = [tableView dequeueReusableCellWithIdentifier:noticeCellid];
+            cell.notics = model.goods_list;
+            return cell;
+        }
+        else if (indexPath.section == 1) {
+            ZCHomeCategoryCell *cell = [tableView dequeueReusableCellWithIdentifier:categoryCellid];
+            cell.categoryList = model.goods_list;
+            return cell;
+        }
+        else if (indexPath.section == 2) {
+            
+            ZCHomeRecommendCell *cell = [tableView dequeueReusableCellWithIdentifier:recommendCellid];
+            cell.tuijianList = model.goods_list;
+            return cell;
+        }
+        else if (indexPath.section == 3) {
+            
+            ZCHomeBangoCell *cell = [tableView dequeueReusableCellWithIdentifier:bangoCellid];
+            cell.model = model.goods_list[indexPath.row];
+            return cell;
+        }
+        else {
+            ZCCategoryEverygodsCell *cell = [tableView dequeueReusableCellWithIdentifier:everygodsCellid];
+            cell.model = model.goods_list[indexPath.row];
+            cell.lineView.hidden = indexPath.row == model.goods_list.count-1;
+            return cell;
+        }
     }
+
     return nil;
 }
 
@@ -243,6 +283,7 @@ static NSString *homeFooterid = @"ZCHomeTableFooterView_id";
     if (!_cycleView) {
         _cycleView = [SDCycleScrollView cycleScrollViewWithFrame:CGRectMake(WidthRatio(12), WidthRatio(10), SCREEN_WIDTH-WidthRatio(24), WidthRatio(144)) delegate:self placeholderImage:nil];
         _cycleView.showPageControl = NO;
+        _cycleView.autoScrollTimeInterval = 4;
     }
     return _cycleView;
 }

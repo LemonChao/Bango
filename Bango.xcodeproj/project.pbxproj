@@ -180,6 +180,7 @@
 		6CD407D72254922C00120310 /* TXScrollLabelView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CD407D52254922C00120310 /* TXScrollLabelView.m */; };
 		6CD407D82254922C00120310 /* UIView+TXFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CD407D62254922C00120310 /* UIView+TXFrame.m */; };
 		6CD407DB2254A87000120310 /* ZCHomeTableHeaderFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CD407DA2254A87000120310 /* ZCHomeTableHeaderFooterView.m */; };
+		6CD407DE2254CF6400120310 /* ZCCartButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CD407DD2254CF6400120310 /* ZCCartButton.m */; };
 		6CE6E3662252F87900D1F046 /* ScrollTopButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CE6E3652252F87900D1F046 /* ScrollTopButton.m */; };
 		6CE6E369225304D700D1F046 /* ZCHomeViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CE6E368225304D700D1F046 /* ZCHomeViewModel.m */; };
 		6CE6E36C22530D1000D1F046 /* ZCNetworkCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CE6E36B22530D1000D1F046 /* ZCNetworkCache.m */; };
@@ -665,6 +666,8 @@
 		6CD407D62254922C00120310 /* UIView+TXFrame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+TXFrame.m"; sourceTree = "<group>"; };
 		6CD407D92254A87000120310 /* ZCHomeTableHeaderFooterView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZCHomeTableHeaderFooterView.h; sourceTree = "<group>"; };
 		6CD407DA2254A87000120310 /* ZCHomeTableHeaderFooterView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZCHomeTableHeaderFooterView.m; sourceTree = "<group>"; };
+		6CD407DC2254CF6400120310 /* ZCCartButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZCCartButton.h; sourceTree = "<group>"; };
+		6CD407DD2254CF6400120310 /* ZCCartButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZCCartButton.m; sourceTree = "<group>"; };
 		6CE6E3642252F87900D1F046 /* ScrollTopButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScrollTopButton.h; sourceTree = "<group>"; };
 		6CE6E3652252F87900D1F046 /* ScrollTopButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ScrollTopButton.m; sourceTree = "<group>"; };
 		6CE6E367225304D700D1F046 /* ZCHomeViewModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZCHomeViewModel.h; sourceTree = "<group>"; };
@@ -1036,7 +1039,6 @@
 				6CF8E403224F42BF00C45220 /* ZCHomeViewController.h */,
 				6CF8E404224F42BF00C45220 /* ZCHomeViewController.m */,
 				6CF8E76D224F6FB900C45220 /* ViewModel */,
-				6CF8E76C224F6FA600C45220 /* Model */,
 				6CF8E76B224F6F9600C45220 /* Views */,
 			);
 			path = Home;
@@ -1714,6 +1716,8 @@
 				6CD407DA2254A87000120310 /* ZCHomeTableHeaderFooterView.m */,
 				6CE6E3642252F87900D1F046 /* ScrollTopButton.h */,
 				6CE6E3652252F87900D1F046 /* ScrollTopButton.m */,
+				6CD407DC2254CF6400120310 /* ZCCartButton.h */,
+				6CD407DD2254CF6400120310 /* ZCCartButton.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1732,6 +1736,7 @@
 			children = (
 				6CE6E367225304D700D1F046 /* ZCHomeViewModel.h */,
 				6CE6E368225304D700D1F046 /* ZCHomeViewModel.m */,
+				6CF8E76C224F6FA600C45220 /* Model */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -2027,6 +2032,7 @@
 				6C5323152239F41100FB7FCC /* ZCLoginViewController.m in Sources */,
 				6CB2A2C022310B5C00CEC1CB /* HXFullScreenCameraPlayView.m in Sources */,
 				6CF8E773224F72AB00C45220 /* ZCHomeRecommendCell.m in Sources */,
+				6CD407DE2254CF6400120310 /* ZCCartButton.m in Sources */,
 				6CE96DCA2241F7BA0028CA0E /* RealNameAuthenticationVC.m in Sources */,
 				6CB2A1082230CAEE00CEC1CB /* WeakWebViewScriptMessageDelegate.m in Sources */,
 				6CB2A2F722310B5C00CEC1CB /* YTKBatchRequest+AnimatingAccessory.m in Sources */,

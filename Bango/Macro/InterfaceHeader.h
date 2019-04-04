@@ -45,6 +45,6 @@
 // app版本更新
 #define kIndex_version          @"?s=/wap/Index/version"
 // 首页
-#define kIndex_home             @"?s=/wap/Index/index"
+#define kIndex_home             @"?s=/wap/Index/app_index"
 
 #endif /* InterfaceHeader_h */

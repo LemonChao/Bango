@@ -16,11 +16,14 @@ NS_ASSUME_NONNULL_BEGIN
 /** 首页数据 */
 @property(nonatomic, strong) RACCommand *homeCmd;
 
-@property(nonatomic, strong) ZCHomeModel *home;
+@property(atomic, strong) ZCHomeModel *home;
 
-@property(nonatomic, copy) NSArray *dataArray;
+@property(atomic, copy) NSArray *dataArray;
 
-@property(nonatomic, copy) NSArray *advImages;
+@property(atomic, copy) NSArray *advImages;
+
+/** 是否存在拼团 */
+@property(nonatomic, assign, getter=hasTuan) BOOL tuan;
 
 @end
 

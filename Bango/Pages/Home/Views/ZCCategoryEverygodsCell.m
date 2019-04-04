@@ -8,6 +8,7 @@
 
 #import "ZCCategoryEverygodsCell.h"
 #import "UIImageView+WebCache.h"
+#import "ZCCartButton.h"
 
 @interface ZCCategoryEverygodsCell ()
 
@@ -24,7 +25,7 @@
 @property(nonatomic, strong) UILabel *promotionPriceLab;
 
 /** 购物车 */
-@property(nonatomic, strong) UIButton *cartButton;
+@property(nonatomic, strong) ZCCartButton *cartButton;
 
 /** 添加 */
 @property(nonatomic, strong) UIButton *addButton;
@@ -49,12 +50,17 @@
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         [self.contentView addSubview:self.godsImgView];
         [self.contentView addSubview:self.descriptLab];
-        [self.contentView addSubview:self.cartContentView];
+//        [self.contentView addSubview:self.cartContentView];
         [self.contentView addSubview:self.cartButton];
         [self.contentView addSubview:self.nameLab];
         [self.contentView addSubview:self.promotionPriceLab];
         [self.contentView addSubview:self.marketPriceLab];
         [self.contentView addSubview:self.lineView];
+        
+//        [[[self.cartButton rac_signalForControlEvents:UIControlEventTouchUpInside] takeUntil:self.rac_prepareForReuseSignal] subscribeNext:^(__kindof UIControl * _Nullable x) {
+//
+//        }];
+        
         
         [self setNeedsUpdateConstraints];
     }
@@ -85,13 +91,13 @@
     
     [self.cartButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(self.contentView).inset(WidthRatio(margin));
-        make.top.equalTo(self.contentView.mas_centerY).offset(WidthRatio(8));
+        make.top.equalTo(self.descriptLab.mas_bottom).offset(WidthRatio(15));
     }];
     
-    [self.cartContentView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(self.contentView).inset(WidthRatio(margin));
-        make.top.equalTo(self.contentView.mas_centerY).offset(WidthRatio(8));
-    }];
+//    [self.cartContentView mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.right.equalTo(self.contentView).inset(WidthRatio(margin));
+//        make.top.equalTo(self.descriptLab.mas_bottom).offset(WidthRatio(15));
+//    }];
     
     
     [self.promotionPriceLab mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -105,19 +111,19 @@
     }];
     
     [self.addButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(self.cartContentView);
-        make.top.bottom.equalTo(self.cartContentView);
+        make.right.equalTo(self.cartButton);
+        make.top.bottom.equalTo(self.cartButton);
     }];
     
     [self.countLab mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(self.cartContentView);
+        make.centerY.equalTo(self.cartButton);
         make.right.equalTo(self.addButton.mas_left).inset(WidthRatio(12));
     }];
     
     [self.divisionButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(self.cartContentView);
+        make.centerY.equalTo(self.cartButton);
         make.right.equalTo(self.countLab.mas_left).inset(WidthRatio(12));
-        make.left.equalTo(self.cartContentView);
+        make.left.equalTo(self.cartButton);
     }];
     
     [self.lineView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -178,9 +184,9 @@
     return _marketPriceLab;
 }
 
-- (UIButton *)cartButton {
+- (ZCCartButton *)cartButton {
     if (!_cartButton) {
-        _cartButton = [UITool imageButton:ImageNamed(@"tabBar3_select")];
+        _cartButton = [[ZCCartButton alloc] init];
     }
     return _cartButton;
 }

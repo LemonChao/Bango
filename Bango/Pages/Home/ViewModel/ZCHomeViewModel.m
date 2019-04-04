@@ -14,20 +14,18 @@
 - (RACCommand *)homeCmd {
     if (!_homeCmd) {
         @weakify(self);
-        _homeCmd = [[RACCommand alloc] initWithSignalBlock:^RACSignal * _Nonnull(id  _Nullable input) {
+        _homeCmd = [[RACCommand alloc] initWithSignalBlock:^RACSignal * _Nonnull(NSString   * _Nullable useCache) {
             return [RACSignal createSignal:^RACDisposable * _Nullable(id<RACSubscriber>  _Nonnull subscriber) {
                 [NetWorkManager.sharedManager requestWithUrl:kIndex_home withParameters:@{} withRequestType:POSTTYPE responseCache:^(id  _Nonnull responseObject) {
                     @strongify(self);
-                    if (kStatusTrue) {
+                    if (kStatusTrue && [useCache boolValue]) {
                         ZCHomeModel *model = [ZCHomeModel modelWithDictionary:responseObject[@"data"]];
                         self.home = model;
                         self.advImages = [self buildAdvImagesWithModel:model];
                         self.dataArray = [self buildDataArrayWithModel:model];
                         [subscriber sendNext:@(1)];
+                        [subscriber sendCompleted];
                     }
-                    
-                    [subscriber sendCompleted];
-                    
                 } withSuccess:^(id  _Nonnull responseObject) {
                     @strongify(self);
                     if (kStatusTrue) {
@@ -67,7 +65,7 @@
         everyGods.footerHeight = 0.001;
         [mArray addObject:everyGods];
     }
-    
+
     if (model.categoryList.count) {
         ZCHomeEverygodsModel *everyGods = [[ZCHomeEverygodsModel alloc] init];
         everyGods.goods_list = model.categoryList;
@@ -88,12 +86,13 @@
     if (model.pintuanList.count) {
         ZCHomeEverygodsModel *everyGods = [[ZCHomeEverygodsModel alloc] init];
         everyGods.goods_list = model.pintuanList;
-        everyGods.rowHeight = WidthRatio(115)*(model.pintuanList.count+1)/2 + WidthRatio(10);
+        everyGods.rowHeight = WidthRatio(115)*((model.pintuanList.count+1)/2) + WidthRatio(10);
         everyGods.category_alias = @"鲜果一起拼";
         everyGods.headerHeight = WidthRatio(32);
         everyGods.footerHeight = WidthRatio(25);
         [mArray addObject:everyGods];
     }
+    self.tuan = model.pintuanList.count;
     if (model.bango.goods_list.count) {
         model.bango.rowHeight = WidthRatio(110);
         model.bango.category_alias = @"成为搬果小将";
@@ -111,6 +110,7 @@
             }
         }
     }
+    
     return mArray.copy;
 }
 
