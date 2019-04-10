@@ -28,13 +28,13 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    [self.navigationController setNavigationBarHidden:YES animated:animated];
+//    [self.navigationController setNavigationBarHidden:YES animated:animated];
     [self.view bringSubviewToFront:self.customNavBar];
 
 }
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
-    [self.navigationController setNavigationBarHidden:NO animated:animated];
+//    [self.navigationController setNavigationBarHidden:NO animated:animated];
 }
 
 - (void)setupNavBar {
@@ -60,8 +60,8 @@
 {
     if (!_customNavBar) {
         _customNavBar = [WRCustomNavigationBar CustomNavigationBar];
-        _customNavBar.titleLabelColor = [UIColor blackColor];
-        _customNavBar.backgroundColor = [UIColor whiteColor];
+//        _customNavBar.titleLabelColor = [UIColor blackColor];
+//        _customNavBar.backgroundColor = [UIColor whiteColor];
         if (self.navigationController.childViewControllers.count != 1) {
             [self.customNavBar wr_setLeftButtonWithImage:[UIImage imageNamed:@"back_white"]];
         }

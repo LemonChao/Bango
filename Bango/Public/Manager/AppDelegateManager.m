@@ -41,7 +41,7 @@
     window.rootViewController = rootNav;
     
     [self handleFunction:launchOptions withWindow:window];
-    [self setNavBarAppearence];
+//    [self setNavBarAppearence];
 }
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {

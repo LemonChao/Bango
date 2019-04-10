@@ -7,7 +7,7 @@
 //
 
 #import "ZCBaseViewModel.h"
-#import "UserInfoModel.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface ZCLoginViewModel : ZCBaseViewModel

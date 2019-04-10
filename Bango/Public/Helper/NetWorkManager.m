@@ -118,8 +118,9 @@
     NSMutableDictionary *parameter = params.mutableCopy;
 
     //读取缓存
-    if (caches) {
-        caches([ZCNetworkCache httpCacheForURL:url parameters:parameter]);
+    id obj = [ZCNetworkCache httpCacheForURL:url parameters:parameter];
+    if (caches && obj) {
+        caches(obj);
     }
 
     NSLog(@"URL:%@-->parameter:%@",url, parameter);

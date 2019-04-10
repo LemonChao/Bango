@@ -15,5 +15,8 @@
 #import "UITool.h"
 #import "NetWorkManager.h"
 #import "BaseMethod.h"
+#import "UserInfoModel.h"
+#import "ZCLoginViewController.h"
+
 
 #endif /* ZCHeader_h */

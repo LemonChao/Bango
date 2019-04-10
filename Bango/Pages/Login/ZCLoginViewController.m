@@ -42,6 +42,7 @@
         //保存用户登录信息
         UserInfoModel *model = [notif.userInfo objectForKey:@"userModel"];
         [BaseMethod saveObject:model withKey:UserInfo_UDSKEY];
+        [self.viewModel.personDataCmd execute:nil];
     }];
     if (self.loginCallback) {
         self.loginCallback([notif.userInfo objectForKey:@"userResp"]);

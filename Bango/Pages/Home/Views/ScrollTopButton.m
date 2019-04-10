@@ -22,17 +22,12 @@
 }
 
 - (void)setupWithScrollView:(UIScrollView *)scrollView{
-//    CGFloat DefaultW = WidthRatio(40);
     _scrollView = scrollView;
-//    self.distanceWhenShow = self.distanceWhenShow ?:SCREEN_HEIGHT;
-    self.distanceWhenShow = 100;
+    self.distanceWhenShow = SCREEN_WIDTH*2;
 
     
     self.backgroundColor = [UIColor clearColor];
     [self setBackgroundImage:[UIImage imageNamed:@"home_toTopButton"] forState:UIControlStateNormal];
-//    self.frame = CGRectMake(CGRectGetMaxX(scrollView.frame) - DefaultW - WidthRatio(15), CGRectGetHeight(scrollView.frame) - WidthRatio(100), DefaultW, DefaultW);
-
-//    self.frame = CGRectMake(SCREEN_WIDTH - DefaultW - WidthRatio(15), SCREEN_HEIGHT - WidthRatio(100), DefaultW, DefaultW);
     [self addTarget:self action:@selector(scrollToTopClick) forControlEvents:UIControlEventTouchUpInside];
     
     [scrollView addObserver:self forKeyPath:@"contentOffset" options:NSKeyValueObservingOptionNew context:nil];

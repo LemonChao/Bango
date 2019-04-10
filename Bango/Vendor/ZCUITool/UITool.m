@@ -112,6 +112,7 @@
     button.layer.cornerRadius = cornerRadius;
     button.layer.borderWidth = borderWidth;
     button.layer.borderColor = [borderColor CGColor];
+    button.layer.masksToBounds = YES;
     return button;
 }
 

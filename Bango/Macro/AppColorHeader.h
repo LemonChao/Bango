@@ -15,8 +15,8 @@
 // rgb三原色
 #define RGBA(r,g,b,a) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:a]
 
-/** 背景 - f5f6f7 */
-#define BackGroundColor HEX_COLOR(0xffffff)
+/** 背景 - f5f5f5 */
+#define BackGroundColor RGBA(245,245,245,1)
 
 /** 线条 - f5f5f5 */
 #define LineColor RGBA(245,245,245,1)

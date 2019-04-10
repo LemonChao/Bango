@@ -60,7 +60,6 @@
         _phoneCmd = [[RACCommand alloc] initWithSignalBlock:^RACSignal * _Nonnull(NSDictionary  *_Nullable input) {
             return [RACSignal createSignal:^RACDisposable * _Nullable(id<RACSubscriber>  _Nonnull subscriber) {
                 [NetWorkManager.sharedManager requestWithUrl:kLogin_index withParameters:input withRequestType:POSTTYPE withSuccess:^(id  _Nonnull responseObject) {
-                    
                     if (kStatusTrue) {
                         UserInfoModel *model = [UserInfoModel modelWithDictionary:responseObject[@"data"]];
                         [[NSNotificationCenter defaultCenter] postNotificationName:loginSuccessNotification object:nil userInfo:@{@"userModel":model,@"userResp":responseObject}];
@@ -161,14 +160,13 @@
                     return nil;
                 }
                 
-                [NetWorkManager.sharedManager requestWithUrl:kMember_personData withParameters:input withRequestType:POSTTYPE withSuccess:^(id  _Nonnull responseObject) {
+                [NetWorkManager.sharedManager requestWithUrl:kMember_personData withParameters:@{@"asstoken":origModel.asstoken} withRequestType:POSTTYPE withSuccess:^(id  _Nonnull responseObject) {
                     if (kStatusTrue) {
-                        UserInfoModel *model = [UserInfoModel modelWithDictionary:responseObject];
+                        UserInfoModel *model = [UserInfoModel modelWithDictionary:responseObject[@"data"]];
                         model.asstoken = origModel.asstoken;
                         model.txPwdStatus = origModel.txPwdStatus;
                         model.loginType = origModel.loginType;
                         model.loginNum = origModel.loginNum;
-                        model.avatar = origModel.avatar;
                         [BaseMethod saveObject:model withKey:UserInfo_UDSKEY];
                         [subscriber sendNext:@(1)];
                     }else {

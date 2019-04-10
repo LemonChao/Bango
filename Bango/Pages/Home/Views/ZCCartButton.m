@@ -7,6 +7,7 @@
 //
 
 #import "ZCCartButton.h"
+#import "ZCBaseModel.h"
 
 @interface ZCCartButton ()
 /** 购物车 */
@@ -25,11 +26,22 @@
 
 @implementation ZCCartButton
 
+
+- (void)setBaseModel:(ZCBaseModel *)baseModel {
+    _baseModel = baseModel;
+}
+
 - (instancetype)init
 {
     self = [super init];
     if (self) {
         [self commonInit];
+        @weakify(self);
+        RAC(self.countLab, text) = RACObserve(self, baseModel.count);
+        [RACObserve(self, baseModel.hide) subscribeNext:^(id  _Nullable x) {
+            @strongify(self);
+            self.divisionButton.hidden = self.countLab.hidden = [x boolValue];
+        }];
     }
     return self;
 }
@@ -39,74 +51,43 @@
     self = [super initWithFrame:frame];
     if (self) {
         [self commonInit];
+        @weakify(self);
+        RAC(self.countLab, text) = RACObserve(self, baseModel.count);
+        [RACObserve(self, baseModel.hide) subscribeNext:^(id  _Nullable x) {
+            @strongify(self);
+            self.divisionButton.hidden = self.countLab.hidden = [x boolValue];
+            [self.addButton setImage:[x boolValue] ? ImageNamed(@"tabBar3_select"): ImageNamed(@"home_add") forState:UIControlStateNormal];
+        }];
     }
     return self;
 }
 
-- (void)addButtonAction:(UIButton *)button {
-    
-    NSInteger count = self.count.integerValue+1;
-    self.count = [NSString stringWithFormat:@"%ld", count];
-    
-    if (count == 1) {
-        self.divisionButton.hidden = self.countLab.hidden = NO;
-        [self.addButton setImage:ImageNamed(@"home_add") forState:UIControlStateNormal];
-    }
-
-}
-
-- (void)divisionButtonAction:(UIButton *)button {
-    NSInteger count = self.count.integerValue-1;
-    self.count = [NSString stringWithFormat:@"%ld", count];
-    if (count <= 0) {
-        [self.addButton setImage:ImageNamed(@"tabBar3_select") forState:UIControlStateNormal];
-        self.divisionButton.hidden = self.countLab.hidden = YES;
-    }
-
-}
-
 
 - (void)commonInit {
-    self.count = @"0";
     self.addButton = [UITool imageButton:ImageNamed(@"tabBar3_select")];
     self.divisionButton = [UITool imageButton:ImageNamed(@"home_division")];
     self.countLab = [UITool labelWithTextColor:ImportantColor font:MediumFont(WidthRatio(14)) alignment:NSTextAlignmentCenter];
     self.divisionButton.hidden = self.countLab.hidden = YES;
     [self.countLab setContentHuggingPriority:UILayoutPriorityFittingSizeLevel forAxis:UILayoutConstraintAxisHorizontal];
-    self.countLab.text = @"1";
     [self addSubview:self.addButton];
     [self addSubview:self.divisionButton];
     [self addSubview:self.countLab];
     
-//    [self.addButton addTarget:self action:@selector(addButtonAction:) forControlEvents:UIControlEventTouchUpInside];
-//    [self.divisionButton addTarget:self action:@selector(divisionButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     
     @weakify(self);
     [[self.addButton rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
         @strongify(self);
-        NSInteger count = self.count.integerValue+1;
-        self.count = [NSString stringWithFormat:@"%ld", count];
-
-        if (count == 1) {
-            self.divisionButton.hidden = self.countLab.hidden = NO;
-            [self.addButton setImage:ImageNamed(@"home_add") forState:UIControlStateNormal];
-        }
+        self.baseModel.count = [NSString stringWithFormat:@"%ld", self.baseModel.count.integerValue+1];
+        self.baseModel.hide = ![self.baseModel.count boolValue];
     }];
-
-
+    
     [[self.divisionButton rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
         @strongify(self);
-        NSInteger count = self.count.integerValue-1;
-        self.count = [NSString stringWithFormat:@"%ld", count];
-        if (count <= 0) {
-            [self.addButton setImage:ImageNamed(@"tabBar3_select") forState:UIControlStateNormal];
-            self.divisionButton.hidden = self.countLab.hidden = YES;
-        }
+        
+        self.baseModel.count = [NSString stringWithFormat:@"%ld", self.baseModel.count.integerValue-1];
+        
+        self.baseModel.hide = ![self.baseModel.count boolValue];
     }];
-
-    RAC(self.countLab, text) = RACObserve(self, count);
-    
-    
     [self setNeedsUpdateConstraints];
 }
 
@@ -134,5 +115,29 @@
 - (CGSize)intrinsicContentSize {
     return CGSizeMake(76.f, 23.f);
 }
+
+
+//- (void)addButtonAction:(UIButton *)button {
+//
+//    NSInteger count = self.count.integerValue+1;
+//    self.count = [NSString stringWithFormat:@"%ld", count];
+//
+//    if (count == 1) {
+//        self.divisionButton.hidden = self.countLab.hidden = NO;
+//        [self.addButton setImage:ImageNamed(@"home_add") forState:UIControlStateNormal];
+//    }
+//
+//}
+//
+//- (void)divisionButtonAction:(UIButton *)button {
+//    NSInteger count = self.count.integerValue-1;
+//    self.count = [NSString stringWithFormat:@"%ld", count];
+//    if (count <= 0) {
+//        [self.addButton setImage:ImageNamed(@"tabBar3_select") forState:UIControlStateNormal];
+//        self.divisionButton.hidden = self.countLab.hidden = YES;
+//    }
+//
+//}
+
 
 @end

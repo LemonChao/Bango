@@ -33,9 +33,9 @@ NS_ASSUME_NONNULL_BEGIN
 + (UIButton *)wordButton:(nullable NSString *)title titleColor:(UIColor *)titleColor font:(UIFont *)font bgColor:(UIColor *)backgroundColor;
 + (UIButton *)wordButton:(nullable NSString *)title titleColor:(UIColor *)titleColor font:(UIFont *)font bgImage:(UIImage *)backgroundImage;
 + (UIButton *)wordButton:(UIButtonType)type title:(nullable NSString *)title titleColor:(UIColor *)titleColor font:(UIFont *)font bgColor:(UIColor *)backgroundColor;
-+ (UIButton *)imageButton:(UIImage *)image;
-+ (UIButton *)imageButton:(UIImage *)image cornerRadius:(CGFloat)cornerRadius borderWidth:(CGFloat)borderWidth borderColor:(UIColor *)borderColor;
-+ (UIButton *)richButton:(UIButtonType)type title:(nullable NSString *)title titleColor:(UIColor *)titleColor font:(UIFont *)font bgColor:(UIColor *)backgroundColor image:(UIImage *)image;
++ (UIButton *)imageButton:(nullable UIImage *)image;
++ (UIButton *)imageButton:(nullable UIImage *)image cornerRadius:(CGFloat)cornerRadius borderWidth:(CGFloat)borderWidth borderColor:(UIColor *)borderColor;
++ (UIButton *)richButton:(UIButtonType)type title:(nullable NSString *)title titleColor:(UIColor *)titleColor font:(UIFont *)font bgColor:(UIColor *)backgroundColor image:(nullable UIImage *)image;
 
 /// UITextField
 + (UITextField *)textField:(NSString *)placeHolder textColor:(UIColor *)textColor font:(UIFont *)font borderStyle:(UITextBorderStyle)style;

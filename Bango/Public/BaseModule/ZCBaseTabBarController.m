@@ -31,7 +31,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.viewControllers = @[self.homeNav,self.classifyNav,self.findNav,self.cartNav,self.personalNav];
+    self.viewControllers = @[self.homeNav,self.classifyNav,self.cartNav,self.personalNav];
     self.tabBar.backgroundImage = [UIImage imageWithColor:[UIColor whiteColor]];
     self.tabBar.shadowImage = ImageNamed(@"tab");
 }
@@ -52,7 +52,7 @@
 
 - (ZCBaseNavigationController *)classifyNav {
     if (!_classifyNav) {
-        ZCWebViewController *webVC = [[ZCWebViewController alloc] init];
+        ZCClassifyViewController *webVC = [[ZCClassifyViewController alloc] init];
         _classifyNav = [[ZCBaseNavigationController alloc] initWithRootViewController:webVC];
         _classifyNav.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"分类" image:[[UIImage imageNamed:@"tabBar1_normal"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] selectedImage:[[UIImage imageNamed:@"tabBar1_select"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
         [_classifyNav.tabBarItem setTitleTextAttributes:@{NSForegroundColorAttributeName:HEX_COLOR(0x0C0B0B)} forState:UIControlStateNormal];

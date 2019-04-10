@@ -10,4 +10,13 @@
 
 @implementation ZCBaseModel
 
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        self.count = @"0";
+        self.hide = YES;
+    }
+    return self;
+}
+
 @end

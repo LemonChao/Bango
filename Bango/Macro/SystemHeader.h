@@ -111,7 +111,7 @@
 
 // Medium字体
 #define MediumFont(sizePt) [UIFont systemFontOfSize:WidthRatio(sizePt) weight:UIFontWeightMedium]
-// Medium字体
+// Bold字体
 #define BoldFont(sizePt) [UIFont boldSystemFontOfSize:sizePt]
 
 

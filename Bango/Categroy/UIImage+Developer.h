@@ -25,7 +25,7 @@
  @param color color
  @return image
  */
-+ (UIImage *)imageWithColor123124:(UIColor *)color;
++ (UIImage *)imageWithColor:(UIColor *)color;
 
 /**
  根据view生成图片

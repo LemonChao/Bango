@@ -50,12 +50,12 @@ static NSString *homeFooterid = @"ZCHomeTableFooterView_id";
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self.navigationController setNavigationBarHidden:NO animated:YES];
+    [self.navigationController setNavigationBarHidden:NO animated:NO];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    [self.navigationController setNavigationBarHidden:YES animated:YES];
+    [self.navigationController setNavigationBarHidden:YES animated:NO];
 }
 
 - (void)configCustomNav {
@@ -110,7 +110,7 @@ static NSString *homeFooterid = @"ZCHomeTableFooterView_id";
         
         [self.tableView.mj_header endRefreshing];
     } error:^(NSError * _Nullable error) {
-        
+        [self.tableView.mj_header endRefreshing];
     }];
     
 }
