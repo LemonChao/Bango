@@ -42,8 +42,7 @@ static NSString *headerid = @"ZCCollectionSectionHeader_id";
     vc.view.frame = self.view.bounds;
     [self.view addSubview:vc.view];
     
-    vc.view.hidden = YES;
-    
+//    vc.view.hidden = YES;
     
     
     @weakify(self);
@@ -72,12 +71,12 @@ static NSString *headerid = @"ZCCollectionSectionHeader_id";
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return self.viewModel.dataArray.count;
+    return self.viewModel.tuijianDatas.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     ZCCartEmptyCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellid forIndexPath:indexPath];
-    ZCCartTuijianModel *model = self.viewModel.dataArray[indexPath.row];
+    ZCCartTuijianModel *model = self.viewModel.tuijianDatas[indexPath.row];
     cell.model = model;
     return cell;
 }

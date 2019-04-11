@@ -11,3 +11,9 @@
 @implementation ZCCartModel
 
 @end
+
+@implementation ZCCartGodsModel
+
+
+@end
+

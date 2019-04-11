@@ -58,6 +58,7 @@
 		6C6979FF22390CF600DDC639 /* PaymentDelegateManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C6979FE22390CF600DDC639 /* PaymentDelegateManager.m */; };
 		6C7546182251EBDD000C9554 /* ZCHomeRecommendCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C7546172251EBDD000C9554 /* ZCHomeRecommendCollectionCell.m */; };
 		6C75461B225203F2000C9554 /* ZCCategoryEverygodsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C75461A225203F2000C9554 /* ZCCategoryEverygodsCell.m */; };
+		6C99A89A225F12B5007E92A2 /* ZCCartValueGodsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C99A899225F12B5007E92A2 /* ZCCartValueGodsCell.m */; };
 		6CA37F06224E30AF00E6FC5C /* ZCBaseTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CA37F05224E30AF00E6FC5C /* ZCBaseTabBarController.m */; };
 		6CA37F0D224E3F3100E6FC5C /* ZCCartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CA37F0C224E3F3100E6FC5C /* ZCCartViewController.m */; };
 		6CA37F10224E3F6100E6FC5C /* ZCClassifyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CA37F0F224E3F6100E6FC5C /* ZCClassifyViewController.m */; };
@@ -431,6 +432,8 @@
 		6C7546172251EBDD000C9554 /* ZCHomeRecommendCollectionCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZCHomeRecommendCollectionCell.m; sourceTree = "<group>"; };
 		6C754619225203F2000C9554 /* ZCCategoryEverygodsCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZCCategoryEverygodsCell.h; sourceTree = "<group>"; };
 		6C75461A225203F2000C9554 /* ZCCategoryEverygodsCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZCCategoryEverygodsCell.m; sourceTree = "<group>"; };
+		6C99A898225F12B5007E92A2 /* ZCCartValueGodsCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZCCartValueGodsCell.h; sourceTree = "<group>"; };
+		6C99A899225F12B5007E92A2 /* ZCCartValueGodsCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZCCartValueGodsCell.m; sourceTree = "<group>"; };
 		6CA37F04224E30AF00E6FC5C /* ZCBaseTabBarController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZCBaseTabBarController.h; sourceTree = "<group>"; };
 		6CA37F05224E30AF00E6FC5C /* ZCBaseTabBarController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZCBaseTabBarController.m; sourceTree = "<group>"; };
 		6CA37F0B224E3F3100E6FC5C /* ZCCartViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZCCartViewController.h; sourceTree = "<group>"; };
@@ -1685,6 +1688,8 @@
 				6CE257B2225DC00E004306C2 /* ZCCartEmptyCollectionCell.m */,
 				6CE257B4225DC5AA004306C2 /* ZCCollectionSectionHeader.h */,
 				6CE257B5225DC5AA004306C2 /* ZCCollectionSectionHeader.m */,
+				6C99A898225F12B5007E92A2 /* ZCCartValueGodsCell.h */,
+				6C99A899225F12B5007E92A2 /* ZCCartValueGodsCell.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -2255,6 +2260,7 @@
 				6CF8E402224F2B3B00C45220 /* ZCFindViewController.m in Sources */,
 				6CD407DB2254A87000120310 /* ZCHomeTableHeaderFooterView.m in Sources */,
 				6CB2A2F422310B5C00CEC1CB /* WB_UploadImageRequest.m in Sources */,
+				6C99A89A225F12B5007E92A2 /* ZCCartValueGodsCell.m in Sources */,
 				6CB2A2B222310B5C00CEC1CB /* HXAlbumListViewController.m in Sources */,
 				6C75461B225203F2000C9554 /* ZCCategoryEverygodsCell.m in Sources */,
 				6C53231F223A311A00FB7FCC /* UITool.m in Sources */,
