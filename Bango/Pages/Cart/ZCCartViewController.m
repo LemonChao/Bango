@@ -8,6 +8,17 @@
 
 #import "ZCCartViewController.h"
 
+@interface ZCCartViewController()
+
+@end
+
+
 @implementation ZCCartViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    self.view.backgroundColor = [UIColor cyanColor];
+}
+
 
 @end

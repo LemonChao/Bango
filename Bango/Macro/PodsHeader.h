@@ -17,5 +17,8 @@
 #import <MJRefresh/MJRefresh.h>
 #import "WXZTipView.h"
 #import <YYKit/YYKit.h>
+#import "UIImageView+WebCache.h"
+#import "UIButton+WebCache.h"
+
 
 #endif /* PodsHeader_h */

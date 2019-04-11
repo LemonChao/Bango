@@ -36,6 +36,31 @@ NS_ASSUME_NONNULL_BEGIN
 + (void)showBottomText:(nullable NSString *)text;
 
 
+#pragma mark - detailText
+
+
+/**
+ 中间显示，多行显示
+
+ @param text 显示内容
+ */
++ (void)showDetailText:(NSString *)text;
+
+/**
+ 顶部显示，多行显示
+ 
+ @param text 显示内容
+ */
++ (void)showTopDetailText:(NSString *)text;
+
+/**
+ 底部显示，多行显示
+ 
+ @param text 显示内容
+ */
++ (void)showBottomDetailText:(NSString *)text;
+
+#pragma mark - Activity
 /**
  Activity + text
  在window上 text为nil或@"" 只显示 Activity

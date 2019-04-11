@@ -192,6 +192,12 @@
 		6CD8B338225B20F800092056 /* ZCClassifyRightVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CD8B337225B20F800092056 /* ZCClassifyRightVC.m */; };
 		6CD8B33B225B213300092056 /* ZCClassifyRightCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CD8B33A225B213300092056 /* ZCClassifyRightCell.m */; };
 		6CE257AB225D7E54004306C2 /* ZCPersonalCenterModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CE257AA225D7E54004306C2 /* ZCPersonalCenterModel.m */; };
+		6CE257AE225DA55A004306C2 /* ZCCartEmptyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CE257AD225DA55A004306C2 /* ZCCartEmptyViewController.m */; };
+		6CE257B3225DC00E004306C2 /* ZCCartEmptyCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CE257B2225DC00E004306C2 /* ZCCartEmptyCollectionCell.m */; };
+		6CE257B6225DC5AA004306C2 /* ZCCollectionSectionHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CE257B5225DC5AA004306C2 /* ZCCollectionSectionHeader.m */; };
+		6CE257B9225DD407004306C2 /* ZCCartViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CE257B8225DD407004306C2 /* ZCCartViewModel.m */; };
+		6CE257BC225DDAFD004306C2 /* ZCCartTuijianModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CE257BB225DDAFD004306C2 /* ZCCartTuijianModel.m */; };
+		6CE257BF225DDB35004306C2 /* ZCCartModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CE257BE225DDB35004306C2 /* ZCCartModel.m */; };
 		6CE6E3662252F87900D1F046 /* ScrollTopButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CE6E3652252F87900D1F046 /* ScrollTopButton.m */; };
 		6CE6E369225304D700D1F046 /* ZCHomeViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CE6E368225304D700D1F046 /* ZCHomeViewModel.m */; };
 		6CE6E36C22530D1000D1F046 /* ZCNetworkCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CE6E36B22530D1000D1F046 /* ZCNetworkCache.m */; };
@@ -701,6 +707,18 @@
 		6CD8B33A225B213300092056 /* ZCClassifyRightCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZCClassifyRightCell.m; sourceTree = "<group>"; };
 		6CE257A9225D7E54004306C2 /* ZCPersonalCenterModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZCPersonalCenterModel.h; sourceTree = "<group>"; };
 		6CE257AA225D7E54004306C2 /* ZCPersonalCenterModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZCPersonalCenterModel.m; sourceTree = "<group>"; };
+		6CE257AC225DA55A004306C2 /* ZCCartEmptyViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZCCartEmptyViewController.h; sourceTree = "<group>"; };
+		6CE257AD225DA55A004306C2 /* ZCCartEmptyViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZCCartEmptyViewController.m; sourceTree = "<group>"; };
+		6CE257B1225DC00E004306C2 /* ZCCartEmptyCollectionCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZCCartEmptyCollectionCell.h; sourceTree = "<group>"; };
+		6CE257B2225DC00E004306C2 /* ZCCartEmptyCollectionCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZCCartEmptyCollectionCell.m; sourceTree = "<group>"; };
+		6CE257B4225DC5AA004306C2 /* ZCCollectionSectionHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZCCollectionSectionHeader.h; sourceTree = "<group>"; };
+		6CE257B5225DC5AA004306C2 /* ZCCollectionSectionHeader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZCCollectionSectionHeader.m; sourceTree = "<group>"; };
+		6CE257B7225DD407004306C2 /* ZCCartViewModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZCCartViewModel.h; sourceTree = "<group>"; };
+		6CE257B8225DD407004306C2 /* ZCCartViewModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZCCartViewModel.m; sourceTree = "<group>"; };
+		6CE257BA225DDAFD004306C2 /* ZCCartTuijianModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZCCartTuijianModel.h; sourceTree = "<group>"; };
+		6CE257BB225DDAFD004306C2 /* ZCCartTuijianModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZCCartTuijianModel.m; sourceTree = "<group>"; };
+		6CE257BD225DDB35004306C2 /* ZCCartModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZCCartModel.h; sourceTree = "<group>"; };
+		6CE257BE225DDB35004306C2 /* ZCCartModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZCCartModel.m; sourceTree = "<group>"; };
 		6CE6E3642252F87900D1F046 /* ScrollTopButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScrollTopButton.h; sourceTree = "<group>"; };
 		6CE6E3652252F87900D1F046 /* ScrollTopButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ScrollTopButton.m; sourceTree = "<group>"; };
 		6CE6E367225304D700D1F046 /* ZCHomeViewModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZCHomeViewModel.h; sourceTree = "<group>"; };
@@ -1123,8 +1141,12 @@
 		6CA37F09224E33FB00E6FC5C /* Cart */ = {
 			isa = PBXGroup;
 			children = (
+				6CE257AC225DA55A004306C2 /* ZCCartEmptyViewController.h */,
+				6CE257AD225DA55A004306C2 /* ZCCartEmptyViewController.m */,
 				6CA37F0B224E3F3100E6FC5C /* ZCCartViewController.h */,
 				6CA37F0C224E3F3100E6FC5C /* ZCCartViewController.m */,
+				6CE257B0225DBF68004306C2 /* ViewModel */,
+				6CE257AF225DBF5C004306C2 /* Views */,
 			);
 			path = Cart;
 			sourceTree = "<group>";
@@ -1656,6 +1678,30 @@
 			path = TXScrollLabelView;
 			sourceTree = "<group>";
 		};
+		6CE257AF225DBF5C004306C2 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				6CE257B1225DC00E004306C2 /* ZCCartEmptyCollectionCell.h */,
+				6CE257B2225DC00E004306C2 /* ZCCartEmptyCollectionCell.m */,
+				6CE257B4225DC5AA004306C2 /* ZCCollectionSectionHeader.h */,
+				6CE257B5225DC5AA004306C2 /* ZCCollectionSectionHeader.m */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		6CE257B0225DBF68004306C2 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				6CE257B7225DD407004306C2 /* ZCCartViewModel.h */,
+				6CE257B8225DD407004306C2 /* ZCCartViewModel.m */,
+				6CE257BD225DDB35004306C2 /* ZCCartModel.h */,
+				6CE257BE225DDB35004306C2 /* ZCCartModel.m */,
+				6CE257BA225DDAFD004306C2 /* ZCCartTuijianModel.h */,
+				6CE257BB225DDAFD004306C2 /* ZCCartTuijianModel.m */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		6CE96DC72241F7BA0028CA0E /* 实名认证 */ = {
 			isa = PBXGroup;
 			children = (
@@ -2110,6 +2156,7 @@
 				6CB2A32222310B5C00CEC1CB /* MyQRViewController.m in Sources */,
 				6C04DB37223B83C400F27501 /* NetWorkManager.m in Sources */,
 				6CB2A1012230BE5200CEC1CB /* ZCBaseViewController.m in Sources */,
+				6CE257BC225DDAFD004306C2 /* ZCCartTuijianModel.m in Sources */,
 				6C3D3EBF2232572E00932F4B /* RSADataSigner.m in Sources */,
 				6CF8E770224F70FA00C45220 /* ZCHomeCategoryCell.m in Sources */,
 				6C3D3EB82232572E00932F4B /* openssl_wrapper.m in Sources */,
@@ -2185,6 +2232,7 @@
 				6CB2A2A722310B5C00CEC1CB /* HXCustomCameraViewController.m in Sources */,
 				6CA37F13224E3F7300E6FC5C /* ZCPersonalViewController.m in Sources */,
 				6CF8E776224F72DA00C45220 /* ZCHomeTuanCell.m in Sources */,
+				6CE257B6225DC5AA004306C2 /* ZCCollectionSectionHeader.m in Sources */,
 				6C3D3EB42232572E00932F4B /* MobilePaymentManager.m in Sources */,
 				6C497DEA222FC72100C592D0 /* AppDelegate.m in Sources */,
 				6CB2A2A022310B5C00CEC1CB /* UIView_extra.m in Sources */,
@@ -2202,6 +2250,7 @@
 				6CE6E36F2253117C00D1F046 /* MBProgressHUD+ZChao.m in Sources */,
 				6CB2A29C22310B5C00CEC1CB /* UITableView+Refresh.m in Sources */,
 				6CFE2B8D224345C000C37333 /* ZCFallingAnimationView.m in Sources */,
+				6CE257BF225DDB35004306C2 /* ZCCartModel.m in Sources */,
 				6CB2A2D122310B5C00CEC1CB /* YTKChainRequestAgent.m in Sources */,
 				6CF8E402224F2B3B00C45220 /* ZCFindViewController.m in Sources */,
 				6CD407DB2254A87000120310 /* ZCHomeTableHeaderFooterView.m in Sources */,
@@ -2224,6 +2273,7 @@
 				6CB2A2EC22310B5C00CEC1CB /* NetWorkHelper.m in Sources */,
 				6CE96DF62241F83B0028CA0E /* UIImage+Extend.m in Sources */,
 				6CE6E3662252F87900D1F046 /* ScrollTopButton.m in Sources */,
+				6CE257B3225DC00E004306C2 /* ZCCartEmptyCollectionCell.m in Sources */,
 				6C6979FC22390CCB00DDC639 /* AppDelegateManager.m in Sources */,
 				6CB2A31E22310B5C00CEC1CB /* JQScanNetAnimation.m in Sources */,
 				6CBC1700225C80C8000C9682 /* ZCPersonalwelfareCell.m in Sources */,
@@ -2261,6 +2311,7 @@
 				6CA37F06224E30AF00E6FC5C /* ZCBaseTabBarController.m in Sources */,
 				6CB2A29F22310B5C00CEC1CB /* UIView+Shadow.m in Sources */,
 				6CB2A2CA22310B5C00CEC1CB /* HXDatePhotoEditViewController.m in Sources */,
+				6CE257AE225DA55A004306C2 /* ZCCartEmptyViewController.m in Sources */,
 				6C5FD7BD225CD3470027B9D5 /* ZCPersonalCenterVM.m in Sources */,
 				6CE96E022241F83B0028CA0E /* IDAuthViewController.m in Sources */,
 				6C04DB3A223B9F9400F27501 /* JKCountDownButton.m in Sources */,
@@ -2272,6 +2323,7 @@
 				6CB2A2FC22310B5C00CEC1CB /* UIViewController+LKBubbleView.m in Sources */,
 				6CD8B338225B20F800092056 /* ZCClassifyRightVC.m in Sources */,
 				6C5323182239F75300FB7FCC /* ZCBaseNavigationController.m in Sources */,
+				6CE257B9225DD407004306C2 /* ZCCartViewModel.m in Sources */,
 				6CB2A2AD22310B5C00CEC1CB /* NSBundle+HXWeiboPhotoPicker.m in Sources */,
 				6CB2A2B622310B5C00CEC1CB /* HXDatePhotoPreviewViewController.m in Sources */,
 				6C04DB25223B540000F27501 /* ZCBaseViewModel.m in Sources */,

@@ -7,7 +7,6 @@
 //
 
 #import "ZCPersonalwelfareCell.h"
-#import "UIButton+WebCache.h"
 
 @interface ZCWelfareButton : UIControl
 

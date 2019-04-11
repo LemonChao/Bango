@@ -18,7 +18,7 @@
 //response返回的判断
 #define kStatusTrue   ([responseObject[@"status"] integerValue] == 0)
 
-#define kShowError      [MBProgressHUD showText:error.localizedDescription]
+#define kShowError      [MBProgressHUD showDetailText:error.localizedDescription]
 
 #define kShowMessage    [MBProgressHUD showText:responseObject[@"message"]]
 

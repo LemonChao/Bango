@@ -9,7 +9,7 @@
 #import "MBProgressHUD+ZChao.h"
 
 static MBProgressHUD *sharedHud;
-
+static CGFloat duration = 2.f;
 @implementation MBProgressHUD (ZChao)
 
 
@@ -81,7 +81,35 @@ static MBProgressHUD *sharedHud;
     [self showText:text offsetY:MBProgressMaxOffset time:2.f];
 }
 
+#pragma mark - detailsText
++ (void)showDetailText:(NSString *)text offsetY:(CGFloat)offsetY time:(NSTimeInterval)time {
+    MBProgressHUD *hud = [self createMBProgressHUD];
+    hud.mode = MBProgressHUDModeText;
+    
+    hud.detailsLabel.text = text;
+    hud.detailsLabel.font = SystemFont(14);
+    hud.offset = CGPointMake(0, offsetY);
+//    hud.detailsLabel.textColor = [UIColor whiteColor];
+//    hud.bezelView.style = MBProgressHUDBackgroundStyleSolidColor;
+//    hud.bezelView.color = [[UIColor blackColor] colorWithAlphaComponent:0.8];
+    
+    [hud hideAnimated:YES afterDelay:time];
+}
 
++ (void)showDetailText:(NSString *)text {
+    [self showDetailText:text offsetY:0 time:duration];
+}
+
++ (void)showTopDetailText:(NSString *)text {
+    [self showDetailText:text offsetY:-MBProgressMaxOffset time:duration];
+}
+
++ (void)showBottomDetailText:(NSString *)text {
+    [self showDetailText:text offsetY:MBProgressMaxOffset time:duration];
+}
+
+
+#pragma mark - Activity
 
 + (void)showActivityText:(NSString *)text {
     MBProgressHUD *hud = [self createMBProgressHUD];

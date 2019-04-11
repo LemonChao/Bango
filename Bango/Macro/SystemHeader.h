@@ -110,10 +110,11 @@
 #define Application [UIApplication sharedApplication]
 
 // Medium字体
-#define MediumFont(sizePt) [UIFont systemFontOfSize:WidthRatio(sizePt) weight:UIFontWeightMedium]
+#define MediumFont(sizePt)  [UIFont systemFontOfSize:WidthRatio(sizePt) weight:UIFontWeightMedium]
 // Bold字体
-#define BoldFont(sizePt) [UIFont boldSystemFontOfSize:sizePt]
-
+#define BoldFont(sizePt)    [UIFont boldSystemFontOfSize:WidthRatio(sizePt)]
+// system|regular字体
+#define SystemFont(sizePt)  [UIFont systemFontOfSize:WidthRatio(sizePt)]
 
 // log 日志
 #ifdef DEBUG

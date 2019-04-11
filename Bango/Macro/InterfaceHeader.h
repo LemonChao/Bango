@@ -50,4 +50,8 @@
 #define kAllCategory_home       @"?s=/wap/Goods/goodsAllCategoryListAPPJin"
 //会员中心
 #define kMember_index           @"?s=/wap/Member/memberIndex"
+//购物车-猜你喜欢
+#define kChart_like             @"?s=/wap/Goods/cart_app_wj"
+
+
 #endif /* InterfaceHeader_h */

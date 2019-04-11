@@ -7,7 +7,6 @@
 //
 
 #import "ZCPersonalTableHeadView.h"
-#import "UIButton+WebCache.h"
 
 @interface ZCPersonalTableHeadView ()
 

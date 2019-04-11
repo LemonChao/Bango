@@ -7,7 +7,6 @@
 //
 
 #import "ZCCategoryEverygodsCell.h"
-#import "UIImageView+WebCache.h"
 #import "ZCCartButton.h"
 
 @interface ZCCategoryEverygodsCell ()
