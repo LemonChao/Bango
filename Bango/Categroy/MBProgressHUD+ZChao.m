@@ -74,11 +74,11 @@ static CGFloat duration = 2.f;
 }
 
 + (void)showTopText:(NSString *)text {
-    [self showText:text offsetY:-MBProgressMaxOffset time:2.f];
+    [self showText:text offsetY:-MBProgressMaxOffset time:duration];
 }
 
 + (void)showBottomText:(NSString *)text {
-    [self showText:text offsetY:MBProgressMaxOffset time:2.f];
+    [self showText:text offsetY:MBProgressMaxOffset time:duration];
 }
 
 #pragma mark - detailsText
@@ -112,10 +112,9 @@ static CGFloat duration = 2.f;
 #pragma mark - Activity
 
 + (void)showActivityText:(NSString *)text {
-    MBProgressHUD *hud = [self createMBProgressHUD];
-    hud.mode = MBProgressHUDModeIndeterminate;
-    hud.label.text = text;
-
+    MBProgressHUD *hud = [self showHudMode:MBProgressHUDModeIndeterminate text:text];
+    hud.graceTime = 3.f;
+//    hud.minShowTime = 2.f;
 }
 
 + (void)showActivityText:(NSString *)text inView:(UIView *)view {

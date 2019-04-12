@@ -10,9 +10,9 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface ZCClassifyGodsModel : ZCBaseModel
+@interface ZCClassifyGodsModel : ZCBaseGodsModel
 
-@property(nonatomic, copy) NSString *goods_id;
+//@property(nonatomic, copy) NSString *goods_id;
 @property(nonatomic, copy) NSString *category_id;
 @property(nonatomic, copy) NSString *goods_name;
 @property(nonatomic, copy) NSString *pic_cover_mid;
@@ -76,7 +76,7 @@ NS_ASSUME_NONNULL_BEGIN
 //                      "gorup_list": [],
 //                      "display_price": "68.00"
 //                  },
-@interface ZCClassifyModel : ZCBaseModel
+@interface ZCClassifyModel : ZCBaseGodsModel
 
 @property(nonatomic, copy) NSString *category_id;
 @property(nonatomic, copy) NSString *category_name;

@@ -21,7 +21,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, strong) RACCommand *netCartCmd;
 
 /** 购物车商品总数据 */
-@property(nonatomic, copy) NSArray <__kindof ZCCartGodsModel *> *cartDatas;
+@property(nonatomic, copy) NSArray <__kindof ZCCartModel *> *cartDatas;
+
+/** 只有推荐 */
+@property(nonatomic, assign) BOOL onlyTuijian;
 
 /** 购物车保存本地的商品 */
 @property(nonatomic, copy) NSArray *localGods;

@@ -10,11 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface ZCCartModel : ZCBaseModel
-
-@end
-
-@interface ZCCartGodsModel : ZCBaseModel
+@interface ZCCartGodsModel : ZCBaseGodsModel
 
 //"cart_id": 1146,
 //"buyer_id": 862,
@@ -37,8 +33,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, copy) NSString *buyer_id;
 /** 商铺名称 */
 @property(nonatomic, copy) NSString *shop_name;
-/** 商品id */
-@property(nonatomic, copy) NSString *goods_id;
+///** 商品id */ base里面有该属性
+//@property(nonatomic, copy) NSString *goods_id;
 /** 商品名称 */
 @property(nonatomic, copy) NSString *goods_name;
 /** 商品介绍 */
@@ -59,7 +55,27 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, copy) NSString *pic_cover_mid;
 
 
+//推荐商品model
+@property(nonatomic, copy) NSString *market_price;
+@property(nonatomic, copy) NSString *goods_type;
+@property(nonatomic, copy) NSString *pic_id;
+@property(nonatomic, copy) NSString *is_hot;
+@property(nonatomic, copy) NSString *is_recommend;
+@property(nonatomic, copy) NSString *is_new;
+@property(nonatomic, copy) NSString *sales;
+@property(nonatomic, copy) NSString *pic_cover_small;
 @end
 
+@interface ZCCartModel : ZCBaseGodsModel
+
+/** 店铺名称 */
+@property(nonatomic, copy) NSString *shop_name;
+/** 店铺id */
+@property(nonatomic, copy) NSString *shop_id;
+/** 本店铺下的商品 */
+@property(nonatomic, copy) NSArray <__kindof ZCCartGodsModel *>*shop_goods;
+
+
+@end
 
 NS_ASSUME_NONNULL_END

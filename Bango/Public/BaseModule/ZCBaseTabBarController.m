@@ -12,7 +12,7 @@
 #import "ZCWebViewController.h"
 #import "ZCClassifyViewController.h"
 #import "ZCFindViewController.h"
-#import "ZCCartEmptyViewController.h"
+#import "ZCCartViewController.h"
 #import "ZCPersonalViewController.h"
 
 
@@ -81,7 +81,7 @@
 
 - (ZCBaseNavigationController *)cartNav {
     if (!_cartNav) {
-        ZCCartEmptyViewController *webVC = [[ZCCartEmptyViewController alloc] init];
+        ZCCartViewController *webVC = [[ZCCartViewController alloc] init];
         _cartNav = [[ZCBaseNavigationController alloc] initWithRootViewController:webVC];
         _cartNav.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"购物车" image:[[UIImage imageNamed:@"tabBar3_normal"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] selectedImage:[[UIImage imageNamed:@"tabBar3_select"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
         [_cartNav.tabBarItem setTitleTextAttributes:@{NSForegroundColorAttributeName:HEX_COLOR(0x0C0B0B)} forState:UIControlStateNormal];

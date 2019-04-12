@@ -10,6 +10,10 @@
 
 @implementation ZCCartModel
 
++ (NSDictionary *)modelContainerPropertyGenericClass {
+    return @{@"shop_goods":[ZCCartGodsModel class]};
+}
+
 @end
 
 @implementation ZCCartGodsModel

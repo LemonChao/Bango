@@ -10,11 +10,11 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class ZCBaseModel;
+@class ZCBaseGodsModel;
 @interface ZCCartButton : UIButton
 
 @property(nonatomic, copy) NSString *count;
-@property (nonatomic, strong) ZCBaseModel *baseModel;
+@property (nonatomic, strong) ZCBaseGodsModel *baseModel;
 
 @end
 

@@ -53,7 +53,7 @@
             return [[RACSignal createSignal:^RACDisposable * _Nullable(id<RACSubscriber>  _Nonnull subscriber) {
                 UserInfoModel *infoModel = [BaseMethod readObjectWithKey:UserInfo_UDSKEY];
                 
-                [NetWorkManager.sharedManager requestWithUrl:kIndex_home withParameters:@{@"asstoken":infoModel.asstoken} withRequestType:POSTTYPE responseCache:^(id  _Nonnull responseObject) {
+                [NetWorkManager.sharedManager requestWithUrl:kIndex_home withParameters:@{@"asstoken":infoModel.asstoken?:@""} withRequestType:POSTTYPE responseCache:^(id  _Nonnull responseObject) {
                     @strongify(self);
                     if (kStatusTrue && [useCache boolValue]) {
                         ZCHomeModel *model = [ZCHomeModel modelWithDictionary:responseObject[@"data"]];

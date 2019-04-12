@@ -18,6 +18,6 @@
 #import "UserInfoModel.h"
 #import "ZCLoginViewController.h"
 #import "UIButton+EdgeInsets.h"
-
+#import "ZCBaseGodsModel.h"
 
 #endif /* ZCHeader_h */

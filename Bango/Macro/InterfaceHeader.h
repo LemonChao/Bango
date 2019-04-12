@@ -52,6 +52,10 @@
 #define kMember_index           @"?s=/wap/Member/memberIndex"
 //购物车-猜你喜欢
 #define kChart_like             @"?s=/wap/Goods/cart_app_wj"
-
-
+//商品-添加购物车
+#define kGods_addCart           @"?s=/wap/Goods/addCar"
+//商品-从购物车删除
+#define kGods_deleteCart        @"?s=/wap/Goods/cartDelete"
+//商品-修改购物车数量
+#define kGods_cartAdjustNum     @"?s=/wap/Goods/cartAdjustNum_app"
 #endif /* InterfaceHeader_h */

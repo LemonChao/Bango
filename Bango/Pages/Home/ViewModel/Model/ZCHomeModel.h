@@ -11,7 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 /// 轮播图
-@interface ZCHomeAdvModel : ZCBaseModel
+@interface ZCHomeAdvModel : ZCBaseGodsModel
 
 @property(nonatomic, copy) NSString *adv_id;
 
@@ -21,13 +21,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property(nonatomic, copy) NSString *adv_url;
 
-@property(nonatomic, copy) NSString *goods_id;
+//@property(nonatomic, copy) NSString *goods_id;
 
 @property(nonatomic, copy) NSString *gotype;
 
 @end
 /// 水果分类
-@interface ZCHomeCategoryModel : ZCBaseModel
+@interface ZCHomeCategoryModel : ZCBaseGodsModel
 @property(nonatomic, copy) NSString *category_id;
 @property(nonatomic, copy) NSString *category_name;
 @property(nonatomic, copy) NSString *category_pic;
@@ -35,7 +35,7 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 /// 公告
-@interface ZCHomeNoticeModel : ZCBaseModel
+@interface ZCHomeNoticeModel : ZCBaseGodsModel
 @property(nonatomic, copy) NSString *notice_id;
 @property(nonatomic, copy) NSString *notice_title;
 @property(nonatomic, copy) NSString *notice_content;
@@ -47,8 +47,8 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 /// 爆款推荐
-@interface ZCHomeTuijianModel : ZCBaseModel
-@property(nonatomic, copy) NSString *goods_id;
+@interface ZCHomeTuijianModel : ZCBaseGodsModel
+//@property(nonatomic, copy) NSString *goods_id;
 @property(nonatomic, copy) NSString *introduction;
 @property(nonatomic, copy) NSString *goods_name;
 @property(nonatomic, copy) NSString *goods_type;
@@ -68,8 +68,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 /// 拼团
-@interface ZCHomePintuanModel : ZCBaseModel
-@property(nonatomic, copy) NSString *goods_id;
+@interface ZCHomePintuanModel : ZCBaseGodsModel
+//@property(nonatomic, copy) NSString *goods_id;
 @property(nonatomic, copy) NSString *goods_name;
 @property(nonatomic, copy) NSString *introduction;
 @property(nonatomic, copy) NSString *promotion_price;
@@ -93,8 +93,8 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 /// gods model
-@interface ZCHomeGodsModel : ZCBaseModel
-@property(nonatomic, copy) NSString *goods_id;
+@interface ZCHomeGodsModel : ZCBaseGodsModel
+//@property(nonatomic, copy) NSString *goods_id;
 @property(nonatomic, copy) NSString *goods_name;
 @property(nonatomic, copy) NSString *introduction;
 @property(nonatomic, copy) NSString *group_id_array;
@@ -114,7 +114,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 /// 每个详细分类<搬果小将，水果区...>
-@interface ZCHomeEverygodsModel : ZCBaseModel
+@interface ZCHomeEverygodsModel : ZCBaseGodsModel
 @property(nonatomic, copy) NSString *category_alias;
 @property(nonatomic, copy) NSString *category_id;
 @property(nonatomic, copy) NSString *goods_sort_type;
@@ -130,7 +130,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 
-@interface ZCHomeModel : ZCBaseModel
+@interface ZCHomeModel : ZCBaseGodsModel
 
 @property(nonatomic, copy) NSArray <__kindof ZCHomeAdvModel *> *lunbo;
 

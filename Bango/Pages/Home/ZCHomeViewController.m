@@ -99,18 +99,17 @@ static NSString *homeFooterid = @"ZCHomeTableFooterView_id";
         if ([x boolValue]) {
             [MBProgressHUD hideHud];
             [self.tableView reloadData];
-            [self.tableView.mj_footer endRefreshingWithNoMoreData];
             
             if (self.viewModel.advImages.count) {
                 self.cycleView.imageURLStringsGroup = self.viewModel.advImages;
             }
-        }else {
-            [self.tableView.mj_footer resetNoMoreData];
         }
         
         [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshingWithNoMoreData];
     } error:^(NSError * _Nullable error) {
         [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshingWithNoMoreData];
     }];
     
 }

@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface ZCCartTuijianModel : ZCBaseModel
+@interface ZCCartTuijianModel : ZCBaseGodsModel
 
 //"goods_id": 21,
 //"goods_name": "海南现摘现发金都一号红心火龙果10斤空运",

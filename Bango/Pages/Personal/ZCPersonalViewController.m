@@ -88,9 +88,9 @@ static NSString *dataCellid = @"ZCPersonalDataCell_id";
     
     [[self.viewModel.memberCmd execute:info.asstoken] subscribeNext:^(id  _Nullable x) {
         if ([x boolValue]) {
+            kHidHud;
             [self.tableView reloadData];
         }
-        
         
         [self.tableView.mj_header endRefreshing];
     } error:^(NSError * _Nullable error) {

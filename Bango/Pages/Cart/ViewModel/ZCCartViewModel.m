@@ -46,11 +46,28 @@
             return [RACSignal createSignal:^RACDisposable * _Nullable(id<RACSubscriber>  _Nonnull subscriber) {
                 UserInfoModel *info = [BaseMethod readObjectWithKey:UserInfo_UDSKEY];
                 
-                [NetWorkManager.sharedManager requestWithUrl:kChart_like withParameters:@{@"asstoken":info.asstoken} withRequestType:POSTTYPE withSuccess:^(id  _Nonnull responseObject) {
+                [NetWorkManager.sharedManager requestWithUrl:kChart_like withParameters:@{@"asstoken":info.asstoken?:@""} withRequestType:POSTTYPE withSuccess:^(id  _Nonnull responseObject) {
                     if (kStatusTrue) {
-                        NSDictionary *dic = responseObject[@"data"];
+//                        NSDictionary *dic = responseObject[@"data"];
+//
+//                        NSArray *youxiaoArray = [NSArray modelArrayWithClass:[ZCCartModel class] json:dic[@"youxiao"]];
+//                        NSArray *shixiaoArray = [NSArray modelArrayWithClass:[ZCCartGodsModel class] json:dic[@"wuxiao"]];
+//                        NSArray *tuijianArray = [NSArray modelArrayWithClass:[ZCCartGodsModel class] json:dic[@"tuijian"]];
+//
+//                        NSMutableArray *tempArray = [NSMutableArray array];
                         
-                        self.cartDatas = [NSArray modelArrayWithClass:[ZCCartGodsModel class] json:dic[@"youxiao"]];
+                        
+                        self.cartDatas = [NSArray modelArrayWithClass:[ZCCartModel class] json:responseObject[@"data"]];
+                        
+                        
+                        
+                        [self.cartDatas enumerateObjectsUsingBlock:^(__kindof ZCCartModel * _Nonnull cartModel, NSUInteger idx, BOOL * _Nonnull stop) {
+                            if ([cartModel.shop_name isEqualToString:@"推荐商品"]) {
+                                self.onlyTuijian = self.cartDatas.count==1;
+                            }
+                        }];
+                        
+                        
                         [subscriber sendNext:@(1)];
                     }else {
                         kShowMessage;

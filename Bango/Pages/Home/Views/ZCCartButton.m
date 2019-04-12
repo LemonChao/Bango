@@ -7,7 +7,7 @@
 //
 
 #import "ZCCartButton.h"
-#import "ZCBaseModel.h"
+#import "ZCBaseGodsModel.h"
 
 @interface ZCCartButton ()
 /** 购物车 */
@@ -22,12 +22,16 @@
 /** 购买数量 */
 @property(nonatomic, strong) UILabel *countLab;
 
+@property(nonatomic, strong) RACCommand *addCmd;
+
+@property(nonatomic, strong) RACCommand *divisionCmd;
+
 @end
 
 @implementation ZCCartButton
 
 
-- (void)setBaseModel:(ZCBaseModel *)baseModel {
+- (void)setBaseModel:(ZCBaseGodsModel *)baseModel {
     _baseModel = baseModel;
 }
 
@@ -37,10 +41,13 @@
     if (self) {
         [self commonInit];
         @weakify(self);
-        RAC(self.countLab, text) = RACObserve(self, baseModel.count);
+        RAC(self.countLab, text) = RACObserve(self, baseModel.have_num);
         [RACObserve(self, baseModel.hide) subscribeNext:^(id  _Nullable x) {
             @strongify(self);
-            self.divisionButton.hidden = self.countLab.hidden = [x boolValue];
+//            self.divisionButton.hidden = self.countLab.hidden = [x boolValue];
+            self.divisionButton.hidden = self.countLab.hidden = self.addButton.selected = [x boolValue];
+
+//            [self.addButton setImage:[x boolValue] ? ImageNamed(@"tabBar3_select"): ImageNamed(@"home_add") forState:UIControlStateNormal];
         }];
     }
     return self;
@@ -52,11 +59,11 @@
     if (self) {
         [self commonInit];
         @weakify(self);
-        RAC(self.countLab, text) = RACObserve(self, baseModel.count);
+        RAC(self.countLab, text) = RACObserve(self, baseModel.have_num);
         [RACObserve(self, baseModel.hide) subscribeNext:^(id  _Nullable x) {
             @strongify(self);
-            self.divisionButton.hidden = self.countLab.hidden = [x boolValue];
-            [self.addButton setImage:[x boolValue] ? ImageNamed(@"tabBar3_select"): ImageNamed(@"home_add") forState:UIControlStateNormal];
+            self.divisionButton.hidden = self.countLab.hidden = self.addButton.selected = [x boolValue];
+//            [self.addButton setImage:[x boolValue] ? ImageNamed(@"tabBar3_select"): ImageNamed(@"home_add") forState:UIControlStateNormal];
         }];
     }
     return self;
@@ -64,7 +71,8 @@
 
 
 - (void)commonInit {
-    self.addButton = [UITool imageButton:ImageNamed(@"tabBar3_select")];
+    self.addButton = [UITool imageButton:ImageNamed(@"home_add")];
+    [self.addButton setImage:ImageNamed(@"tabBar3_select") forState:UIControlStateSelected];
     self.divisionButton = [UITool imageButton:ImageNamed(@"home_division")];
     self.countLab = [UITool labelWithTextColor:ImportantColor font:MediumFont(WidthRatio(14)) alignment:NSTextAlignmentCenter];
     self.divisionButton.hidden = self.countLab.hidden = YES;
@@ -75,22 +83,24 @@
     
     
     @weakify(self);
-    [[self.addButton rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
-        @strongify(self);
-        self.baseModel.count = [NSString stringWithFormat:@"%ld", self.baseModel.count.integerValue+1];
-        self.baseModel.hide = ![self.baseModel.count boolValue];
-    }];
+    self.addButton.rac_command = self.addCmd;
+    self.divisionButton.rac_command = self.divisionCmd;
+//    [[self.addButton rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
+//        @strongify(self);
+//        self.baseModel.count = [NSString stringWithFormat:@"%ld", self.baseModel.count.integerValue+1];
+//        self.baseModel.hide = ![self.baseModel.count boolValue];
+//    }];
     
-    [[self.divisionButton rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
-        @strongify(self);
-        
-        self.baseModel.count = [NSString stringWithFormat:@"%ld", self.baseModel.count.integerValue-1];
-        
-        self.baseModel.hide = ![self.baseModel.count boolValue];
-    }];
+//    [[self.divisionButton rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
+//        @strongify(self);
+//
+//        self.baseModel.count = [NSString stringWithFormat:@"%ld", self.baseModel.count.integerValue-1];
+//
+//        self.baseModel.hide = ![self.baseModel.count boolValue];
+//    }];
+    
     [self setNeedsUpdateConstraints];
 }
-
 
 
 - (void)updateConstraints {
@@ -116,28 +126,88 @@
     return CGSizeMake(76.f, 23.f);
 }
 
+- (void)sdfa {
+    [NetWorkManager.sharedManager requestWithUrl:kGods_addCart withParameters:@{} withRequestType:POSTTYPE withSuccess:^(id  _Nonnull responseObject) {
+        
+    } withFailure:^(NSError * _Nonnull error) {
+        
+    }];
+    
+    [NetWorkManager.sharedManager requestWithUrl:kGods_cartAdjustNum withParameters:@{} withRequestType:POSTTYPE withSuccess:^(id  _Nonnull responseObject) {
+        
+    } withFailure:^(NSError * _Nonnull error) {
+        
+    }];
+    
+}
 
-//- (void)addButtonAction:(UIButton *)button {
-//
-//    NSInteger count = self.count.integerValue+1;
-//    self.count = [NSString stringWithFormat:@"%ld", count];
-//
-//    if (count == 1) {
-//        self.divisionButton.hidden = self.countLab.hidden = NO;
-//        [self.addButton setImage:ImageNamed(@"home_add") forState:UIControlStateNormal];
-//    }
-//
-//}
-//
-//- (void)divisionButtonAction:(UIButton *)button {
-//    NSInteger count = self.count.integerValue-1;
-//    self.count = [NSString stringWithFormat:@"%ld", count];
-//    if (count <= 0) {
-//        [self.addButton setImage:ImageNamed(@"tabBar3_select") forState:UIControlStateNormal];
-//        self.divisionButton.hidden = self.countLab.hidden = YES;
-//    }
-//
-//}
 
+- (RACCommand *)addCmd {
+    if (!_addCmd) {
+        @weakify(self);
+        _addCmd = [[RACCommand alloc] initWithSignalBlock:^RACSignal * _Nonnull(id  _Nullable input) {
+            return [RACSignal createSignal:^RACDisposable * _Nullable(id<RACSubscriber>  _Nonnull subscriber) {
+                @strongify(self);
+                
+                UserInfoModel *info = [BaseMethod readObjectWithKey:UserInfo_UDSKEY];
+                NSDictionary *dic = @{@"asstoken":info.asstoken,
+                                      @"goods_id":self.baseModel.goods_id,
+                                      @"type":@"0"};
+                
+                [NetWorkManager.sharedManager requestWithUrl:kGods_cartAdjustNum withParameters:dic withRequestType:POSTTYPE withSuccess:^(id  _Nonnull responseObject) {
+                    if (kStatusTrue) {
+                        self.baseModel.have_num = [NSString stringWithFormat:@"%ld", self.baseModel.have_num.integerValue+1];
+                        self.baseModel.hide = ![self.baseModel.have_num boolValue];
+                        [subscriber sendNext:@(1)];
+                    }else {
+                        kShowMessage
+                        [subscriber sendNext:@(0)];
+                    }
+                    [subscriber sendCompleted];
+                } withFailure:^(NSError * _Nonnull error) {
+                    kShowError
+                    [subscriber sendError:error];
+                }];
+                return nil;
+            }];
+        }];
+    }
+    return _addCmd;
+}
+
+
+- (RACCommand *)divisionCmd {
+    if (!_divisionCmd) {
+        @weakify(self);
+        _divisionCmd = [[RACCommand alloc] initWithSignalBlock:^RACSignal * _Nonnull(id  _Nullable input) {
+            return [RACSignal createSignal:^RACDisposable * _Nullable(id<RACSubscriber>  _Nonnull subscriber) {
+                @strongify(self);
+                
+                UserInfoModel *info = [BaseMethod readObjectWithKey:UserInfo_UDSKEY];
+                NSDictionary *dic = @{@"asstoken":info.asstoken,
+                                      @"goods_id":self.baseModel.goods_id,
+                                      @"type":@"1"};
+                
+                [NetWorkManager.sharedManager requestWithUrl:kGods_cartAdjustNum withParameters:dic withRequestType:POSTTYPE withSuccess:^(id  _Nonnull responseObject) {
+                    if (kStatusTrue) {
+                        self.baseModel.have_num = [NSString stringWithFormat:@"%ld", self.baseModel.have_num.integerValue-1];
+                        self.baseModel.hide = ![self.baseModel.have_num boolValue];
+                        [subscriber sendNext:@(1)];
+                    }else {
+                        kShowMessage
+                        [subscriber sendNext:@(0)];
+                    }
+                    
+                    [subscriber sendCompleted];
+                } withFailure:^(NSError * _Nonnull error) {
+                    kShowError
+                    [subscriber sendError:error];
+                }];
+                return nil;
+            }];
+        }];
+    }
+    return _divisionCmd;
+}
 
 @end

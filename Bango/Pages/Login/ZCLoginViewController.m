@@ -95,6 +95,7 @@
 
 - (void)configViews {
     [self.view addSubview:self.scrollView];
+    self.view.backgroundColor = [UIColor whiteColor];
     UIImageView *imgView = [UITool imageViewImage:ImageNamed(@"login_illustration") contentMode:UIViewContentModeScaleAspectFill];
 
     [self.view addSubview:imgView];
@@ -392,7 +393,7 @@
 - (UIScrollView *)scrollView {
     if (!_scrollView) {
         _scrollView = [[UIScrollView alloc] init];
-        _scrollView.backgroundColor = BackGroundColor;
+        _scrollView.backgroundColor = [UIColor whiteColor];
         _scrollView.showsVerticalScrollIndicator = NO;
         _scrollView.showsHorizontalScrollIndicator = NO;
     }

@@ -18,10 +18,13 @@
 //response返回的判断
 #define kStatusTrue   ([responseObject[@"status"] integerValue] == 0)
 
-#define kShowError      [MBProgressHUD showDetailText:error.localizedDescription]
+#define kShowError      [MBProgressHUD showDetailText:error.localizedDescription];
 
-#define kShowMessage    [MBProgressHUD showText:responseObject[@"message"]]
+#define kShowMessage    [MBProgressHUD showText:responseObject[@"message"]];
 
+#define kShowActivity   [MBProgressHUD showActivityText:nil];
+
+#define kHidHud         [MBProgressHUD hideHud];
 /** 设置view圆角和边框 */
 #define MMViewBorderRadius(View, Radius, Width, Color)\
 \
