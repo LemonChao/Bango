@@ -7,16 +7,13 @@
 //
 
 #import "ZCBaseViewModel.h"
-#import "ZCCartTuijianModel.h"
 #import "ZCCartModel.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface ZCCartViewModel : ZCBaseViewModel
 
-@property(nonatomic, strong) RACCommand *emptyCartCmd;
 
-@property(nonatomic, copy) NSArray<__kindof ZCCartTuijianModel *> *tuijianDatas;
 
 @property(nonatomic, strong) RACCommand *netCartCmd;
 
