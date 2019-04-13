@@ -31,7 +31,8 @@
 
 #pragma mark - notificationKey
 #define loginSuccessNotification    @"loginSuccessNotification_key"
-
+// 清空商品刷新购物车通知
+#define deleteGodsToRefreshCartNotification     @"deleteGodsToRefreshCartNotification_key"
 
 #pragma mark - NSUserDefaultsKey
 #define UserInfo_UDSKEY             @"UserInfo_NSUserDefaultsKey"

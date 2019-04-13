@@ -39,8 +39,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, copy) NSString *goods_name;
 /** 商品介绍 */
 @property(nonatomic, copy) NSString *introduction;
-/** 购买数量 */
-@property(nonatomic, copy) NSString *num;
 /** 商品库存 */
 @property(nonatomic, copy) NSString *stock;
 /** 商品状态  0下架，1正常，10违规（禁售） */

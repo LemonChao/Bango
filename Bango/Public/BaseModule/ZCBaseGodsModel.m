@@ -15,6 +15,7 @@
     if (self) {
         self.have_num = @"0";
         self.hide = YES;
+        self.deleteEnsure = NO;
     }
     return self;
 }

@@ -12,6 +12,8 @@
 #import "ZCCartViewModel.h"
 #import "ZCCartViewController.h"
 #import "ZCCartValueCollectionCell.h"
+#import "ZCCartBottomView.h"
+#import "LCAlertTools.h"
 
 @interface ZCCartViewController ()<UICollectionViewDelegateFlowLayout,UICollectionViewDataSource>
 
@@ -34,11 +36,24 @@ static NSString *invaluedHeaderid = @"ZCCartInvaluedSectionHeader_id";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deleteGodsToRefreshCart:) name:deleteGodsToRefreshCartNotification object:nil];
+    
+    
+    [self addObserver:self.collectionView forKeyPath:@"indexPathsForVisibleItems" options:NSKeyValueObservingOptionNew||NSKeyValueChangeOldKey context:nil];
 }
+
+
+// 选中商品后改变价格
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context {
+    
+    NSLog(@"bianhe=========");
+}
+
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [MBProgressHUD showActivityText:nil];
+//    [MBProgressHUD showActivityText:nil];
+    kShowActivity
     [self getData];
 }
 
@@ -48,10 +63,27 @@ static NSString *invaluedHeaderid = @"ZCCartInvaluedSectionHeader_id";
 
 - (void)configCustomNav {
     self.title = @"购物车";
+    
+    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithTitle:@"删除" style:UIBarButtonItemStylePlain target:self action:@selector(rightBarButtonAction:)];
+    [rightItem setTitleTextAttributes:@{NSForegroundColorAttributeName:AssistColor} forState:UIControlStateNormal];
+    self.navigationItem.rightBarButtonItem = rightItem;
 }
 - (void)configViews {
+    
+    ZCCartBottomView *bottomView = [[ZCCartBottomView alloc] init];
+    [self.view addSubview:bottomView];
     [self.view addSubview:self.collectionView];
     
+    [bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.bottom.equalTo(self.view);
+        make.height.mas_equalTo(WidthRatio(50));
+    }];
+    
+    [self.collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.left.right.equalTo(self.view);
+        make.bottom.equalTo(bottomView.mas_top);
+    }];
+
     @weakify(self);
     self.collectionView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         @strongify(self);
@@ -77,6 +109,57 @@ static NSString *invaluedHeaderid = @"ZCCartInvaluedSectionHeader_id";
         [self.collectionView.mj_footer endRefreshingWithNoMoreData];
     }];
     
+}
+
+- (void)executeDeleteCmd:(NSString *)cartids {
+    kShowActivity
+    
+    @weakify(self);
+    [[self.viewModel.godsDeleteCmd execute:cartids] subscribeNext:^(id  _Nullable x) {
+        @strongify(self);
+        if ([x boolValue]) {
+            
+            [self getData];
+        }
+    } error:^(NSError * _Nullable error) {
+        
+    }];
+}
+
+
+- (void)rightBarButtonAction:(UIBarButtonItem *)item {
+    NSArray *selectItems = self.collectionView.indexPathsForSelectedItems;
+    
+    NSMutableArray *cartIds = [NSMutableArray array];
+    [selectItems enumerateObjectsUsingBlock:^(NSIndexPath *  _Nonnull indexPath, NSUInteger idx, BOOL * _Nonnull stop) {
+        ZCCartModel *model = self.viewModel.cartDatas[indexPath.section];
+        ZCCartGodsModel *godsModel = model.shop_goods[indexPath.row];
+        if (godsModel.cart_id) {
+            [cartIds addObject:godsModel.cart_id];
+        }
+    }];
+    
+    NSString *cartIdString = @"";
+    if (cartIds.count) {
+        cartIdString = [cartIds componentsJoinedByString:@","];
+    }else {
+        [MBProgressHUD showText:@"您尚未选中任何商品"];
+        return;
+    }
+    
+    [LCAlertTools showTipAlertViewWith:self title:@"您确定要删除该商品" message:nil cancelTitle:@"确定" cancelHandler:^{
+        [self executeDeleteCmd:cartIdString];
+    }];
+}
+
+
+
+
+
+/** 清空商品刷新购物车通知 */
+- (void)deleteGodsToRefreshCart:(NSNotification *)notif {
+    kShowActivity
+    [self getData];
 }
 
 #pragma mark - collection layout
@@ -178,15 +261,24 @@ static NSString *invaluedHeaderid = @"ZCCartInvaluedSectionHeader_id";
     
     if ([model.shop_name isEqualToString:@"推荐商品"]) {
         ZCCartTuijianCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellid forIndexPath:indexPath];
-        
         cell.model = godModel;
         return cell;
     }else {
         ZCCartValueCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:valueCellid forIndexPath:indexPath];
-        
         cell.model = godModel;
+        cell.indexPath = indexPath;
         return cell;
     }
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    [collectionView deselectItemAtIndexPath:indexPath animated:YES];
+    NSLog(@"%@", collectionView.indexPathsForSelectedItems);
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath {
+    
+    NSLog(@"%@", collectionView.indexPathsForSelectedItems);
 }
 
 
@@ -196,11 +288,13 @@ static NSString *invaluedHeaderid = @"ZCCartInvaluedSectionHeader_id";
     if (!_collectionView) {
         UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
         
-        _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-TabBarHeight-NavBarHeight) collectionViewLayout:layout];
+//        _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-TabBarHeight-NavBarHeight) collectionViewLayout:layout];
+        _collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
         _collectionView.backgroundColor = BackGroundColor;
         _collectionView.dataSource = self;
         _collectionView.delegate = self;
         _collectionView.showsVerticalScrollIndicator = NO;
+        _collectionView.allowsMultipleSelection = YES;
         [_collectionView registerClass:[ZCCartValueCollectionCell class] forCellWithReuseIdentifier:valueCellid];
         [_collectionView registerClass:[ZCCartTuijianCollectionCell class] forCellWithReuseIdentifier:cellid];
         [_collectionView registerClass:[ZCCartEmptySectionHeader class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:headerid];
@@ -217,6 +311,11 @@ static NSString *invaluedHeaderid = @"ZCCartInvaluedSectionHeader_id";
         _viewModel = [[ZCCartViewModel alloc] init];
     }
     return _viewModel;
+}
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:deleteGodsToRefreshCartNotification object:nil];
+    
 }
 
 @end

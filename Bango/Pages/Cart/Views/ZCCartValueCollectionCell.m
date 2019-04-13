@@ -125,14 +125,32 @@
 
 
 - (void)setModel:(ZCCartGodsModel *)model {
+    model.deleteEnsure = YES;
     _model = model;
-    
     [self.godsImgView sd_setImageWithURL:[NSURL URLWithString:model.pic_cover_mid]];
     self.nameLab.text = model.goods_name;
     self.promotionPriceLab.text = model.promotion_price;
     self.cartButton.baseModel = model;
 }
 
+- (void)setSelected:(BOOL)selected {
+    [super setSelected:selected];
+
+    self.selectButton.selected = selected;
+}
+
+
+- (void)selectButtonAction:(UIButton *)button {
+    UICollectionView *collectionView = (UICollectionView *)self.superview;
+
+    if (button.selected) {
+        [collectionView deselectItemAtIndexPath:self.indexPath animated:NO];
+    }else {
+        [collectionView selectItemAtIndexPath:self.indexPath animated:NO scrollPosition:UICollectionViewScrollPositionNone];
+    }
+    
+    NSLog(@"select:%@", collectionView.indexPathsForSelectedItems);
+}
 
 #pragma mark - setter && getter
 
@@ -140,6 +158,8 @@
     if (!_selectButton) {
         _selectButton = [UITool imageButton:ImageNamed(@"cart_gods_normal")];
         [_selectButton setImage:ImageNamed(@"cart_gods_select") forState:UIControlStateSelected];
+        [_selectButton addTarget:self action:@selector(selectButtonAction:) forControlEvents:UIControlEventTouchUpInside];
+        
     }
     return _selectButton;
 }

@@ -14,9 +14,8 @@
     if (!_netCartCmd) {
         _netCartCmd = [[RACCommand alloc] initWithSignalBlock:^RACSignal * _Nonnull(id  _Nullable input) {
             return [RACSignal createSignal:^RACDisposable * _Nullable(id<RACSubscriber>  _Nonnull subscriber) {
-                UserInfoModel *info = [BaseMethod readObjectWithKey:UserInfo_UDSKEY];
                 
-                [NetWorkManager.sharedManager requestWithUrl:kChart_like withParameters:@{@"asstoken":info.asstoken?:@""} withRequestType:POSTTYPE withSuccess:^(id  _Nonnull responseObject) {
+                [NetWorkManager.sharedManager requestWithUrl:kChart_like withParameters:@{} withRequestType:POSTTYPE withSuccess:^(id  _Nonnull responseObject) {
                     if (kStatusTrue) {
                         self.cartDatas = [NSArray modelArrayWithClass:[ZCCartModel class] json:responseObject[@"data"]];
                         
@@ -42,6 +41,30 @@
         }];
     }
     return _netCartCmd;
+}
+
+- (RACCommand *)godsDeleteCmd {
+    if (!_godsDeleteCmd) {
+        _godsDeleteCmd = [[RACCommand alloc] initWithSignalBlock:^RACSignal * _Nonnull(NSString * _Nullable cartIds) {
+            return [RACSignal createSignal:^RACDisposable * _Nullable(id<RACSubscriber>  _Nonnull subscriber) {
+                
+                [NetWorkManager.sharedManager requestWithUrl:kGods_deleteCart withParameters:@{@"del_id":cartIds} withRequestType:POSTTYPE withSuccess:^(id  _Nonnull responseObject) {
+                    if (kStatusTrue) {
+                        [subscriber sendNext:@(1)];
+                    }else {
+                        kShowMessage
+                        [subscriber sendNext:@(0)];
+                    }
+                    [subscriber sendCompleted];
+                } withFailure:^(NSError * _Nonnull error) {
+                    kShowError
+                    [subscriber sendError:error];
+                }];
+                return nil;
+            }];
+        }];
+    }
+    return _godsDeleteCmd;
 }
 
 

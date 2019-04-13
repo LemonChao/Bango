@@ -8,6 +8,7 @@
 
 #import "ZCCartButton.h"
 #import "ZCBaseGodsModel.h"
+#import "LCAlertTools.h"
 
 @interface ZCCartButton ()
 /** 购物车 */
@@ -44,10 +45,7 @@
         RAC(self.countLab, text) = RACObserve(self, baseModel.have_num);
         [RACObserve(self, baseModel.hide) subscribeNext:^(id  _Nullable x) {
             @strongify(self);
-//            self.divisionButton.hidden = self.countLab.hidden = [x boolValue];
             self.divisionButton.hidden = self.countLab.hidden = self.addButton.selected = [x boolValue];
-
-//            [self.addButton setImage:[x boolValue] ? ImageNamed(@"tabBar3_select"): ImageNamed(@"home_add") forState:UIControlStateNormal];
         }];
     }
     return self;
@@ -63,7 +61,6 @@
         [RACObserve(self, baseModel.hide) subscribeNext:^(id  _Nullable x) {
             @strongify(self);
             self.divisionButton.hidden = self.countLab.hidden = self.addButton.selected = [x boolValue];
-//            [self.addButton setImage:[x boolValue] ? ImageNamed(@"tabBar3_select"): ImageNamed(@"home_add") forState:UIControlStateNormal];
         }];
     }
     return self;
@@ -82,7 +79,6 @@
     [self addSubview:self.countLab];
     
     
-    @weakify(self);
     self.addButton.rac_command = self.addCmd;
     self.divisionButton.rac_command = self.divisionCmd;
 //    [[self.addButton rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
@@ -126,21 +122,6 @@
     return CGSizeMake(76.f, 23.f);
 }
 
-- (void)sdfa {
-    [NetWorkManager.sharedManager requestWithUrl:kGods_addCart withParameters:@{} withRequestType:POSTTYPE withSuccess:^(id  _Nonnull responseObject) {
-        
-    } withFailure:^(NSError * _Nonnull error) {
-        
-    }];
-    
-    [NetWorkManager.sharedManager requestWithUrl:kGods_cartAdjustNum withParameters:@{} withRequestType:POSTTYPE withSuccess:^(id  _Nonnull responseObject) {
-        
-    } withFailure:^(NSError * _Nonnull error) {
-        
-    }];
-    
-}
-
 
 - (RACCommand *)addCmd {
     if (!_addCmd) {
@@ -149,25 +130,7 @@
             return [RACSignal createSignal:^RACDisposable * _Nullable(id<RACSubscriber>  _Nonnull subscriber) {
                 @strongify(self);
                 
-                UserInfoModel *info = [BaseMethod readObjectWithKey:UserInfo_UDSKEY];
-                NSDictionary *dic = @{@"asstoken":info.asstoken,
-                                      @"goods_id":self.baseModel.goods_id,
-                                      @"type":@"0"};
-                
-                [NetWorkManager.sharedManager requestWithUrl:kGods_cartAdjustNum withParameters:dic withRequestType:POSTTYPE withSuccess:^(id  _Nonnull responseObject) {
-                    if (kStatusTrue) {
-                        self.baseModel.have_num = [NSString stringWithFormat:@"%ld", self.baseModel.have_num.integerValue+1];
-                        self.baseModel.hide = ![self.baseModel.have_num boolValue];
-                        [subscriber sendNext:@(1)];
-                    }else {
-                        kShowMessage
-                        [subscriber sendNext:@(0)];
-                    }
-                    [subscriber sendCompleted];
-                } withFailure:^(NSError * _Nonnull error) {
-                    kShowError
-                    [subscriber sendError:error];
-                }];
+                [self executeCmdWithSubscriber:subscriber type:@"0"];
                 return nil;
             }];
         }];
@@ -182,32 +145,52 @@
         _divisionCmd = [[RACCommand alloc] initWithSignalBlock:^RACSignal * _Nonnull(id  _Nullable input) {
             return [RACSignal createSignal:^RACDisposable * _Nullable(id<RACSubscriber>  _Nonnull subscriber) {
                 @strongify(self);
-                
-                UserInfoModel *info = [BaseMethod readObjectWithKey:UserInfo_UDSKEY];
-                NSDictionary *dic = @{@"asstoken":info.asstoken,
-                                      @"goods_id":self.baseModel.goods_id,
-                                      @"type":@"1"};
-                
-                [NetWorkManager.sharedManager requestWithUrl:kGods_cartAdjustNum withParameters:dic withRequestType:POSTTYPE withSuccess:^(id  _Nonnull responseObject) {
-                    if (kStatusTrue) {
-                        self.baseModel.have_num = [NSString stringWithFormat:@"%ld", self.baseModel.have_num.integerValue-1];
-                        self.baseModel.hide = ![self.baseModel.have_num boolValue];
-                        [subscriber sendNext:@(1)];
-                    }else {
-                        kShowMessage
-                        [subscriber sendNext:@(0)];
-                    }
+
+                if (self.baseModel.have_num.integerValue == 1 && self.baseModel.deleteEnsure) { //二次确认
                     
-                    [subscriber sendCompleted];
-                } withFailure:^(NSError * _Nonnull error) {
-                    kShowError
-                    [subscriber sendError:error];
-                }];
+                    [LCAlertTools showTipAlertViewWith:[UIApplication sharedApplication].keyWindow.rootViewController title:@"您确定删除该商品吗" message:nil cancelTitle:@"取消" defaultTitle:@"确定" cancelHandler:^{
+                        [subscriber sendNext:@(0)];
+                        [subscriber sendCompleted];
+                    } defaultHandler:^{
+                        [self executeCmdWithSubscriber:subscriber type:@"1"];
+                    }];
+                    
+                }else {
+                    [self executeCmdWithSubscriber:subscriber type:@"1"];
+                }
                 return nil;
             }];
         }];
     }
     return _divisionCmd;
+}
+
+
+- (void)executeCmdWithSubscriber:(id<RACSubscriber>  _Nonnull) subscriber type:(NSString *)type{
+    
+    UserInfoModel *info = [BaseMethod readObjectWithKey:UserInfo_UDSKEY];
+    NSDictionary *dic = @{@"asstoken":info.asstoken,
+                          @"goods_id":self.baseModel.goods_id,
+                          @"type":type};
+    
+    [NetWorkManager.sharedManager requestWithUrl:kGods_cartAdjustNum withParameters:dic withRequestType:POSTTYPE withSuccess:^(id  _Nonnull responseObject) {
+        if (kStatusTrue) {
+            self.baseModel.have_num = StringFormat(@"%@", responseObject[@"data"]);
+            self.baseModel.hide = ![self.baseModel.have_num boolValue];
+            if (self.baseModel.deleteEnsure && ![self.baseModel.have_num boolValue]) {
+                [[NSNotificationCenter defaultCenter] postNotificationName:deleteGodsToRefreshCartNotification object:deleteGodsToRefreshCartNotification];
+            }
+            [subscriber sendNext:@(1)];
+        }else {
+            kShowMessage
+            [subscriber sendNext:@(0)];
+        }
+        
+        [subscriber sendCompleted];
+    } withFailure:^(NSError * _Nonnull error) {
+        kShowError
+        [subscriber sendError:error];
+    }];
 }
 
 @end

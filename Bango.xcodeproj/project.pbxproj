@@ -45,12 +45,15 @@
 		6C497DF8222FC72200C592D0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C497DF7222FC72200C592D0 /* main.m */; };
 		6C497E02222FC72200C592D0 /* BangoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C497E01222FC72200C592D0 /* BangoTests.m */; };
 		6C497E0D222FC72200C592D0 /* BangoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C497E0C222FC72200C592D0 /* BangoUITests.m */; };
+		6C4EFC932261C63700EB1ABE /* ZCCartManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C4EFC922261C63700EB1ABE /* ZCCartManager.m */; };
 		6C5323152239F41100FB7FCC /* ZCLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C5323142239F41100FB7FCC /* ZCLoginViewController.m */; };
 		6C5323182239F75300FB7FCC /* ZCBaseNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C5323172239F75300FB7FCC /* ZCBaseNavigationController.m */; };
 		6C53231E223A311A00FB7FCC /* CornerShadowView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C53231B223A311A00FB7FCC /* CornerShadowView.m */; };
 		6C53231F223A311A00FB7FCC /* UITool.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C53231C223A311A00FB7FCC /* UITool.m */; };
 		6C532322223A344200FB7FCC /* UITextView+ZWPlaceHolder.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C532320223A344100FB7FCC /* UITextView+ZWPlaceHolder.m */; };
 		6C5FD7BD225CD3470027B9D5 /* ZCPersonalCenterVM.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C5FD7BC225CD3470027B9D5 /* ZCPersonalCenterVM.m */; };
+		6C673DFC2260844D0045B00A /* ZCCartBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C673DFB2260844D0045B00A /* ZCCartBottomView.m */; };
+		6C673DFF2260AD3C0045B00A /* LCAlertTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C673DFD2260AD3B0045B00A /* LCAlertTools.m */; };
 		6C6979F6223902FD00DDC639 /* GuideImage.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 6C6979F1223902FD00DDC639 /* GuideImage.bundle */; };
 		6C6979F7223902FD00DDC639 /* DHGifImageOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C6979F2223902FD00DDC639 /* DHGifImageOperation.m */; };
 		6C6979F8223902FD00DDC639 /* DHGuidePageHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C6979F5223902FD00DDC639 /* DHGuidePageHUD.m */; };
@@ -406,6 +409,8 @@
 		6C497E0C222FC72200C592D0 /* BangoUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BangoUITests.m; sourceTree = "<group>"; };
 		6C497E0E222FC72200C592D0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6C497E1A222FC7A200C592D0 /* Bango.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Bango.entitlements; sourceTree = "<group>"; };
+		6C4EFC912261C63700EB1ABE /* ZCCartManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZCCartManager.h; sourceTree = "<group>"; };
+		6C4EFC922261C63700EB1ABE /* ZCCartManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZCCartManager.m; sourceTree = "<group>"; };
 		6C5323132239F41100FB7FCC /* ZCLoginViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZCLoginViewController.h; sourceTree = "<group>"; };
 		6C5323142239F41100FB7FCC /* ZCLoginViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZCLoginViewController.m; sourceTree = "<group>"; };
 		6C5323162239F75300FB7FCC /* ZCBaseNavigationController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZCBaseNavigationController.h; sourceTree = "<group>"; };
@@ -418,6 +423,10 @@
 		6C532321223A344100FB7FCC /* UITextView+ZWPlaceHolder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITextView+ZWPlaceHolder.h"; sourceTree = "<group>"; };
 		6C5FD7BB225CD3470027B9D5 /* ZCPersonalCenterVM.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZCPersonalCenterVM.h; sourceTree = "<group>"; };
 		6C5FD7BC225CD3470027B9D5 /* ZCPersonalCenterVM.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZCPersonalCenterVM.m; sourceTree = "<group>"; };
+		6C673DFA2260844D0045B00A /* ZCCartBottomView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZCCartBottomView.h; sourceTree = "<group>"; };
+		6C673DFB2260844D0045B00A /* ZCCartBottomView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZCCartBottomView.m; sourceTree = "<group>"; };
+		6C673DFD2260AD3B0045B00A /* LCAlertTools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCAlertTools.m; sourceTree = "<group>"; };
+		6C673DFE2260AD3B0045B00A /* LCAlertTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCAlertTools.h; sourceTree = "<group>"; };
 		6C6979F1223902FD00DDC639 /* GuideImage.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = GuideImage.bundle; sourceTree = "<group>"; };
 		6C6979F2223902FD00DDC639 /* DHGifImageOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DHGifImageOperation.m; sourceTree = "<group>"; };
 		6C6979F3223902FD00DDC639 /* DHGuidePageHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DHGuidePageHUD.h; sourceTree = "<group>"; };
@@ -1087,6 +1096,8 @@
 				6C53231B223A311A00FB7FCC /* CornerShadowView.m */,
 				6C04DB38223B9F9400F27501 /* JKCountDownButton.h */,
 				6C04DB39223B9F9400F27501 /* JKCountDownButton.m */,
+				6C673DFE2260AD3B0045B00A /* LCAlertTools.h */,
+				6C673DFD2260AD3B0045B00A /* LCAlertTools.m */,
 			);
 			path = ZCUITool;
 			sourceTree = "<group>";
@@ -1687,6 +1698,8 @@
 				6C99A89F225F377F007E92A2 /* ZCCartTuijianCollectionCell.m */,
 				6C99A89B225F3454007E92A2 /* ZCCartEmptySectionHeader.h */,
 				6C99A89C225F3454007E92A2 /* ZCCartEmptySectionHeader.m */,
+				6C673DFA2260844D0045B00A /* ZCCartBottomView.h */,
+				6C673DFB2260844D0045B00A /* ZCCartBottomView.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1698,6 +1711,8 @@
 				6CE257B8225DD407004306C2 /* ZCCartViewModel.m */,
 				6CE257BD225DDB35004306C2 /* ZCCartModel.h */,
 				6CE257BE225DDB35004306C2 /* ZCCartModel.m */,
+				6C4EFC912261C63700EB1ABE /* ZCCartManager.h */,
+				6C4EFC922261C63700EB1ABE /* ZCCartManager.m */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -2180,8 +2195,10 @@
 				6C3D3EBC2232572E00932F4B /* DataSigner.m in Sources */,
 				6CB2A32022310B5C00CEC1CB /* JQZXingWrapper.m in Sources */,
 				6CB2A29022310B5C00CEC1CB /* SELUpdateAlert.m in Sources */,
+				6C673DFC2260844D0045B00A /* ZCCartBottomView.m in Sources */,
 				6CB2A2B322310B5C00CEC1CB /* UIView+HXExtension.m in Sources */,
 				6CAE0A6A2240953C004D4A68 /* FaceShareView.m in Sources */,
+				6C673DFF2260AD3C0045B00A /* LCAlertTools.m in Sources */,
 				6CB2A2A522310B5C00CEC1CB /* UIView+Extension.m in Sources */,
 				6C99A8A6225F575F007E92A2 /* ZCBaseGodsModel.m in Sources */,
 				6C53231E223A311A00FB7FCC /* CornerShadowView.m in Sources */,
@@ -2298,6 +2315,7 @@
 				6C04DB2B223B5A8E00F27501 /* UserInfoModel.m in Sources */,
 				6CB2A2B422310B5C00CEC1CB /* HXPhotoCustomNavigationBar.m in Sources */,
 				6CB2A2C622310B5C00CEC1CB /* UIButton+HXExtension.m in Sources */,
+				6C4EFC932261C63700EB1ABE /* ZCCartManager.m in Sources */,
 				6CB2A33422310CC200CEC1CB /* WeChatPayNetApi.m in Sources */,
 				6CB2A2D422310B5C00CEC1CB /* WXZTipView.m in Sources */,
 				6CBC16FD225C3E50000C9682 /* ZCPersonalBalanceCell.m in Sources */,

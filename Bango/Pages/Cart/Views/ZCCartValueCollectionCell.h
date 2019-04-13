@@ -15,6 +15,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property(nonatomic, strong) ZCCartGodsModel *model;
 
+@property(nonatomic, strong) NSIndexPath *indexPath;
+
 @end
 
 NS_ASSUME_NONNULL_END

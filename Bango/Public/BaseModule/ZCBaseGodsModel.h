@@ -19,6 +19,9 @@ NS_ASSUME_NONNULL_BEGIN
 /** 商品id */
 @property(nonatomic, copy) NSString *goods_id;
 
+/** 数量为1 删除需要确认 */
+@property(nonatomic, assign) BOOL deleteEnsure;
+
 @end
 
 NS_ASSUME_NONNULL_END

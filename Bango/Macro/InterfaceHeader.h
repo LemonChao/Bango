@@ -56,6 +56,10 @@
 #define kGods_addCart           @"?s=/wap/Goods/addCar"
 //商品-从购物车删除
 #define kGods_deleteCart        @"?s=/wap/Goods/cartDelete"
-//商品-修改购物车数量
+//商品-修改商品在购物车数量
 #define kGods_cartAdjustNum     @"?s=/wap/Goods/cartAdjustNum_app"
+//购物车-删除商品 多商品逗号拼接cart_id "4,5"
+#define kGods_cartDelete        @"?s=/wap/Goods/cartDelete"
+
+
 #endif /* InterfaceHeader_h */

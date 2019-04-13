@@ -31,6 +31,12 @@
 - (void)requestWithUrl:(NSString *)url withParameters:(NSDictionary *)params withRequestType:(NetWorkType)requestType withSuccess:(void (^)(id responseObject))success withFailure:(void (^)(NSError *error))failure
 {
     NSMutableDictionary *parameter = params.mutableCopy;
+    UserInfoModel *info = [BaseMethod readObjectWithKey:UserInfo_UDSKEY];
+    
+    [parameter setObject:info.asstoken?:@"" forKey:@"asstoken"];
+    
+    
+    
 //    if ([url containsString:kInterface]) {
 //        parameter = [NSMutableDictionary dictionaryWithDictionary:params];
 //        [parameter setValue:BBUserDefault.token ? BBUserDefault.token : @"" forKey:@"token"];

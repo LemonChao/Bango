@@ -23,6 +23,10 @@ NS_ASSUME_NONNULL_BEGIN
 /** 只有推荐 */
 @property(nonatomic, assign) BOOL onlyTuijian;
 
+/** 购物车-删除商品 多商品逗号拼接cart_id "4,5" */
+@property(nonatomic, strong) RACCommand *godsDeleteCmd;
+
+
 /** 购物车保存本地的商品 */
 @property(nonatomic, copy) NSArray *localGods;
 @end
