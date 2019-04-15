@@ -177,9 +177,19 @@
         if (kStatusTrue) {
             self.baseModel.have_num = StringFormat(@"%@", responseObject[@"data"]);
             self.baseModel.hide = ![self.baseModel.have_num boolValue];
-            if (self.baseModel.deleteEnsure && ![self.baseModel.have_num boolValue]) {
-                [[NSNotificationCenter defaultCenter] postNotificationName:deleteGodsToRefreshCartNotification object:deleteGodsToRefreshCartNotification];
+            if (self.baseModel.deleteEnsure && ![self.baseModel.have_num boolValue]) {//购物车列表减为0
+                [[NSNotificationCenter defaultCenter] postNotificationName:cartValueChangedNotification object:@"removeGoods"];
+            }else {
+                [[NSNotificationCenter defaultCenter] postNotificationName:cartValueChangedNotification object:@"selectAction"];
             }
+            
+            if ([self.baseModel.have_num boolValue]) {
+                [[ZCCartManager manager].goodsDic setObject:self.baseModel forKey:self.baseModel.goods_id];
+            }else {//购物车商品减为0
+                [[ZCCartManager manager].goodsDic removeObjectForKey:self.baseModel.goods_id];
+            }
+            [ZCCartManager manager].change = @"1";
+
             [subscriber sendNext:@(1)];
         }else {
             kShowMessage

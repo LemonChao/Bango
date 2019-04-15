@@ -11,6 +11,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+//选中商品后无法监测到选中状况，无法计算总价
 @interface ZCCartViewModel : ZCBaseViewModel
 
 
@@ -18,7 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, strong) RACCommand *netCartCmd;
 
 /** 购物车商品总数据 */
-@property(nonatomic, copy) NSArray <__kindof ZCCartModel *> *cartDatas;
+@property(nonatomic, copy) NSMutableArray <__kindof ZCCartModel *> *cartDatas;
 
 /** 只有推荐 */
 @property(nonatomic, assign) BOOL onlyTuijian;
@@ -26,9 +27,43 @@ NS_ASSUME_NONNULL_BEGIN
 /** 购物车-删除商品 多商品逗号拼接cart_id "4,5" */
 @property(nonatomic, strong) RACCommand *godsDeleteCmd;
 
+/** 选中商品的总价 */
+@property(nonatomic, copy) NSNumber *totalPrice;
+
+/** 选中的商品id */
+@property(nonatomic, copy) NSString *selectedCartIds;
+
+/** 选中购物车全部商品 */
+@property(nonatomic, strong) NSNumber *selectAll;
+
 
 /** 购物车保存本地的商品 */
 @property(nonatomic, copy) NSArray *localGods;
+
+
+
+
+/** 计算商品总价 */
+-(void)calculateTotalPrice;
+
+/**
+ 获取被选中的 indexPath
+ 
+ @return return indexPath
+ */
+- (nullable NSArray<NSIndexPath *>*)indexsForSelectGoods;
+
+/**
+ 根据被选中的indexpath 删除
+ 
+ @return a new cartDatas
+ */
+- (NSMutableArray <ZCCartModel *>*)deleteWithSelectedIndexPath:(NSArray<NSIndexPath *> *)indexs;
+
+
+
+
+
 @end
 
 NS_ASSUME_NONNULL_END

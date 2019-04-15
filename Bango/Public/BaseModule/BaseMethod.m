@@ -42,7 +42,7 @@
     }
 }
 
-+ (void)cleanObjectForKey:(NSString *)key {
++ (void)deleteObjectForKey:(NSString *)key {
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:key];
 }
 

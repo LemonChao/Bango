@@ -139,7 +139,7 @@
 //}
 
 
-- (void)setModel:(ZCCartGodsModel *)model {
+- (void)setModel:(ZCPublicGoodsModel *)model {
     _model = model;
     
     [self.godsImgView sd_setImageWithURL:[NSURL URLWithString:model.pic_cover_mid]];

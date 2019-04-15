@@ -16,7 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(atomic, strong) NSString *change;
 
 /** 购物车商品 key:goods_id value:GoodsModel */
-@property(nonatomic, strong) NSDictionary *goodsDic;
+@property(nonatomic, strong) NSMutableDictionary *goodsDic;
 
 + (instancetype)manager;
 

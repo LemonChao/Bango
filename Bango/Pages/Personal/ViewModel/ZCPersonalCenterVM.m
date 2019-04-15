@@ -15,7 +15,7 @@
         @weakify(self);
         _memberCmd = [[RACCommand alloc] initWithSignalBlock:^RACSignal * _Nonnull(NSString  *_Nonnull input) {
             return [RACSignal createSignal:^RACDisposable * _Nullable(id<RACSubscriber>  _Nonnull subscriber) {
-                [NetWorkManager.sharedManager requestWithUrl:kMember_index withParameters:@{@"asstoken":input} withRequestType:POSTTYPE withSuccess:^(id  _Nonnull responseObject) {
+                [NetWorkManager.sharedManager requestWithUrl:kMember_index withParameters:@{} withRequestType:POSTTYPE withSuccess:^(id  _Nonnull responseObject) {
                     @strongify(self);
                     if (kStatusTrue) {
                         self.model = [ZCPersonalCenterModel modelWithDictionary:responseObject[@"data"]];

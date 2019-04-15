@@ -7,13 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "ZCHomeModel.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface ZCHomeBangoCell : UITableViewCell
 
-@property(nonatomic, strong) ZCHomeGodsModel *model;
+@property(nonatomic, strong) ZCPublicGoodsModel *model;
 
 @end
 

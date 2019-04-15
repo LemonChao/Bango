@@ -79,14 +79,10 @@ static NSString *dataCellid = @"ZCPersonalDataCell_id";
         @strongify(self);
         [self getData];
     }];
-
 }
 
 - (void)getData {
-    UserInfoModel *info = [BaseMethod readObjectWithKey:UserInfo_UDSKEY];
-    if (StringIsEmpty(info.asstoken)) return;
-    
-    [[self.viewModel.memberCmd execute:info.asstoken] subscribeNext:^(id  _Nullable x) {
+    [[self.viewModel.memberCmd execute:nil] subscribeNext:^(id  _Nullable x) {
         if ([x boolValue]) {
             kHidHud;
             [self.tableView reloadData];

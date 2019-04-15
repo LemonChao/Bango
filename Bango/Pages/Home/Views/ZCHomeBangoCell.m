@@ -31,7 +31,7 @@
     
 }
 
-- (void)setModel:(ZCHomeGodsModel *)model {
+- (void)setModel:(ZCPublicGoodsModel *)model {
     _model = model;
     
     [self.contentImgView sd_setImageWithURL:[NSURL URLWithString:model.pic_cover_small]];

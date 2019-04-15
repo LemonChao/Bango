@@ -93,23 +93,23 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 /// gods model
-@interface ZCHomeGodsModel : ZCBaseGodsModel
-//@property(nonatomic, copy) NSString *goods_id;
-@property(nonatomic, copy) NSString *goods_name;
-@property(nonatomic, copy) NSString *introduction;
-@property(nonatomic, copy) NSString *group_id_array;
-@property(nonatomic, copy) NSString *is_hot;
-@property(nonatomic, copy) NSString *is_new;
-@property(nonatomic, copy) NSString *is_recommend;
-@property(nonatomic, copy) NSString *market_price;
-@property(nonatomic, copy) NSString *pic_cover_small;
-@property(nonatomic, copy) NSString *colonel_content;
-@property(nonatomic, copy) NSString *point_exchange;
-@property(nonatomic, copy) NSString *point_exchange_type;
-@property(nonatomic, copy) NSString *promotion_price;
-@property(nonatomic, copy) NSString *shipping_fee;
-@property(nonatomic, copy) NSString *state;
-
+//@interface ZCHomeGodsModel : ZCBaseGodsModel
+////@property(nonatomic, copy) NSString *goods_id;
+////@property(nonatomic, copy) NSString *goods_name;
+////@property(nonatomic, copy) NSString *introduction;
+////@property(nonatomic, copy) NSString *is_hot;
+////@property(nonatomic, copy) NSString *is_new;
+////@property(nonatomic, copy) NSString *is_recommend;
+////@property(nonatomic, copy) NSString *market_price;
+////@property(nonatomic, copy) NSString *pic_cover_small;
+//@property(nonatomic, copy) NSString *colonel_content;
+//@property(nonatomic, copy) NSString *point_exchange;
+//@property(nonatomic, copy) NSString *point_exchange_type;
+////@property(nonatomic, copy) NSString *promotion_price;
+//@property(nonatomic, copy) NSString *shipping_fee;
+////@property(nonatomic, copy) NSString *state;
+//
+//
 ///** 购物车id */
 //@property(nonatomic, copy) NSString *cart_id;
 ///** 用户id */
@@ -145,8 +145,8 @@ NS_ASSUME_NONNULL_BEGIN
 //@property(nonatomic, copy) NSString *is_new;
 //@property(nonatomic, copy) NSString *sales;
 //@property(nonatomic, copy) NSString *pic_cover_small;
-
-@end
+//
+//@end
 
 
 /// 每个详细分类<搬果小将，水果区...>

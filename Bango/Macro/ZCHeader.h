@@ -19,5 +19,8 @@
 #import "ZCLoginViewController.h"
 #import "UIButton+EdgeInsets.h"
 #import "ZCBaseGodsModel.h"
+#import "ZCBaseModel.h"
+#import "ZCPublicGoodsModel.h"
+#import "ZCCartManager.h"
 
 #endif /* ZCHeader_h */

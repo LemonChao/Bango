@@ -124,13 +124,15 @@
 
 
 
-- (void)setModel:(ZCCartGodsModel *)model {
+- (void)setModel:(ZCPublicGoodsModel *)model {
     model.deleteEnsure = YES;
     _model = model;
     [self.godsImgView sd_setImageWithURL:[NSURL URLWithString:model.pic_cover_mid]];
     self.nameLab.text = model.goods_name;
     self.promotionPriceLab.text = model.promotion_price;
     self.cartButton.baseModel = model;
+    
+    self.selected = model.isSelected;
 }
 
 - (void)setSelected:(BOOL)selected {
@@ -142,12 +144,16 @@
 
 - (void)selectButtonAction:(UIButton *)button {
     UICollectionView *collectionView = (UICollectionView *)self.superview;
-
-    if (button.selected) {
-        [collectionView deselectItemAtIndexPath:self.indexPath animated:NO];
-    }else {
-        [collectionView selectItemAtIndexPath:self.indexPath animated:NO scrollPosition:UICollectionViewScrollPositionNone];
-    }
+//
+//    if (button.selected) {
+//        [collectionView deselectItemAtIndexPath:self.indexPath animated:NO];
+//    }else {
+//        [collectionView selectItemAtIndexPath:self.indexPath animated:NO scrollPosition:UICollectionViewScrollPositionNone];
+//    }
+    
+    self.model.selected = !self.model.isSelected;
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:cartValueChangedNotification object:@"selectAction"];
     
     NSLog(@"select:%@", collectionView.indexPathsForSelectedItems);
 }

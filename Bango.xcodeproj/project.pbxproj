@@ -46,6 +46,7 @@
 		6C497E02222FC72200C592D0 /* BangoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C497E01222FC72200C592D0 /* BangoTests.m */; };
 		6C497E0D222FC72200C592D0 /* BangoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C497E0C222FC72200C592D0 /* BangoUITests.m */; };
 		6C4EFC932261C63700EB1ABE /* ZCCartManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C4EFC922261C63700EB1ABE /* ZCCartManager.m */; };
+		6C4EFC9C2261D28C00EB1ABE /* ZCPublicGoodsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C4EFC9B2261D28C00EB1ABE /* ZCPublicGoodsModel.m */; };
 		6C5323152239F41100FB7FCC /* ZCLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C5323142239F41100FB7FCC /* ZCLoginViewController.m */; };
 		6C5323182239F75300FB7FCC /* ZCBaseNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C5323172239F75300FB7FCC /* ZCBaseNavigationController.m */; };
 		6C53231E223A311A00FB7FCC /* CornerShadowView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C53231B223A311A00FB7FCC /* CornerShadowView.m */; };
@@ -411,6 +412,8 @@
 		6C497E1A222FC7A200C592D0 /* Bango.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Bango.entitlements; sourceTree = "<group>"; };
 		6C4EFC912261C63700EB1ABE /* ZCCartManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZCCartManager.h; sourceTree = "<group>"; };
 		6C4EFC922261C63700EB1ABE /* ZCCartManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZCCartManager.m; sourceTree = "<group>"; };
+		6C4EFC9A2261D28C00EB1ABE /* ZCPublicGoodsModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZCPublicGoodsModel.h; sourceTree = "<group>"; };
+		6C4EFC9B2261D28C00EB1ABE /* ZCPublicGoodsModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZCPublicGoodsModel.m; sourceTree = "<group>"; };
 		6C5323132239F41100FB7FCC /* ZCLoginViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZCLoginViewController.h; sourceTree = "<group>"; };
 		6C5323142239F41100FB7FCC /* ZCLoginViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZCLoginViewController.m; sourceTree = "<group>"; };
 		6C5323162239F75300FB7FCC /* ZCBaseNavigationController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZCBaseNavigationController.h; sourceTree = "<group>"; };
@@ -1875,6 +1878,8 @@
 			children = (
 				6CE6E37022531C7A00D1F046 /* ZCHomeModel.h */,
 				6CE6E37122531C7A00D1F046 /* ZCHomeModel.m */,
+				6C4EFC9A2261D28C00EB1ABE /* ZCPublicGoodsModel.h */,
+				6C4EFC9B2261D28C00EB1ABE /* ZCPublicGoodsModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -2341,6 +2346,7 @@
 				6CD8B338225B20F800092056 /* ZCClassifyRightVC.m in Sources */,
 				6C5323182239F75300FB7FCC /* ZCBaseNavigationController.m in Sources */,
 				6CE257B9225DD407004306C2 /* ZCCartViewModel.m in Sources */,
+				6C4EFC9C2261D28C00EB1ABE /* ZCPublicGoodsModel.m in Sources */,
 				6CB2A2AD22310B5C00CEC1CB /* NSBundle+HXWeiboPhotoPicker.m in Sources */,
 				6CB2A2B622310B5C00CEC1CB /* HXDatePhotoPreviewViewController.m in Sources */,
 				6C04DB25223B540000F27501 /* ZCBaseViewModel.m in Sources */,

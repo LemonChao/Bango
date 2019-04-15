@@ -11,13 +11,13 @@
 @implementation ZCCartModel
 
 + (NSDictionary *)modelContainerPropertyGenericClass {
-    return @{@"shop_goods":[ZCCartGodsModel class]};
+    return @{@"shop_goods":[ZCPublicGoodsModel class]};
 }
 
 @end
 
-@implementation ZCCartGodsModel
-
-
-@end
+//@implementation ZCCartGodsModel
+//
+//
+//@end
 

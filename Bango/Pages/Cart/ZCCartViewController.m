@@ -37,24 +37,14 @@ static NSString *invaluedHeaderid = @"ZCCartInvaluedSectionHeader_id";
     [super viewDidLoad];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deleteGodsToRefreshCart:) name:deleteGodsToRefreshCartNotification object:nil];
-    
-    
-    [self addObserver:self.collectionView forKeyPath:@"indexPathsForVisibleItems" options:NSKeyValueObservingOptionNew||NSKeyValueChangeOldKey context:nil];
-}
-
-
-// 选中商品后改变价格
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context {
-    
-    NSLog(@"bianhe=========");
+//    [MBProgressHUD showActivityText:nil];
+    kShowActivity
+    [self getData];
 }
 
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-//    [MBProgressHUD showActivityText:nil];
-    kShowActivity
-    [self getData];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -71,6 +61,7 @@ static NSString *invaluedHeaderid = @"ZCCartInvaluedSectionHeader_id";
 - (void)configViews {
     
     ZCCartBottomView *bottomView = [[ZCCartBottomView alloc] init];
+    bottomView.viewModel = self.viewModel;
     [self.view addSubview:bottomView];
     [self.view addSubview:self.collectionView];
     
@@ -93,13 +84,24 @@ static NSString *invaluedHeaderid = @"ZCCartInvaluedSectionHeader_id";
 }
 
 
+- (void)bindViewModel {
+    @weakify(self);
+    [RACObserve(self, viewModel.cartDatas) subscribeNext:^(NSArray <__kindof ZCCartModel *> *  _Nullable cartDatas) {
+        @strongify(self);
+        if (!cartDatas.count) return;
+        [self.viewModel calculateTotalPrice];
+        [self.collectionView reloadData];
+    }];
+    
+}
+
+
 - (void)getData {
     @weakify(self);
     [[self.viewModel.netCartCmd execute:nil] subscribeNext:^(id  _Nullable x) {
         @strongify(self);
         if ([x boolValue]) {
             [MBProgressHUD hideHud];
-            [self.collectionView reloadData];
         }
         
         [self.collectionView.mj_header endRefreshing];
@@ -128,27 +130,15 @@ static NSString *invaluedHeaderid = @"ZCCartInvaluedSectionHeader_id";
 
 
 - (void)rightBarButtonAction:(UIBarButtonItem *)item {
-    NSArray *selectItems = self.collectionView.indexPathsForSelectedItems;
+    NSArray *selectItems = [self.viewModel indexsForSelectGoods];
     
-    NSMutableArray *cartIds = [NSMutableArray array];
-    [selectItems enumerateObjectsUsingBlock:^(NSIndexPath *  _Nonnull indexPath, NSUInteger idx, BOOL * _Nonnull stop) {
-        ZCCartModel *model = self.viewModel.cartDatas[indexPath.section];
-        ZCCartGodsModel *godsModel = model.shop_goods[indexPath.row];
-        if (godsModel.cart_id) {
-            [cartIds addObject:godsModel.cart_id];
-        }
-    }];
-    
-    NSString *cartIdString = @"";
-    if (cartIds.count) {
-        cartIdString = [cartIds componentsJoinedByString:@","];
-    }else {
+    if (!selectItems.count) {
         [MBProgressHUD showText:@"您尚未选中任何商品"];
-        return;
+         return;
     }
     
     [LCAlertTools showTipAlertViewWith:self title:@"您确定要删除该商品" message:nil cancelTitle:@"确定" cancelHandler:^{
-        [self executeDeleteCmd:cartIdString];
+        [self executeDeleteCmd:self.viewModel.selectedCartIds];
     }];
 }
 
@@ -257,7 +247,7 @@ static NSString *invaluedHeaderid = @"ZCCartInvaluedSectionHeader_id";
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     ZCCartModel *model = self.viewModel.cartDatas[indexPath.section];
-    ZCCartGodsModel *godModel = model.shop_goods[indexPath.row];
+    ZCPublicGoodsModel *godModel = model.shop_goods[indexPath.row];
     
     if ([model.shop_name isEqualToString:@"推荐商品"]) {
         ZCCartTuijianCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellid forIndexPath:indexPath];

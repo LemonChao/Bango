@@ -93,6 +93,7 @@
         self.backgroundColor = [UIColor whiteColor];
         self.selectButton = [UITool imageButton:ImageNamed(@"cart_gods_normal")];
         [self.selectButton setImage:ImageNamed(@"cart_gods_select") forState:UIControlStateSelected];
+        [self.selectButton addTarget:self action:@selector(selectButtonAction:) forControlEvents:UIControlEventTouchUpInside];
         self.shopNameBtn = [UITool wordButton:nil titleColor:ImportantColor font:MediumFont(14) bgColor:[UIColor clearColor]];
         self.shopNameBtn.userInteractionEnabled = NO;
         
@@ -118,7 +119,19 @@
     _model = model;
     
     [self.shopNameBtn setTitle:model.shop_name forState:UIControlStateNormal];
+    
+    self.selectButton.selected = model.isSelectAll;
 }
+
+- (void)selectButtonAction:(UIButton *)button {
+    self.model.selectAll = !self.model.isSelectAll;
+    for (ZCPublicGoodsModel *item in self.model.shop_goods) {
+        item.selected = self.model.selectAll;
+    }
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:cartValueChangedNotification object:@"selectAction"];
+}
+
 
 @end
 

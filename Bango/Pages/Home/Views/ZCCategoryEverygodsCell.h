@@ -14,7 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface ZCCategoryEverygodsCell : UITableViewCell
 @property(nonatomic, strong) UIView *lineView;
 
-@property(nonatomic, strong) ZCHomeGodsModel *model;
+@property(nonatomic, strong) ZCPublicGoodsModel *model;
 
 @end
 

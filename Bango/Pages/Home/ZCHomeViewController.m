@@ -244,7 +244,7 @@ static NSString *homeFooterid = @"ZCHomeTableFooterView_id";
 
 
 - (void)newsButtonItemAction:(UIBarButtonItem *)item {
-    
+    [BaseMethod deleteObjectForKey:UserInfo_UDSKEY];
 }
 
 - (void)signButtonItemAction:(UIBarButtonItem *)item {

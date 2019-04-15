@@ -33,10 +33,12 @@
 #define loginSuccessNotification    @"loginSuccessNotification_key"
 // 清空商品刷新购物车通知
 #define deleteGodsToRefreshCartNotification     @"deleteGodsToRefreshCartNotification_key"
+// 购物车改变通知
+#define cartValueChangedNotification     @"CartValueChangedNotification"
 
 #pragma mark - NSUserDefaultsKey
 #define UserInfo_UDSKEY             @"UserInfo_NSUserDefaultsKey"
-
+#define ZCCartManager_UDSKey        @"ZCCartManagerSaved_NSUserDefaultsKey"
 
 #define mark - JSBridgeFunctionName
 #define gameShareImmediately            @"shareImmediatelyWithParams"

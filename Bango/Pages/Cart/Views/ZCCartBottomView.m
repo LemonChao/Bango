@@ -25,6 +25,16 @@
     self = [super init];
     if (self) {
         [self commonInit];
+        
+        @weakify(self);
+        [RACObserve(self, viewModel.totalPrice) subscribeNext:^(NSNumber  *_Nullable x) {
+            @strongify(self);
+            self.countLabel.text = StringFormat(@"￥%@",x);
+            self.jieSuanButton.enabled = [x boolValue];
+        }];
+        
+        RAC(self.selectAllBtn,selected) = [RACObserve(self, viewModel.selectAll) skip:1];
+        
     }
     return self;
 }
@@ -80,6 +90,22 @@
 }
 
 - (void)selectAllButtonAction:(UIButton *)button {
+    if (self.viewModel.onlyTuijian) return;
+    
+    BOOL selected = ![self.viewModel.selectAll boolValue];
+    
+    self.viewModel.selectAll = [NSNumber numberWithBool:selected];
+    [self.viewModel.cartDatas enumerateObjectsUsingBlock:^(__kindof ZCCartModel * _Nonnull model, NSUInteger idx, BOOL * _Nonnull stop) {
+        if(!([model.shop_name isEqualToString:@"推荐商品"] || [model.shop_name isEqualToString:@"失效商品"]))  {
+            
+            model.selectAll = selected;
+            for (ZCPublicGoodsModel *goods in model.shop_goods) {
+                goods.selected = selected;
+            }
+        }
+    }];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:cartValueChangedNotification object:@"selectAction"];
     
 }
 
@@ -109,6 +135,8 @@
 - (UIButton *)jieSuanButton {
     if (!_jieSuanButton) {
         _jieSuanButton = [UITool richButton:UIButtonTypeCustom title:@"去结算" titleColor:[UIColor whiteColor] font:MediumFont(WidthRatio(17)) bgColor:GeneralRedColor image:ImageNamed(@"cart_jiesuan_arrow")];
+        [_jieSuanButton setBackgroundImage:[UIImage imageWithColor:GeneralRedColor] forState:UIControlStateNormal];
+        [_jieSuanButton setBackgroundImage:[UIImage imageWithColor:AssistColor] forState:UIControlStateDisabled];
         [_jieSuanButton addTarget:self action:@selector(jieSuanButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _jieSuanButton;

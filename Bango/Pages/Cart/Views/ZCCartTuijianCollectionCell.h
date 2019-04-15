@@ -7,13 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "ZCCartModel.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface ZCCartTuijianCollectionCell : UICollectionViewCell
 
-@property(nonatomic, strong) ZCCartGodsModel *model;
+@property(nonatomic, strong) ZCPublicGoodsModel *model;
 
 @end
 

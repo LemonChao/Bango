@@ -18,7 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - NSUserDefaules操作
 + (void)saveObject:(NSObject *)object withKey:(NSString *)key;
 + (id)readObjectWithKey:(NSString *)key;
-+ (void)cleanObjectForKey:(NSString *)key;
++ (void)deleteObjectForKey:(NSString *)key;
 
 #pragma mark - PhotoLibrary
 
