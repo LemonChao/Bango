@@ -7,10 +7,13 @@
 //
 
 #import "ZCPublicGoodsModel.h"
+//- (void)encodeWithCoder:(NSCoder *)aCoder { [self modelEncodeWithCoder:aCoder]; }
+//- (id)initWithCoder:(NSCoder *)aDecoder { self = [super init]; return [self modelInitWithCoder:aDecoder]; }
 
 
 @implementation ZCPublicGoodsModel
 - (void)encodeWithCoder:(NSCoder *)encoder {
+    [self modelEncodeWithCoder:encoder];
     [encoder encodeObject:self.colonel_content forKey:@"colonel_content"];
     [encoder encodeObject:self.point_exchange forKey:@"point_exchange"];
     [encoder encodeObject:self.point_exchange_type forKey:@"point_exchange_type"];

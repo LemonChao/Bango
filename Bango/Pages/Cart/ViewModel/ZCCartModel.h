@@ -77,7 +77,8 @@ NS_ASSUME_NONNULL_BEGIN
 /** 本店铺下的商品 */
 @property(nonatomic, copy) NSMutableArray <__kindof ZCPublicGoodsModel *>*shop_goods;
 
-
+/** 读取本地购物车商品使用 */
+- (instancetype)initWithName:(NSString *)name aid:(NSString *)aid selectAll:(BOOL)select goods:(NSArray *)goods;
 @end
 
 NS_ASSUME_NONNULL_END

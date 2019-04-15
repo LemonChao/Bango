@@ -32,4 +32,25 @@
     return YES;
 }
 
+- (void)encodeWithCoder:(NSCoder *)encoder {
+    [encoder encodeObject:self.have_num forKey:@"have_num"];
+    [encoder encodeBool:self.hide forKey:@"hide"];
+    [encoder encodeBool:self.deleteEnsure forKey:@"deleteEnsure"];
+    [encoder encodeObject:self.goods_id forKey:@"goods_id"];
+}
+
+
+- (instancetype)initWithCoder:(NSCoder *)decoder {
+    self = [super init];
+    if (self) {
+        self.have_num = [decoder decodeObjectForKey:@"have_num"];
+        self.hide = [decoder decodeBoolForKey:@"hide"];
+        self.deleteEnsure = [decoder decodeBoolForKey:@"deleteEnsure"];
+        self.goods_id = [decoder decodeObjectForKey:@"goods_id"];
+    }
+    return self;
+}
+
+
+
 @end

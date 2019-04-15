@@ -27,7 +27,6 @@
                 [self.netCartCmd execute:nil];
             }
             
-            
             if ([notif.object isEqualToString:@"selectAction"]) { //商品选中事件
                 //重新复制一份，改变指针地址，触发VC里的KVO
                 [self indexsForSelectGoods];
@@ -49,15 +48,26 @@
                 [NetWorkManager.sharedManager requestWithUrl:kChart_like withParameters:@{} withRequestType:POSTTYPE withSuccess:^(id  _Nonnull responseObject) {
                     if (kStatusTrue) {
                         
-                        NSArray *tempArray = [NSArray modelArrayWithClass:[ZCCartModel class] json:responseObject[@"data"]];
                         
+                        NSMutableArray *tempArray = [NSArray modelArrayWithClass:[ZCCartModel class] json:responseObject[@"data"]].mutableCopy;
+                        
+                        UserInfoModel *info = [BaseMethod readObjectWithKey:UserInfo_UDSKEY];
+                        if (StringIsEmpty(info.asstoken)) {
+                            NSDictionary *goodDic = [BaseMethod readObjectWithKey:ZCGoodsDictionary_UDSKey];
+                            
+                            if (goodDic.allValues.count) {
+                                ZCCartModel *model = [[ZCCartModel alloc] initWithName:@"搬果将店铺" aid:@"" selectAll:NO goods:goodDic.allValues];
+                                [tempArray insertObject:model atIndex:0];
+                            }
+                        }
+
                         [tempArray enumerateObjectsUsingBlock:^(__kindof ZCCartModel * _Nonnull cartModel, NSUInteger idx, BOOL * _Nonnull stop) {
                             if ([cartModel.shop_name isEqualToString:@"推荐商品"]) {
                                 self.onlyTuijian = tempArray.count==1;
                             }
                         }];
                         
-                        self.cartDatas = tempArray.mutableCopy;
+                        self.cartDatas = tempArray.copy;
                         [subscriber sendNext:@(1)];
                     }else {
                         kShowMessage;

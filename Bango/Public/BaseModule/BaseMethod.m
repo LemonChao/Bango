@@ -32,7 +32,7 @@
     [[NSUserDefaults standardUserDefaults] setObject:data forKey:key];
 }
 
-+ (id)readObjectWithKey:(NSString *)key {
++ (nullable id)readObjectWithKey:(NSString *)key {
     if ([[[NSUserDefaults standardUserDefaults] dictionaryRepresentation].allKeys containsObject:key]) {
         //消除警告 -[NSKeyedUnarchiver initForReadingWithData:]: data is NULL
         NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:key];
@@ -45,6 +45,30 @@
 + (void)deleteObjectForKey:(NSString *)key {
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:key];
 }
+
++ (void)saveGoodsModel:(NSObject *)object withKey:(NSString *)key {
+    NSMutableDictionary *dic = (NSMutableDictionary *)[self readObjectWithKey:ZCGoodsDictionary_UDSKey];
+    if (!dic) {
+        dic = [NSMutableDictionary dictionary];
+    }
+    [dic setObject:object forKey:key];
+    
+    [self saveObject:dic withKey:ZCGoodsDictionary_UDSKey];
+}
++ (nullable id)readGoodsModelWithKey:(NSString *)key {
+    NSMutableDictionary *dic = [self readObjectWithKey:ZCGoodsDictionary_UDSKey];
+    
+    return [dic objectForKey:key];
+    
+}
++ (void)deleteGoodsModelForKey:(NSString *)key {
+    NSMutableDictionary *dic = [self readObjectWithKey:ZCGoodsDictionary_UDSKey];
+    if (dic) {
+        [dic removeObjectForKey:key];
+        [self saveObject:dic withKey:ZCGoodsDictionary_UDSKey];
+    }
+}
+
 
 
 #pragma mark - PhotoLibrary

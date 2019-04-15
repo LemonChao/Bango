@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface ZCPublicGoodsModel : ZCBaseGodsModel
+@interface ZCPublicGoodsModel : ZCBaseGodsModel<NSCoding>
 //水果专区 干果专区... 商品model
 
 //@property(nonatomic, copy) NSString *goods_id;

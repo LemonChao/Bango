@@ -130,6 +130,15 @@
             return [RACSignal createSignal:^RACDisposable * _Nullable(id<RACSubscriber>  _Nonnull subscriber) {
                 @strongify(self);
                 
+                UserInfoModel *info = [BaseMethod readObjectWithKey:UserInfo_UDSKEY];
+                if (StringIsEmpty(info.asstoken)) {//存本地
+                    self.baseModel.have_num = [NSString stringWithFormat:@"%ld", self.baseModel.have_num.integerValue+1];
+                    self.baseModel.hide = ![self.baseModel.have_num boolValue];
+                    [BaseMethod saveGoodsModel:self.baseModel withKey:self.baseModel.goods_id];
+                    [subscriber sendCompleted];
+                    return nil;
+                }
+                
                 [self executeCmdWithSubscriber:subscriber type:@"0"];
                 return nil;
             }];
@@ -146,10 +155,33 @@
             return [RACSignal createSignal:^RACDisposable * _Nullable(id<RACSubscriber>  _Nonnull subscriber) {
                 @strongify(self);
 
+                UserInfoModel *info = [BaseMethod readObjectWithKey:UserInfo_UDSKEY];
+                if (StringIsEmpty(info.asstoken)) {//本地操作
+                    if (self.baseModel.have_num.integerValue == 1 && self.baseModel.deleteEnsure) { //二次确认
+                        
+                        [LCAlertTools showTipAlertViewWith:[UIApplication sharedApplication].keyWindow.rootViewController title:@"您确定删除该商品吗" message:nil cancelTitle:@"取消" defaultTitle:@"确定" cancelHandler:^{
+                            [subscriber sendCompleted];
+                        } defaultHandler:^{
+                            
+                            self.baseModel.have_num = [NSString stringWithFormat:@"%ld", self.baseModel.have_num.integerValue-1];
+                            self.baseModel.hide = ![self.baseModel.have_num boolValue];
+                            [BaseMethod deleteGoodsModelForKey:self.baseModel.goods_id];
+                            [subscriber sendCompleted];
+                        }];
+                    }else {
+                        self.baseModel.have_num = [NSString stringWithFormat:@"%ld", self.baseModel.have_num.integerValue-1];
+                        self.baseModel.hide = ![self.baseModel.have_num boolValue];
+                        [BaseMethod saveGoodsModel:self.baseModel withKey:self.baseModel.goods_id];
+                        [subscriber sendCompleted];
+                    }
+                    return nil;
+                }
+                
+                
                 if (self.baseModel.have_num.integerValue == 1 && self.baseModel.deleteEnsure) { //二次确认
                     
                     [LCAlertTools showTipAlertViewWith:[UIApplication sharedApplication].keyWindow.rootViewController title:@"您确定删除该商品吗" message:nil cancelTitle:@"取消" defaultTitle:@"确定" cancelHandler:^{
-                        [subscriber sendNext:@(0)];
+//                        [subscriber sendNext:@(0)];
                         [subscriber sendCompleted];
                     } defaultHandler:^{
                         [self executeCmdWithSubscriber:subscriber type:@"1"];
@@ -188,7 +220,6 @@
             }else {//购物车商品减为0
                 [[ZCCartManager manager].goodsDic removeObjectForKey:self.baseModel.goods_id];
             }
-            [ZCCartManager manager].change = @"1";
 
             [subscriber sendNext:@(1)];
         }else {

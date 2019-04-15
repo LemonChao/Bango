@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface ZCBaseGodsModel : ZCBaseModel
+@interface ZCBaseGodsModel : ZCBaseModel<NSCoding>
 
 /** 商品在购物车中的数量 */
 @property (nonatomic, copy) NSString *have_num;
