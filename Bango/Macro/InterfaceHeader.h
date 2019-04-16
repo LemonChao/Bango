@@ -60,6 +60,7 @@
 #define kGods_cartAdjustNum     @"?s=/wap/Goods/cartAdjustNum_app"
 //购物车-删除商品 多商品逗号拼接cart_id "4,5"
 #define kGods_cartDelete        @"?s=/wap/Goods/cartDelete"
-
+//添加到购物车，支持批量 (本地保存的商品上传)
+#define kGod_uploadCartFromLocal   @"?s=/wap/Goods/addCart_more"
 
 #endif /* InterfaceHeader_h */

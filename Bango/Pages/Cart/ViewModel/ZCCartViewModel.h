@@ -30,18 +30,18 @@ NS_ASSUME_NONNULL_BEGIN
 /** 选中商品的总价 */
 @property(nonatomic, copy) NSNumber *totalPrice;
 
-/** 选中的商品id */
+/** 选中的商品cartIds */
 @property(nonatomic, copy) NSString *selectedCartIds;
 
-/** 选中购物车全部商品 */
+/** 选中购物车是否全部商品 */
 @property(nonatomic, strong) NSNumber *selectAll;
 
-
-/** 购物车保存本地的商品 */
-@property(nonatomic, copy) NSArray *localGods;
-
+/** 选中商品的 goodsIds */
+@property(nonatomic, copy) NSArray *selectedGoodsIds;
 
 
+/** 添加到购物车，支持批量 (本地保存的商品上传) */
+@property(nonatomic, strong) RACCommand *addCartCmd;
 
 /** 计算商品总价 */
 -(void)calculateTotalPrice;

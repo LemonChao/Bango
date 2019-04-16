@@ -46,29 +46,100 @@
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:key];
 }
 
+
+
+
+
+//+ (void)saveGoodsModel:(NSObject *)object withKey:(NSString *)key {
+//    NSDictionary *dic = [[NSUserDefaults standardUserDefaults] objectForKey:ZCGoodsDictionary_UDSKey];
+//
+//    NSMutableDictionary *mdic;
+//    if (dic) {
+//        mdic = [NSMutableDictionary dictionaryWithDictionary:dic];
+//    }else {
+//        mdic = [NSMutableDictionary dictionary];
+//    }
+//
+//    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:object];
+//    [mdic setObject:data forKey:key];
+//
+//    [[NSUserDefaults standardUserDefaults] setObject:[NSDictionary dictionaryWithDictionary:mdic] forKey:ZCGoodsDictionary_UDSKey];
+//}
+//+ (nullable id)readGoodsModelWithKey:(NSString *)key {
+//    NSDictionary *dic = [[NSUserDefaults standardUserDefaults] objectForKey:ZCGoodsDictionary_UDSKey];
+//    return [NSKeyedUnarchiver unarchiveObjectWithData:[dic objectForKey:key]];
+//}
+//
+//+ (NSArray *)shopGoodsWithKey:(NSString *)key {
+//    NSDictionary *dic = [[NSUserDefaults standardUserDefaults] objectForKey:ZCGoodsDictionary_UDSKey];
+//
+//    if (!dic.allValues.count) return nil;
+//
+//    NSMutableArray *tempArray = [NSMutableArray array];
+//    for (NSData *item in dic.allValues) {
+//        id obj = [NSKeyedUnarchiver unarchiveObjectWithData:item];
+//        [tempArray addObject:obj];
+//    }
+//
+//    return tempArray.copy;
+//
+//}
+//+ (void)deleteGoodsModelForKey:(NSString *)key {
+//
+//    NSDictionary *dic = [[NSUserDefaults standardUserDefaults] objectForKey:ZCGoodsDictionary_UDSKey];
+////    NSDictionary *dic = [self readObjectWithKey:ZCGoodsDictionary_UDSKey];
+//
+//
+//    NSMutableDictionary *mdic;
+//    if (dic) {
+//        mdic = [NSMutableDictionary dictionaryWithDictionary:dic];
+//        [mdic removeObjectForKey:key];
+//        [self saveObject:[NSDictionary dictionaryWithDictionary:mdic] withKey:ZCGoodsDictionary_UDSKey];
+//    }
+//}
+
 + (void)saveGoodsModel:(NSObject *)object withKey:(NSString *)key {
-    NSMutableDictionary *dic = (NSMutableDictionary *)[self readObjectWithKey:ZCGoodsDictionary_UDSKey];
-    if (!dic) {
-        dic = [NSMutableDictionary dictionary];
-    }
-    [dic setObject:object forKey:key];
+    NSDictionary *dic = [self readObjectWithKey:ZCGoodsDictionary_UDSKey];
     
-    [self saveObject:dic withKey:ZCGoodsDictionary_UDSKey];
+    NSMutableDictionary *mdic;
+    if (dic) {
+        mdic = [NSMutableDictionary dictionaryWithDictionary:dic];
+    }else {
+        mdic = [NSMutableDictionary dictionary];
+    }
+    
+//    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:object];
+//    [mdic setObject:data forKey:key];
+//    [[NSUserDefaults standardUserDefaults] setObject:[NSDictionary dictionaryWithDictionary:mdic] forKey:ZCGoodsDictionary_UDSKey];
+    
+    [mdic setObject:object forKey:key];
+    [self saveObject:mdic.copy withKey:ZCGoodsDictionary_UDSKey];
 }
 + (nullable id)readGoodsModelWithKey:(NSString *)key {
-    NSMutableDictionary *dic = [self readObjectWithKey:ZCGoodsDictionary_UDSKey];
-    
-    return [dic objectForKey:key];
-    
-}
-+ (void)deleteGoodsModelForKey:(NSString *)key {
-    NSMutableDictionary *dic = [self readObjectWithKey:ZCGoodsDictionary_UDSKey];
-    if (dic) {
-        [dic removeObjectForKey:key];
-        [self saveObject:dic withKey:ZCGoodsDictionary_UDSKey];
-    }
+    NSDictionary *dic = [[NSUserDefaults standardUserDefaults] objectForKey:ZCGoodsDictionary_UDSKey];
+    return [NSKeyedUnarchiver unarchiveObjectWithData:[dic objectForKey:key]];
 }
 
++ (NSArray *)shopGoodsFromeUserDefaults {
+    NSDictionary *dic = [self readObjectWithKey:ZCGoodsDictionary_UDSKey];
+    
+    if (!dic.allValues.count) return nil;
+    
+    return dic.allValues;
+}
++ (void)deleteGoodsModelForKeys:(NSArray<NSString *>*)keys {
+    
+    NSDictionary *dic = [self readObjectWithKey:ZCGoodsDictionary_UDSKey];
+    
+    NSMutableDictionary *mdic;
+    if (dic) {
+        mdic = [NSMutableDictionary dictionaryWithDictionary:dic];
+        for (NSString *goodsId in keys) {
+            [mdic removeObjectForKey:goodsId];
+        }
+        [self saveObject:mdic.copy withKey:ZCGoodsDictionary_UDSKey];
+    }
+}
 
 
 #pragma mark - PhotoLibrary

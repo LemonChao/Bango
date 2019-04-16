@@ -23,6 +23,11 @@
 /** 购物车 */
 @property(nonatomic, strong) ZCCartButton *cartButton;
 
+/** 爆款直降 */
+@property(nonatomic, strong) UIImageView *tagImgView1;
+
+/** 运费 */
+@property(nonatomic, strong) UIImageView *tagImgView2;
 @end
 
 
@@ -34,12 +39,16 @@
     if (self) {
         self.contentView.backgroundColor = [UIColor whiteColor];
         
+        self.tagImgView1 = [[UIImageView alloc] init];
+        self.tagImgView2 = [[UIImageView alloc] init];
+        
         [self.contentView addSubview:self.selectButton];
         [self.contentView addSubview:self.godsImgView];
         [self.contentView addSubview:self.nameLab];
         [self.contentView addSubview:self.promotionPriceLab];
         [self.contentView addSubview:self.cartButton];
-        
+        [self.contentView addSubview:self.tagImgView1];
+        [self.contentView addSubview:self.tagImgView2];
         [self initConstraints];
     }
     return self;
@@ -63,6 +72,16 @@
         make.top.equalTo(self.godsImgView).offset(WidthRatio(2));
         make.right.equalTo(self.contentView).inset(WidthRatio(12));
     }];
+    
+    [self.tagImgView1 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.nameLab);
+        make.top.equalTo(self.nameLab.mas_bottom).offset(WidthRatio(5));
+    }];
+    
+    [self.tagImgView2 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.tagImgView1.mas_right).offset(WidthRatio(10));
+        make.top.equalTo(self.tagImgView1);
+    }];
 
     [self.promotionPriceLab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.nameLab);
@@ -75,54 +94,6 @@
     }];
 }
 
-//- (void)initConstraints {
-//    [self.contentView mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.mas_equalTo(0);
-//        make.width.mas_equalTo(SCREEN_WIDTH);
-//        make.bottom.equalTo(self.godsImgView.mas_bottom).offset(WidthRatio(24));
-//    }];
-//
-//
-//    [self.selectButton mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.centerY.equalTo(self.contentView);
-//        make.left.equalTo(self.contentView).inset(WidthRatio(12));
-//    }];
-//
-//    [self.godsImgView mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.centerY.equalTo(self.contentView);
-//        make.left.equalTo(self.selectButton.mas_right).offset(WidthRatio(10));
-//        make.size.mas_equalTo(CGSizeMake(WidthRatio(74), WidthRatio(74)));
-//    }];
-//
-//    [self.nameLab mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.left.equalTo(self.godsImgView.mas_right).offset(WidthRatio(10));
-//        make.top.equalTo(self.godsImgView).offset(WidthRatio(2));
-//        make.right.equalTo(self.contentView).inset(WidthRatio(12));
-//        //        make.width.mas_equalTo(SCREEN_WIDTH-WidthRatio(24+74+10));
-//    }];
-//
-//    [self.promotionPriceLab mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.left.equalTo(self.nameLab);
-//        make.bottom.equalTo(self.godsImgView.mas_bottom).inset(WidthRatio(10));
-//    }];
-//
-//    [self.cartButton mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.right.equalTo(self.contentView).inset(WidthRatio(12));
-//        make.bottom.equalTo(self.godsImgView.mas_bottom).inset(WidthRatio(2));
-//    }];
-//}
-
-//- (UICollectionViewLayoutAttributes *)preferredLayoutAttributesFittingAttributes:(UICollectionViewLayoutAttributes *)layoutAttributes {
-//    [self setNeedsLayout];
-//    [self layoutIfNeeded];
-//    CGSize size = [self.contentView systemLayoutSizeFittingSize:layoutAttributes.size];
-//    CGRect newFrame = layoutAttributes.frame;
-//    newFrame.size.height = size.height;
-//    layoutAttributes.frame = newFrame;
-//    return layoutAttributes;
-//}
-
-
 
 - (void)setModel:(ZCPublicGoodsModel *)model {
     model.deleteEnsure = YES;
@@ -130,10 +101,17 @@
     [self.godsImgView sd_setImageWithURL:[NSURL URLWithString:model.pic_cover_mid]];
     self.nameLab.text = model.goods_name;
     self.promotionPriceLab.text = model.promotion_price;
-    self.cartButton.baseModel = model;
-    
     self.selected = model.isSelected;
-}
+    
+    for (int i = 0; i < model.tagArray.count; i++) {
+        if (i == 0) {
+            self.tagImgView1.image = ImageNamed(model.tagArray[i]);
+        }else if (i == 1) {
+            self.tagImgView2.image = ImageNamed(model.tagArray[i]);
+        }
+    }
+    self.cartButton.baseModel = model;
+ }
 
 - (void)setSelected:(BOOL)selected {
     [super setSelected:selected];
@@ -144,12 +122,6 @@
 
 - (void)selectButtonAction:(UIButton *)button {
     UICollectionView *collectionView = (UICollectionView *)self.superview;
-//
-//    if (button.selected) {
-//        [collectionView deselectItemAtIndexPath:self.indexPath animated:NO];
-//    }else {
-//        [collectionView selectItemAtIndexPath:self.indexPath animated:NO scrollPosition:UICollectionViewScrollPositionNone];
-//    }
     
     self.model.selected = !self.model.isSelected;
     

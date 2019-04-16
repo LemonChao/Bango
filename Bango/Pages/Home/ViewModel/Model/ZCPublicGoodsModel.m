@@ -7,13 +7,10 @@
 //
 
 #import "ZCPublicGoodsModel.h"
-//- (void)encodeWithCoder:(NSCoder *)aCoder { [self modelEncodeWithCoder:aCoder]; }
-//- (id)initWithCoder:(NSCoder *)aDecoder { self = [super init]; return [self modelInitWithCoder:aDecoder]; }
-
 
 @implementation ZCPublicGoodsModel
 - (void)encodeWithCoder:(NSCoder *)encoder {
-    [self modelEncodeWithCoder:encoder];
+//    [self modelEncodeWithCoder:encoder];
     [encoder encodeObject:self.colonel_content forKey:@"colonel_content"];
     [encoder encodeObject:self.point_exchange forKey:@"point_exchange"];
     [encoder encodeObject:self.point_exchange_type forKey:@"point_exchange_type"];
@@ -21,6 +18,7 @@
     [encoder encodeObject:self.cart_id forKey:@"cart_id"];
     [encoder encodeObject:self.buyer_id forKey:@"buyer_id"];
     [encoder encodeObject:self.shop_name forKey:@"shop_name"];
+    [encoder encodeObject:self.goods_name forKey:@"goods_name"];
     [encoder encodeObject:self.introduction forKey:@"introduction"];
     [encoder encodeObject:self.stock forKey:@"stock"];
     [encoder encodeObject:self.max_buy forKey:@"max_buy"];
@@ -29,6 +27,7 @@
     [encoder encodeObject:self.pic_cover_big forKey:@"pic_cover_big"];
     [encoder encodeObject:self.pic_cover_mid forKey:@"pic_cover_mid"];
     [encoder encodeBool:self.selected forKey:@"selected"];
+    [encoder encodeObject:self.tagArray forKey:@"tagArray"];
     //推荐商品
     [encoder encodeObject:self.market_price forKey:@"market_price"];
     [encoder encodeObject:self.goods_type forKey:@"goods_type"];
@@ -56,6 +55,7 @@
         self.cart_id = [decoder decodeObjectForKey:@"cart_id"];
         self.buyer_id = [decoder decodeObjectForKey:@"buyer_id"];
         self.shop_name = [decoder decodeObjectForKey:@"shop_name"];
+        self.goods_name = [decoder decodeObjectForKey:@"goods_name"];
         self.introduction = [decoder decodeObjectForKey:@"introduction"];
         self.stock = [decoder decodeObjectForKey:@"stock"];
         self.max_buy = [decoder decodeObjectForKey:@"max_buy"];
@@ -64,6 +64,7 @@
         self.pic_cover_big = [decoder decodeObjectForKey:@"pic_cover_big"];
         self.pic_cover_mid = [decoder decodeObjectForKey:@"pic_cover_mid"];
         self.selected = [decoder decodeBoolForKey:@"selected"];
+        self.tagArray = [decoder decodeObjectForKey:@"tagArray"];
         // 推荐商品
         self.market_price = [decoder decodeObjectForKey:@"market_price"];
         self.goods_type = [decoder decodeObjectForKey:@"goods_type"];
@@ -78,12 +79,29 @@
         self.hide = [decoder decodeBoolForKey:@"hide"];
         self.goods_id = [decoder decodeObjectForKey:@"goods_id"];
         self.deleteEnsure = [decoder decodeBoolForKey:@"deleteEnsure"];
-
     }
     
     return self;
 }
 
+
+// 当 JSON 转为 Model 完成后，该方法会被调用。
+// 你可以在这里对数据进行校验，如果校验不通过，可以返回 NO，则该 Model 会被忽略。
+// 你也可以在这里做一些自动转换不能完成的工作。
+- (BOOL)modelCustomTransformFromDictionary:(NSDictionary *)dic {
+    NSString *cart_id = [NSString stringWithFormat:@"%@",dic[@"cart_id"]];
+    
+    if (StringIsEmpty(cart_id)) {
+        cart_id = @"0";
+    }
+    _cart_id = cart_id;
+    
+    NSString *have_num = [NSString stringWithFormat:@"%@",dic[@"have_num"]];
+    
+    self.hide = ![have_num boolValue];
+    
+    return YES;
+}
 
 
 @end

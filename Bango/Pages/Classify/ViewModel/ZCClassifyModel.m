@@ -11,7 +11,7 @@
 @implementation ZCClassifyModel
 
 + (NSDictionary *)modelContainerPropertyGenericClass {
-    return @{@"good_list":[ZCClassifyGodsModel class]};
+    return @{@"good_list":[ZCPublicGoodsModel class]};
 }
 
 + (NSDictionary *)modelCustomPropertyMapper {

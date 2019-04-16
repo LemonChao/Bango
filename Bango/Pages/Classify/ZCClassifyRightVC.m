@@ -45,7 +45,7 @@ static NSString *rightCellid = @"ZCClassifyRightCell_id";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     ZCClassifyRightCell *cell = [tableView dequeueReusableCellWithIdentifier:rightCellid];
-    ZCClassifyGodsModel *godsModel = self.dataArray[indexPath.row];
+    ZCPublicGoodsModel *godsModel = self.dataArray[indexPath.row];
     cell.model = godsModel;
     return cell;
 }

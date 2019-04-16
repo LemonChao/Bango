@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ZCClassifyRightVC : ZCBaseViewController
 
-@property(nonatomic, copy) NSArray<__kindof ZCClassifyGodsModel *> *dataArray;
+@property(nonatomic, copy) NSArray<__kindof ZCPublicGoodsModel *> *dataArray;
 
 @end
 

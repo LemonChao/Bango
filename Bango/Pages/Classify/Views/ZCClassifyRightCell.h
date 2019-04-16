@@ -15,7 +15,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property(nonatomic, strong) UIView *lineView;
 
-@property(nonatomic, strong) ZCClassifyGodsModel *model;
+//@property(nonatomic, strong) ZCClassifyGodsModel *model;
+@property(nonatomic, strong) ZCPublicGoodsModel *model;
+
 
 @end
 

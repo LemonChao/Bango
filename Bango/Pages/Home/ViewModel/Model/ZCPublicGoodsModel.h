@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface ZCPublicGoodsModel : ZCBaseGodsModel<NSCoding>
+@interface ZCPublicGoodsModel : ZCBaseGodsModel
 //水果专区 干果专区... 商品model
 
 //@property(nonatomic, copy) NSString *goods_id;
@@ -56,7 +56,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, copy) NSString *pic_cover_mid;
 
 @property(nonatomic, assign, getter=isSelected) BOOL selected;
-
+/** 商品标签 */
+@property(nonatomic, copy) NSArray *tagArray;
 
 //推荐商品model
 @property(nonatomic, copy) NSString *market_price;

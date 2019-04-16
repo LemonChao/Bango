@@ -39,6 +39,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property(nonatomic, copy) NSString *loginBtnTitle;
 
+
+/**
+ 上传本地商品到购物车，登录完成后执行
+ */
+- (void)addGoodsToNetCart;
+
 @end
 
 NS_ASSUME_NONNULL_END

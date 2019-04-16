@@ -28,6 +28,12 @@
             self.loginType = @"2";
             self.loginBtnTitle = @"登录";
         }
+        
+//        [[[[NSNotificationCenter defaultCenter] rac_addObserverForName:loginSuccessNotification object:nil] takeUntil:[self rac_willDeallocSignal]] subscribeNext:^(NSNotification *notif) {
+//
+//
+//
+//        }];
     }
     return self;
 }
@@ -169,6 +175,8 @@
                         model.loginNum = origModel.loginNum;
                         [BaseMethod saveObject:model withKey:UserInfo_UDSKEY];
                         [subscriber sendNext:@(1)];
+                        
+                        [self addGoodsToNetCart];
                     }else {
                         [subscriber sendNext:@(0)];
                     }
@@ -182,6 +190,48 @@
         }];
     }
     return _personDataCmd;
+}
+
+
+/**
+ 上传本地商品到购物车，登录完成后执行
+ */
+- (void)addGoodsToNetCart{
+    
+    if (![self goodsIds].length) return;
+    
+    [NetWorkManager.sharedManager requestWithUrl:kGod_uploadCartFromLocal withParameters:@{@"goods_id":[self goodsIds]} withRequestType:POSTTYPE withSuccess:^(id  _Nonnull responseObject) {
+        if (kStatusTrue) {
+            [BaseMethod deleteObjectForKey:ZCGoodsDictionary_UDSKey];
+        }else {
+            [self performSelector:@selector(addGoodsToNetCart) withObject:nil afterDelay:5];
+        }
+        kShowMessage;
+    } withFailure:^(NSError * _Nonnull error) {
+        [self performSelector:@selector(addGoodsToNetCart) withObject:nil afterDelay:5];
+        kShowError
+    }];
+}
+
+
+/**
+ 本地商品id，，支持批量上传
+ 
+ @return 拼接的上传参数
+ */
+- (NSString *)goodsIds {
+    NSArray *tempArray = [BaseMethod shopGoodsFromeUserDefaults];
+    if (!tempArray.count) return @"";
+    
+    NSMutableArray *mArray = [NSMutableArray array];
+    [tempArray enumerateObjectsUsingBlock:^(ZCPublicGoodsModel *_Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        
+        NSString *item = StringFormat(@"%@:%@", obj.goods_id,obj.have_num);
+        [mArray addObject:item];
+        
+    }];
+    
+    return [mArray componentsJoinedByString:@","];
 }
 
 

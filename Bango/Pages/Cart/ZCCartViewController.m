@@ -38,13 +38,12 @@ static NSString *invaluedHeaderid = @"ZCCartInvaluedSectionHeader_id";
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deleteGodsToRefreshCart:) name:deleteGodsToRefreshCartNotification object:nil];
 //    [MBProgressHUD showActivityText:nil];
-    kShowActivity
-    [self getData];
 }
 
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    [self getData];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -116,12 +115,9 @@ static NSString *invaluedHeaderid = @"ZCCartInvaluedSectionHeader_id";
 - (void)executeDeleteCmd:(NSString *)cartids {
     kShowActivity
     
-    @weakify(self);
     [[self.viewModel.godsDeleteCmd execute:cartids] subscribeNext:^(id  _Nullable x) {
-        @strongify(self);
         if ([x boolValue]) {
-            
-            [self getData];
+            [[NSNotificationCenter defaultCenter] postNotificationName:cartValueChangedNotification object:@"refreshNetCart"];
         }
     } error:^(NSError * _Nullable error) {
         
@@ -138,10 +134,18 @@ static NSString *invaluedHeaderid = @"ZCCartInvaluedSectionHeader_id";
     }
     
     [LCAlertTools showTipAlertViewWith:self title:@"您确定要删除该商品" message:nil cancelTitle:@"确定" cancelHandler:^{
-        [self executeDeleteCmd:self.viewModel.selectedCartIds];
+        
+        UserInfoModel *info = [BaseMethod readObjectWithKey:UserInfo_UDSKEY];
+        if (StringIsEmpty(info.asstoken)) {
+            [BaseMethod deleteGoodsModelForKeys:self.viewModel.selectedGoodsIds];
+            [[NSNotificationCenter defaultCenter] postNotificationName:cartValueChangedNotification object:@"refreshNetCart"];
+
+        }else {
+            [self executeDeleteCmd:self.viewModel.selectedCartIds];
+        }
+        
     }];
 }
-
 
 
 
@@ -262,13 +266,10 @@ static NSString *invaluedHeaderid = @"ZCCartInvaluedSectionHeader_id";
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    [collectionView deselectItemAtIndexPath:indexPath animated:YES];
-    NSLog(@"%@", collectionView.indexPathsForSelectedItems);
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath {
     
-    NSLog(@"%@", collectionView.indexPathsForSelectedItems);
 }
 
 

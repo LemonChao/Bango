@@ -21,9 +21,10 @@ NS_ASSUME_NONNULL_BEGIN
 + (void)deleteObjectForKey:(NSString *)key;
 
 + (void)saveGoodsModel:(NSObject *)object withKey:(NSString *)key;
-+ (nullable id)readGoodsModelWithKey:(NSString *)key;
-+ (void)deleteGoodsModelForKey:(NSString *)key;
+//+ (nullable id)readGoodsModelWithKey:(NSString *)key;
++ (void)deleteGoodsModelForKeys:(NSArray<NSString *>*)keys;
 
++ (NSArray *)shopGoodsFromeUserDefaults;
 
 #pragma mark - PhotoLibrary
 

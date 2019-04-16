@@ -129,7 +129,7 @@
 - (void)setModel:(ZCPublicGoodsModel *)model {
     _model = model;
     
-    [self.godsImgView sd_setImageWithURL:[NSURL URLWithString:model.pic_cover_small]];
+    [self.godsImgView sd_setImageWithURL:[NSURL URLWithString:model.pic_cover_mid]];
     self.nameLab.text = model.goods_name;
     self.descriptLab.text = model.introduction;
     self.promotionPriceLab.text = model.promotion_price;

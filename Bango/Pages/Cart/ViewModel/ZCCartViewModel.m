@@ -23,7 +23,7 @@
             NSLog(@"object:%@ /nuserInfo:%@", notif,notif.userInfo);
             
             //减1 需要reload ，减到0 删除商品(二次确认)
-            if ([notif.object isEqualToString:@"removeGoods"]) {
+            if ([notif.object isEqualToString:@"refreshNetCart"]) {
                 [self.netCartCmd execute:nil];
             }
             
@@ -33,8 +33,6 @@
                 self.cartDatas = self.cartDatas.copy;
             }
         }];
-        
-        
     }
     return self;
 }
@@ -47,16 +45,15 @@
                 
                 [NetWorkManager.sharedManager requestWithUrl:kChart_like withParameters:@{} withRequestType:POSTTYPE withSuccess:^(id  _Nonnull responseObject) {
                     if (kStatusTrue) {
-                        
-                        
+                        kHidHud
                         NSMutableArray *tempArray = [NSArray modelArrayWithClass:[ZCCartModel class] json:responseObject[@"data"]].mutableCopy;
                         
                         UserInfoModel *info = [BaseMethod readObjectWithKey:UserInfo_UDSKEY];
                         if (StringIsEmpty(info.asstoken)) {
-                            NSDictionary *goodDic = [BaseMethod readObjectWithKey:ZCGoodsDictionary_UDSKey];
                             
-                            if (goodDic.allValues.count) {
-                                ZCCartModel *model = [[ZCCartModel alloc] initWithName:@"搬果将店铺" aid:@"" selectAll:NO goods:goodDic.allValues];
+                            NSArray *locals = [BaseMethod shopGoodsFromeUserDefaults];
+                            if (locals.count) {
+                                ZCCartModel *model = [[ZCCartModel alloc] initWithName:@"搬果将店铺" aid:@"" selectAll:NO goods:locals];
                                 [tempArray insertObject:model atIndex:0];
                             }
                         }
@@ -65,6 +62,21 @@
                             if ([cartModel.shop_name isEqualToString:@"推荐商品"]) {
                                 self.onlyTuijian = tempArray.count==1;
                             }
+                            
+                            [cartModel.shop_goods enumerateObjectsUsingBlock:^(__kindof ZCPublicGoodsModel * _Nonnull goods, NSUInteger idx, BOOL * _Nonnull stop) {
+                                NSMutableArray *marray = [NSMutableArray array];
+                                
+                                if ([goods.is_hot boolValue]) {
+                                    [marray addObject:@"cart_hotsell"];
+                                }
+                                if ([goods.shipping_fee boolValue]) {
+                                    [marray addObject:@"cart_bubaoyou"];
+                                }else {
+                                    [marray addObject:@"cart_baoyou"];
+                                }
+                                goods.tagArray = marray.copy;
+                            }];
+                            
                         }];
                         
                         self.cartDatas = tempArray.copy;
@@ -110,6 +122,35 @@
     return _godsDeleteCmd;
 }
 
+
+- (RACCommand *)addCartCmd {
+    if (!_addCartCmd) {
+        _addCartCmd = [[RACCommand alloc] initWithSignalBlock:^RACSignal * _Nonnull(id  _Nullable input) {
+            return [RACSignal createSignal:^RACDisposable * _Nullable(id<RACSubscriber>  _Nonnull subscriber) {
+                
+                [NetWorkManager.sharedManager requestWithUrl:kGod_uploadCartFromLocal withParameters:@{@"goods_id":[self goodsIds]} withRequestType:POSTTYPE withSuccess:^(id  _Nonnull responseObject) {
+                    
+                    if (kStatusTrue) {
+                        [BaseMethod deleteObjectForKey:ZCGoodsDictionary_UDSKey];
+                        [subscriber sendNext:@(1)];
+                    }else {
+                        kShowMessage
+                        [subscriber sendNext:@(0)];
+                    }
+                    [subscriber sendCompleted];
+                } withFailure:^(NSError * _Nonnull error) {
+                    kShowError
+                    [subscriber sendError:error];
+                }];
+                return nil;
+            }];
+        }];
+    }
+    return _addCartCmd;
+}
+
+
+
 // 计算选中的总价
 -(void)calculateTotalPrice {
     
@@ -138,7 +179,8 @@
     
     NSMutableArray *selectedArray = [NSMutableArray array];
     NSMutableArray *cartIds = [NSMutableArray array];
-    
+    NSMutableArray *goodIds = [NSMutableArray array];
+
     __block BOOL selectAll = YES;
     [self.cartDatas enumerateObjectsUsingBlock:^(__kindof ZCCartModel * _Nonnull model, NSUInteger section, BOOL * _Nonnull stop) {
         
@@ -152,7 +194,7 @@
                 if (goodsModel.isSelected == YES) {
                     NSIndexPath *index = [NSIndexPath indexPathForRow:row inSection:section];
                     [selectedArray addObject:index];
-                    
+                    [goodIds addObject:goodsModel.goods_id];
                     [cartIds addObject:goodsModel.cart_id];
                 }else {
                     sectionSelect = NO;
@@ -168,6 +210,7 @@
     
     self.selectedCartIds = [cartIds componentsJoinedByString:@","];
     self.selectAll = [NSNumber numberWithBool:selectAll];
+    self.selectedGoodsIds = goodIds.copy;
     return selectedArray;
 }
 
@@ -183,7 +226,6 @@
     for (NSIndexPath *indexPath in indexs) {
         
         ZCCartModel *model = self.cartDatas[indexPath.section];
-        
         [model.shop_goods removeObjectAtIndex:indexPath.row];
         
         if (model.shop_goods.count == 0) {
@@ -193,5 +235,27 @@
     
     return self.cartDatas.mutableCopy;
 }
+
+
+/**
+ 本地商品id，，支持批量上传
+
+ @return 拼接的上传参数
+ */
+- (NSString *)goodsIds {
+    NSArray *tempArray = [BaseMethod shopGoodsFromeUserDefaults];
+    if (!tempArray.count) return @"";
+    
+    NSMutableArray *mArray = [NSMutableArray array];
+    [tempArray enumerateObjectsUsingBlock:^(ZCPublicGoodsModel *_Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        
+        NSString *item = StringFormat(@"%@:%@", obj.goods_id,obj.have_num);
+        [mArray addObject:item];
+        
+    }];
+    
+    return [mArray componentsJoinedByString:@","];
+}
+
 
 @end

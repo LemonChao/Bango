@@ -82,7 +82,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, copy) NSString *category_name;
 @property(nonatomic, copy) NSString *short_name;
 @property(nonatomic, copy) NSString *pid;
-@property(nonatomic, copy) NSArray <__kindof ZCClassifyGodsModel *>*good_list;
+@property(nonatomic, copy) NSArray <__kindof ZCPublicGoodsModel *>*good_list;
 
 @end
 

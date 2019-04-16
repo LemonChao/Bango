@@ -42,7 +42,11 @@
     if (self) {
         [self commonInit];
         @weakify(self);
-        RAC(self.countLab, text) = RACObserve(self, baseModel.have_num);
+//        RAC(self.countLab, text) = RACObserve(self, baseModel.have_num);
+        
+        [RACObserve(self, baseModel.have_num) subscribeNext:^(id  _Nullable x) {
+            self.countLab.text = x;
+        }];
         [RACObserve(self, baseModel.hide) subscribeNext:^(id  _Nullable x) {
             @strongify(self);
             self.divisionButton.hidden = self.countLab.hidden = self.addButton.selected = [x boolValue];
@@ -57,7 +61,10 @@
     if (self) {
         [self commonInit];
         @weakify(self);
-        RAC(self.countLab, text) = RACObserve(self, baseModel.have_num);
+//        RAC(self.countLab, text) = RACObserve(self, baseModel.have_num);
+        [RACObserve(self, baseModel.have_num) subscribeNext:^(id  _Nullable x) {
+            self.countLab.text = x;
+        }];
         [RACObserve(self, baseModel.hide) subscribeNext:^(id  _Nullable x) {
             @strongify(self);
             self.divisionButton.hidden = self.countLab.hidden = self.addButton.selected = [x boolValue];
@@ -135,6 +142,7 @@
                     self.baseModel.have_num = [NSString stringWithFormat:@"%ld", self.baseModel.have_num.integerValue+1];
                     self.baseModel.hide = ![self.baseModel.have_num boolValue];
                     [BaseMethod saveGoodsModel:self.baseModel withKey:self.baseModel.goods_id];
+                    [[NSNotificationCenter defaultCenter] postNotificationName:cartValueChangedNotification object:@"refreshNetCart"];
                     [subscriber sendCompleted];
                     return nil;
                 }
@@ -165,13 +173,15 @@
                             
                             self.baseModel.have_num = [NSString stringWithFormat:@"%ld", self.baseModel.have_num.integerValue-1];
                             self.baseModel.hide = ![self.baseModel.have_num boolValue];
-                            [BaseMethod deleteGoodsModelForKey:self.baseModel.goods_id];
+                            [BaseMethod deleteGoodsModelForKeys:@[self.baseModel.goods_id]];
+                            [[NSNotificationCenter defaultCenter] postNotificationName:cartValueChangedNotification object:@"refreshNetCart"];
                             [subscriber sendCompleted];
                         }];
                     }else {
                         self.baseModel.have_num = [NSString stringWithFormat:@"%ld", self.baseModel.have_num.integerValue-1];
                         self.baseModel.hide = ![self.baseModel.have_num boolValue];
                         [BaseMethod saveGoodsModel:self.baseModel withKey:self.baseModel.goods_id];
+                        [[NSNotificationCenter defaultCenter] postNotificationName:cartValueChangedNotification object:@"selectAction"];
                         [subscriber sendCompleted];
                     }
                     return nil;
@@ -209,18 +219,13 @@
         if (kStatusTrue) {
             self.baseModel.have_num = StringFormat(@"%@", responseObject[@"data"]);
             self.baseModel.hide = ![self.baseModel.have_num boolValue];
-            if (self.baseModel.deleteEnsure && ![self.baseModel.have_num boolValue]) {//购物车列表减为0
-                [[NSNotificationCenter defaultCenter] postNotificationName:cartValueChangedNotification object:@"removeGoods"];
-            }else {
+            
+            if (self.baseModel.deleteEnsure && [self.baseModel.have_num boolValue]) {//购物车列表没有减为0
                 [[NSNotificationCenter defaultCenter] postNotificationName:cartValueChangedNotification object:@"selectAction"];
+            }else {
+                [[NSNotificationCenter defaultCenter] postNotificationName:cartValueChangedNotification object:@"refreshNetCart"];
             }
             
-            if ([self.baseModel.have_num boolValue]) {
-                [[ZCCartManager manager].goodsDic setObject:self.baseModel forKey:self.baseModel.goods_id];
-            }else {//购物车商品减为0
-                [[ZCCartManager manager].goodsDic removeObjectForKey:self.baseModel.goods_id];
-            }
-
             [subscriber sendNext:@(1)];
         }else {
             kShowMessage
