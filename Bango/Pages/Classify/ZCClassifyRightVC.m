@@ -36,7 +36,7 @@ static NSString *rightCellid = @"ZCClassifyRightCell_id";
 
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return WidthRatio(160);
+    return WidthRatio(140);
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {

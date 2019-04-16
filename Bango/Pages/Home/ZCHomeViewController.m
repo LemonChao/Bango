@@ -18,7 +18,7 @@
 #import "ZCHomeViewModel.h"
 #import "SDCycleScrollView.h"
 #import "ZCHomeTableHeaderFooterView.h"
-
+#import "DHGuidePageHUD.h"
 @interface ZCHomeViewController ()<UITableViewDataSource,UITableViewDelegate,SDCycleScrollViewDelegate>
 /** 轮播图 */
 @property (nonatomic, strong) SDCycleScrollView *cycleView;
@@ -43,6 +43,11 @@ static NSString *homeFooterid = @"ZCHomeTableFooterView_id";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    if (![[NSUserDefaults standardUserDefaults] boolForKey:showGuidePageKey]) {
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:showGuidePageKey];
+        DHGuidePageHUD *guidePage = [[DHGuidePageHUD alloc] dh_initWithFrame:self.view.frame imageNameArray:@[@"guide_1",@"guide_2",@"guide_3"] buttonIsHidden:NO];
+        [[UIApplication sharedApplication].keyWindow addSubview:guidePage];
+    }
     
     [MBProgressHUD showActivityText:nil];
     [self getDataWithCaches:@"1"];
@@ -281,6 +286,7 @@ static NSString *homeFooterid = @"ZCHomeTableFooterView_id";
 - (SDCycleScrollView *)cycleView {
     if (!_cycleView) {
         _cycleView = [SDCycleScrollView cycleScrollViewWithFrame:CGRectMake(WidthRatio(12), WidthRatio(10), SCREEN_WIDTH-WidthRatio(24), WidthRatio(144)) delegate:self placeholderImage:nil];
+        _cycleView.backgroundColor = [UIColor whiteColor];
         _cycleView.showPageControl = NO;
         _cycleView.autoScrollTimeInterval = 4;
     }

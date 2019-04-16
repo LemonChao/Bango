@@ -84,13 +84,7 @@
         make.right.equalTo(self.contentView).inset(WidthRatio(margin));
         make.top.equalTo(self.descriptLab.mas_bottom).offset(WidthRatio(15));
     }];
-    
-//    [self.cartContentView mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.right.equalTo(self.contentView).inset(WidthRatio(margin));
-//        make.top.equalTo(self.descriptLab.mas_bottom).offset(WidthRatio(15));
-//    }];
-    
-    
+
     [self.promotionPriceLab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.cartButton);
         make.left.equalTo(self.descriptLab);
@@ -101,22 +95,6 @@
         make.top.equalTo(self.promotionPriceLab.mas_bottom).offset(WidthRatio(10));
     }];
     
-//    [self.addButton mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.right.equalTo(self.cartButton);
-//        make.top.bottom.equalTo(self.cartButton);
-//    }];
-//
-//    [self.countLab mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.centerY.equalTo(self.cartButton);
-//        make.right.equalTo(self.addButton.mas_left).inset(WidthRatio(12));
-//    }];
-//
-//    [self.divisionButton mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.centerY.equalTo(self.cartButton);
-//        make.right.equalTo(self.countLab.mas_left).inset(WidthRatio(12));
-//        make.left.equalTo(self.cartButton);
-//    }];
-//
     [self.lineView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.equalTo(self.contentView).inset(margin);
         make.bottom.equalTo(self.contentView).inset(1);
@@ -133,8 +111,11 @@
     self.nameLab.text = model.goods_name;
     self.descriptLab.text = model.introduction;
     self.promotionPriceLab.text = model.promotion_price;
-    self.marketPriceLab.text = model.market_price;
     self.cartButton.baseModel = model;
+    NSMutableAttributedString *attText = [[NSMutableAttributedString alloc] initWithString:model.market_price];
+    attText.strikethroughStyle = NSUnderlineStyleSingle;
+    attText.strikethroughColor = AssistColor;
+    self.marketPriceLab.attributedText = attText;
 }
 
 
@@ -143,7 +124,7 @@
 
 - (UIImageView *)godsImgView {
     if (!_godsImgView) {
-        _godsImgView = [UITool imageViewImage:ImageNamed(@"list_placeholder_normal") contentMode:UIViewContentModeScaleAspectFill];
+        _godsImgView = [UITool imageViewPlaceHolder:ImageNamed(@"list_placeholder_normal") contentMode:UIViewContentModeScaleToFill cornerRadius:WidthRatio(4) borderWidth:0 borderColor:[UIColor clearColor]];
     }
     return _godsImgView;
 }

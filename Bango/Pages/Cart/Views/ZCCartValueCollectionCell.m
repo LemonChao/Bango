@@ -103,6 +103,7 @@
     self.promotionPriceLab.text = model.promotion_price;
     self.selected = model.isSelected;
     
+    self.tagImgView1.image = self.tagImgView2.image = nil;
     for (int i = 0; i < model.tagArray.count; i++) {
         if (i == 0) {
             self.tagImgView1.image = ImageNamed(model.tagArray[i]);
@@ -144,7 +145,7 @@
 
 - (UIImageView *)godsImgView {
     if (!_godsImgView) {
-        _godsImgView = [UITool imageViewImage:ImageNamed(@"list_placeholder_normal") contentMode:UIViewContentModeScaleAspectFill];
+        _godsImgView = [UITool imageViewPlaceHolder:ImageNamed(@"list_placeholder_normal") contentMode:UIViewContentModeScaleToFill cornerRadius:WidthRatio(4) borderWidth:0 borderColor:[UIColor clearColor]];
     }
     return _godsImgView;
 }

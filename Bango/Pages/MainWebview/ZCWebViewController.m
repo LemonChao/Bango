@@ -53,8 +53,8 @@
         make.edges.mas_equalTo(UIEdgeInsetsZero);
     }];
     
-    if (![[NSUserDefaults standardUserDefaults] boolForKey:showGuodePageKey]) {
-        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:showGuodePageKey];
+    if (![[NSUserDefaults standardUserDefaults] boolForKey:showGuidePageKey]) {
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:showGuidePageKey];
         DHGuidePageHUD *guidePage = [[DHGuidePageHUD alloc] dh_initWithFrame:self.view.frame imageNameArray:@[@"guide_1",@"guide_2",@"guide_3"] buttonIsHidden:NO];
         [[UIApplication sharedApplication].keyWindow addSubview:guidePage];
     }

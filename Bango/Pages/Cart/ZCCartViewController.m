@@ -163,7 +163,7 @@ static NSString *invaluedHeaderid = @"ZCCartInvaluedSectionHeader_id";
     ZCCartModel *model = self.viewModel.cartDatas[indexPath.section];
     
     if ([model.shop_name isEqualToString:@"推荐商品"]) {
-        return CGSizeMake(((SCREEN_WIDTH-WidthRatio(29))/2), WidthRatio(300));
+        return CGSizeMake(floorf(((SCREEN_WIDTH-WidthRatio(29))/2)), floorf(WidthRatio(300)));
     }else {
         return CGSizeMake(SCREEN_WIDTH, WidthRatio(122));
     }

@@ -19,7 +19,8 @@
         UIButton *likeButton = [UITool wordButton:UIButtonTypeCustom title:@"猜你喜欢" titleColor:ImportantColor font:MediumFont(WidthRatio(14)) bgColor:[UIColor clearColor]];
         [likeButton setBackgroundImage:ImageNamed(@"cart_gussLike") forState:UIControlStateNormal];
         UIButton *emptyButton = [UITool richButton:UIButtonTypeCustom title:@"去逛逛" titleColor:GeneralRedColor font:SystemFont(17) bgColor:[UIColor clearColor] image:ImageNamed(@"public_emptyContent")];
-        emptyButton.frame = CGRectMake((SCREEN_WIDTH-WidthRatio(123))/2, WidthRatio(44), WidthRatio(123), WidthRatio(136));
+        emptyButton.frame = CGRectMake(0, WidthRatio(44), SCREEN_WIDTH, WidthRatio(157));
+
         [emptyButton setImagePosition:ZCImagePositionTop spacing:WidthRatio(20)];
         UILabel *emptyLabel = [UITool labelWithText:@"购物车空空如也~" textColor:AssistColor font:SystemFont(11)];
         

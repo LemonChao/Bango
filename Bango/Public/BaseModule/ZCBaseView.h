@@ -11,6 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface ZCBaseView : UIView
+@property (nonatomic, strong) ZCBaseViewController *viewController;
 
 @end
 

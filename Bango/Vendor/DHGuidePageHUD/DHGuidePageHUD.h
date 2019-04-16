@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-#define showGuodePageKey @"showdhGuidePage_Key"
+#define showGuidePageKey @"showdhGuidePage_Key"
 
 @interface DHGuidePageHUD : UIView
 /**

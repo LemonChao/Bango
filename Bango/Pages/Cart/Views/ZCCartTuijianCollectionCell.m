@@ -146,8 +146,11 @@
     self.nameLab.text = model.goods_name;
     self.descriptLab.text = model.introduction;
     self.promotionPriceLab.text = model.promotion_price;
-    self.marketPriceLab.text = model.market_price;
     self.cartButton.baseModel = model;
+    NSMutableAttributedString *attText = [[NSMutableAttributedString alloc] initWithString:model.market_price];
+    attText.strikethroughStyle = NSUnderlineStyleSingle;
+    attText.strikethroughColor = AssistColor;
+    self.marketPriceLab.attributedText = attText;
 }
 
 

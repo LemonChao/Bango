@@ -59,7 +59,7 @@
     
     [self.godsImgView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.contentView).inset(WidthRatio(margin));
-        make.top.bottom.equalTo(self.contentView).inset(WidthRatio(5));
+        make.top.bottom.equalTo(self.contentView).inset(WidthRatio(10));
         make.height.equalTo(self.godsImgView.mas_width);
     }];
     
@@ -107,15 +107,19 @@
     self.nameLab.text = model.goods_name;
     self.descriptLab.text = model.goods_name;
     self.promotionPriceLab.text = model.promotion_price;
-    self.marketPriceLab.text = model.market_price;
     self.cartButton.baseModel = model;
+    NSMutableAttributedString *attText = [[NSMutableAttributedString alloc] initWithString:model.market_price];
+    attText.strikethroughStyle = NSUnderlineStyleSingle;
+    attText.strikethroughColor = AssistColor;
+    self.marketPriceLab.attributedText = attText;
+
 }
 
 #pragma mark - setter && getter
 
 - (UIImageView *)godsImgView {
     if (!_godsImgView) {
-        _godsImgView = [UITool imageViewImage:ImageNamed(@"list_placeholder_normal") contentMode:UIViewContentModeScaleAspectFill];
+        _godsImgView = [UITool imageViewPlaceHolder:ImageNamed(@"list_placeholder_normal") contentMode:UIViewContentModeScaleAspectFill cornerRadius:WidthRatio(4) borderWidth:0.f borderColor:[UIColor clearColor]];
     }
     return _godsImgView;
 }
