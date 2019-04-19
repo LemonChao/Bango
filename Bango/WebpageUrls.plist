@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>点击水果专区</key>
+	<string> /search-result?category_id=1&amp;key_word=水果专区</string>
+	<key>点击搜索框</key>
+	<string> /search</string>
+	<key>点击爆款推荐——查看全部 </key>
+	<string>/search-result?type=tuijian</string>
+	<key>goods-detail</key>
+	<string>/goods-detail?goods_id=166</string>
+</dict>
+</plist>

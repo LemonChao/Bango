@@ -54,6 +54,21 @@ static NSString *cellid = @"ZCCategoryCollectionCell_id";
     return cell;
 }
 
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    
+    ZCHomeCategoryModel *model = self.categoryList[indexPath.row];
+    
+    UIViewController *baseVC = [self viewController];
+    
+    NSDictionary *dic = @{@"category_id":model.category_id,@"key_word@":model.category_name};
+    
+    ZCWebViewController *webVC = [[ZCWebViewController alloc] initWithPath:@"search-result" parameters:dic];
+    
+    [baseVC.navigationController pushViewController:webVC animated:YES];
+}
+
+
+
 - (UICollectionView *)collectionView {
     if (!_collectionView) {
         UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];

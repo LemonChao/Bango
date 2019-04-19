@@ -31,7 +31,6 @@
         
         
         [self setNeedsUpdateConstraints];
-        [self reloadData];
     }
     return self;
 }
@@ -63,18 +62,32 @@
     [super updateConstraints];
 }
 
-- (void)reloadData {
-    UserInfoModel *infoModel = [BaseMethod readObjectWithKey:UserInfo_UDSKEY];
+- (void)setModel:(ZCPersonalCenterModel *)model {
+    _model = model;
     
-    [self.avatarButton sd_setImageWithURL:[NSURL URLWithString:infoModel.avatarhead] forState:UIControlStateNormal placeholderImage:ImageNamed(@"portrait_placeholder_normal") completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
-        UIImage *img = [image imageByResizeToSize:CGSizeMake(WidthRatio(64), WidthRatio(64)) contentMode:UIViewContentModeScaleAspectFill];
-        [self->_avatarButton setImage:[img imageByRoundCornerRadius:WidthRatio(32) borderWidth:WidthRatio(2) borderColor:[UIColor whiteColor]] forState:UIControlStateNormal];
+    [self.avatarButton sd_setImageWithURL:[NSURL URLWithString:model.avatarhead] forState:UIControlStateNormal placeholderImage:ImageNamed(@"portrait_placeholder_normal") completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+        if (image) {
+            UIImage *img = [image imageByResizeToSize:CGSizeMake(WidthRatio(64), WidthRatio(64)) contentMode:UIViewContentModeScaleAspectFill];
+            UIImage *roundImg = [img imageByRoundCornerRadius:WidthRatio(32) borderWidth:WidthRatio(2) borderColor:[UIColor whiteColor]];
+            [self->_avatarButton setImage:roundImg forState:UIControlStateNormal];
+            [self->_avatarButton setImage:roundImg forState:UIControlStateHighlighted];
+        }
     }];
-    [self.avatarButton sd_setImageWithURL:[NSURL URLWithString:infoModel.avatarhead] forState:UIControlStateHighlighted placeholderImage:ImageNamed(@"portrait_placeholder_normal") completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
-        UIImage *img = [image imageByResizeToSize:CGSizeMake(WidthRatio(64), WidthRatio(64)) contentMode:UIViewContentModeScaleAspectFill];
-        [self->_avatarButton setImage:[img imageByRoundCornerRadius:WidthRatio(32) borderWidth:WidthRatio(2) borderColor:[UIColor whiteColor]] forState:UIControlStateNormal];
-    }];
-    self.userNameLab.text = infoModel.nickName;
+    self.userNameLab.text = model.user_name;
+    self.bangoLab.text = model.jibie;
+}
+
+- (void)avatarButtonAction:(UIButton *)button {
+    UserInfoModel *info = [BaseMethod readObjectWithKey:UserInfo_UDSKEY];
+    if (info.asstoken) {
+        ZCWebViewController *webVC = [[ZCWebViewController alloc] initWithPath:@"personal-data" parameters:nil];
+        [[self viewController].navigationController pushViewController:webVC animated:YES];
+    }else {
+        ZCLoginViewController *loginVC = [[ZCLoginViewController alloc] init];
+        loginVC.completeBackToHome = NO;
+        [[self viewController] presentViewController:loginVC animated:YES completion:nil];
+    }
+    
 }
 
 #pragma mark - setter && getter
@@ -89,9 +102,7 @@
 - (UIButton *)avatarButton {
     if (!_avatarButton) {
         _avatarButton = [UITool imageButton:ImageNamed(@"portrait_placeholder_normal")];
-//        _avatarButton = [UITool imageButton:ImageNamed(@"portrait_placeholder_normal") cornerRadius:WidthRatio(32) borderWidth:0 borderColor:[UIColor clearColor]];
-//        _avatarButton.backgroundColor = [UIColor whiteColor];
-//        _avatarButton.imageEdgeInsets = UIEdgeInsetsMake(2, 2, 2, 2);
+        [_avatarButton addTarget:self action:@selector(avatarButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _avatarButton;
 }
@@ -105,7 +116,7 @@
 
 - (UILabel *)bangoLab {
     if (!_bangoLab) {
-        _bangoLab = [UITool labelWithText:@"搬果小将" textColor:GeneralRedColor font:[UIFont systemFontOfSize:WidthRatio(11) weight:UIFontWeightRegular] alignment:NSTextAlignmentCenter numberofLines:1 backgroundColor:[UIColor whiteColor]];
+        _bangoLab = [UITool labelWithText:@"普通会员" textColor:GeneralRedColor font:[UIFont systemFontOfSize:WidthRatio(11) weight:UIFontWeightRegular] alignment:NSTextAlignmentCenter numberofLines:1 backgroundColor:[UIColor whiteColor]];
         MMViewBorderRadius(_bangoLab, WidthRatio(9), 0, [UIColor clearColor]);
     }
     return _bangoLab;

@@ -39,7 +39,6 @@
         UIView *bgView = [UITool viewWithColor:[UIColor whiteColor]];
         UIView *lineView = [UITool viewWithColor:LineColor];
         self.stack = [[UIStackView alloc] initWithArrangedSubviews:self.subButtons];
-        self.stack.backgroundColor = [UIColor redColor];
         self.stack.axis = UILayoutConstraintAxisHorizontal;
         self.stack.distribution = UIStackViewDistributionFillEqually;
         self.stack.alignment = UIStackViewAlignmentFill;
@@ -83,7 +82,7 @@
 }
 
 - (void)setModel:(ZCPersonalCenterModel *)model {
-    if (!model) return;
+//    if (!model) return;
     _model = model;
     [self.subButtons enumerateObjectsUsingBlock:^(__kindof ZCBadgeButton * _Nonnull button, NSUInteger idx, BOOL * _Nonnull stop) {
         switch (idx) {
@@ -116,12 +115,27 @@
         NSMutableArray *array = [NSMutableArray array];
         for (int i = 0; i < titls.count; i++) {
             ZCBadgeButton *button = [[ZCBadgeButton alloc] initWithImage:ImageNamed(imageNames[i]) title:titls[i] badge:@"0"];
+            [button addTarget:self action:@selector(badgeButtonAction:) forControlEvents:UIControlEventTouchUpInside];
             [array addObject:button];
         }
         _subButtons = array.copy;
     }
     
     return _subButtons;
+}
+
+- (void)badgeButtonAction:(ZCBadgeButton *)button {
+    
+    NSString *index = StringFormat(@"%ld",[self.subButtons indexOfObject:button]);
+    
+    NSDictionary *dic = @{@"current_tab":index};
+    ZCWebViewController *webVC = [[ZCWebViewController alloc] initWithPath:@"my-order" parameters:dic];
+    [[self viewController].navigationController pushViewController:webVC animated:YES];
+}
+- (void)allButtonAction:(ZCBadgeButton *)button {
+    NSDictionary *dic = @{@"current_tab":@"all"};
+    ZCWebViewController *webVC = [[ZCWebViewController alloc] initWithPath:@"my-order" parameters:dic];
+    [[self viewController].navigationController pushViewController:webVC animated:YES];
 }
 
 
@@ -139,6 +153,7 @@
         _allButton = [UITool richButton:UIButtonTypeCustom title:@"查看全部订单" titleColor:AssistColor font:MediumFont(WidthRatio(12)) bgColor:[UIColor clearColor] image:[[UIImage imageNamed:@"home_arrow_right"] redrawImageWithColor:AssistColor]];
         CGSize size = [_allButton sizeThatFits:CGSizeZero];
         _allButton.frame = CGRectMake(0, 0, size.width, size.height);
+        [_allButton addTarget:self action:@selector(allButtonAction:) forControlEvents:UIControlEventTouchUpInside];
         [self.allButton setImagePosition:ZCImagePositionRight spacing:WidthRatio(9)];
     }
     return _allButton;

@@ -43,7 +43,6 @@ static NSString *dataCellid = @"ZCPersonalDataCell_id";
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:YES animated:NO];
     [self getData];
-    [(ZCPersonalTableHeadView *)self.tableView.tableHeaderView reloadData];
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
@@ -56,13 +55,12 @@ static NSString *dataCellid = @"ZCPersonalDataCell_id";
     self.customNavBar.barBackgroundColor = [UIColor colorWithRed:247/255.0 green:247/255.0 blue:247/255.0 alpha:1.0];
     [self.customNavBar wr_setBackgroundAlpha:0];
     [self.customNavBar wr_setRightButtonWithImage:ImageNamed(@"pesonal_header_set")];
-    
+    self.customNavBar.titleLabelColor = ImportantColor;
     @weakify(self);
     [self.customNavBar setOnClickRightButton:^{
         @strongify(self);
-        ZCLoginViewController *login = [[ZCLoginViewController alloc] init];
-        
-        [self presentViewController:login animated:YES completion:nil];
+        ZCWebViewController *webVC = [[ZCWebViewController alloc] initWithPath:@"set" parameters:nil];
+        [self.navigationController pushViewController:webVC animated:YES];
     }];
     
 }
@@ -85,14 +83,16 @@ static NSString *dataCellid = @"ZCPersonalDataCell_id";
     [[self.viewModel.memberCmd execute:nil] subscribeNext:^(id  _Nullable x) {
         if ([x boolValue]) {
             kHidHud;
-            [self.tableView reloadData];
+//            [(ZCPersonalTableHeadView *)self.tableView.tableHeaderView setModel:self.viewModel.model];
+//            [self.tableView reloadData];
         }
-        
+        [(ZCPersonalTableHeadView *)self.tableView.tableHeaderView setModel:self.viewModel.model];
+        [self.tableView reloadData];
+
         [self.tableView.mj_header endRefreshing];
     } error:^(NSError * _Nullable error) {
         [self.tableView.mj_header endRefreshing];
     }];
-    
 }
 
 
@@ -180,11 +180,13 @@ static NSString *dataCellid = @"ZCPersonalDataCell_id";
         CGFloat alpha = (offsetY - NAVBAR_COLORCHANGE_POINT) / NavBarHeight;
         [self.customNavBar wr_setBackgroundAlpha:alpha];
         [self.customNavBar wr_setTintColor:[[UIColor blackColor] colorWithAlphaComponent:alpha]];
+        self.customNavBar.title = @"会员中心";
     }
     else
     {
         [self.customNavBar wr_setBackgroundAlpha:0];
         [self.customNavBar wr_setTintColor:[UIColor whiteColor]];
+        self.customNavBar.title = nil;
     }
 }
 

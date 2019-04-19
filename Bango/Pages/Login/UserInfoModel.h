@@ -46,6 +46,8 @@ NS_ASSUME_NONNULL_BEGIN
 /**  密码设置状态 0：未设置登陆密码  1：已设置 */
 @property(nonatomic, copy) NSString *userPasswordStatus;
 
+/** 登录完成后的 userResp */
+@property(nonatomic, strong) id userResp;
 
 @end
 

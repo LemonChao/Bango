@@ -153,6 +153,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface ZCHomeEverygodsModel : ZCBaseGodsModel
 @property(nonatomic, copy) NSString *category_alias;
 @property(nonatomic, copy) NSString *category_id;
+@property(nonatomic, copy) NSString *category_search_type;
 @property(nonatomic, copy) NSString *goods_sort_type;
 @property(nonatomic, copy) NSArray *goods_list;
 

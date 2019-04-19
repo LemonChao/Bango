@@ -46,7 +46,7 @@
         [self.contentView addSubview:bgView];
         [bgView addSubview:self.titleLable];
         [bgView addSubview:lineView];
-        [bgView addSubview:self.powerView];
+//        [bgView addSubview:self.powerView];
         [bgView addSubview:self.guoguoView];
 
         [self.contentView addSubview:self.leftButton];
@@ -67,18 +67,18 @@
             make.height.mas_equalTo(1);
         }];
         
-        [self.powerView mas_makeConstraints:^(MASConstraintMaker *make) {
+        [self.guoguoView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(bgView).inset(WidthRatio(10));
             make.top.equalTo(lineView.mas_bottom).offset(WidthRatio(14));
             make.height.mas_equalTo(WidthRatio(50));
         }];
         
-        [self.guoguoView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.right.equalTo(bgView).inset(WidthRatio(10));
-            make.left.equalTo(self.powerView.mas_right);
-            make.size.equalTo(self.powerView);
-            make.top.equalTo(self.powerView);
-        }];
+//        [self.powerView mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.right.equalTo(bgView).inset(WidthRatio(10));
+//            make.left.equalTo(self.guoguoView.mas_right);
+//            make.size.equalTo(self.guoguoView);
+//            make.top.equalTo(self.guoguoView);
+//        }];
         
         [self.leftButton mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(self.contentView).inset(WidthRatio(12));
@@ -98,18 +98,17 @@
 }
 
 - (void)setModel:(ZCPersonalCenterModel *)model {
-    if (!model) return;
     _model = model;
     
     [model.platforms enumerateObjectsUsingBlock:^(__kindof ZCPersonalAdvModel * _Nonnull advModel, NSUInteger idx, BOOL * _Nonnull stop) {
         if (idx == 0) {
-            [self.leftButton sd_setImageWithURL:[NSURL URLWithString:advModel.adv_image] forState:UIControlStateNormal];
-            [self.leftButton sd_setImageWithURL:[NSURL URLWithString:advModel.adv_image] forState:UIControlStateHighlighted];
+            [self.leftButton sd_setImageWithURL:[NSURL URLWithString:advModel.adv_image] forState:UIControlStateNormal placeholderImage:ImageNamed(@"personnal_advPlaceholder_left")];
+            [self.leftButton sd_setImageWithURL:[NSURL URLWithString:advModel.adv_image] forState:UIControlStateHighlighted placeholderImage:ImageNamed(@"personnal_advPlaceholder_left")];
             [self.leftButton sd_setImageWithURL:[NSURL URLWithString:advModel.adv_url] forState:UIControlStateSelected];
             
         }else if (idx == 1) {
-            [self.rightButton sd_setImageWithURL:[NSURL URLWithString:advModel.adv_image] forState:UIControlStateNormal];
-            [self.rightButton sd_setImageWithURL:[NSURL URLWithString:advModel.adv_image] forState:UIControlStateHighlighted];
+            [self.rightButton sd_setImageWithURL:[NSURL URLWithString:advModel.adv_image] forState:UIControlStateNormal placeholderImage:ImageNamed(@"personnal_advPlaceholder_right")];
+            [self.rightButton sd_setImageWithURL:[NSURL URLWithString:advModel.adv_image] forState:UIControlStateHighlighted placeholderImage:ImageNamed(@"personnal_advPlaceholder_right")];
             [self.rightButton sd_setImageWithURL:[NSURL URLWithString:advModel.adv_url] forState:UIControlStateSelected];
         }
     }];
@@ -120,20 +119,26 @@
 - (void)leftButtonAction:(UIButton *)button {
     
     NSURL *advUrl = [button sd_imageURLForState:UIControlStateSelected];
-    
-    
+    if (!advUrl) return;
+    ZCWebViewController *webVC = [[ZCWebViewController alloc] init];
+    webVC.urlString = advUrl.absoluteString;
+    [[self viewController].navigationController pushViewController:webVC animated:YES];
 }
 - (void)rightButtonAction:(UIButton *)button {
     NSURL *advUrl = [button sd_imageURLForState:UIControlStateSelected];
-
+    if (!advUrl) return;
+    ZCWebViewController *webVC = [[ZCWebViewController alloc] init];
+    webVC.urlString = advUrl.absoluteString;
+    [[self viewController].navigationController pushViewController:webVC animated:YES];
 }
 
 
 - (void)guoguoViewAction:(ZCWelfareButton *)button {
-    
+    ZCWebViewController *webVC = [[ZCWebViewController alloc] init];
+    webVC.urlString = @"https://mr-bango.cn/GuoGuoGame/";
+    [[self viewController].navigationController pushViewController:webVC animated:YES];
 }
 - (void)powerViewAction:(ZCWelfareButton *)button {
-    
 }
 
 

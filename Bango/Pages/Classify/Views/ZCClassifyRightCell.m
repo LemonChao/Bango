@@ -59,7 +59,8 @@
     
     [self.godsImgView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.contentView).inset(WidthRatio(margin));
-        make.top.bottom.equalTo(self.contentView).inset(WidthRatio(10));
+        make.top.equalTo(self.contentView).inset(WidthRatio(10));
+        make.bottom.equalTo(self.lineView.mas_top).inset(WidthRatio(10));
         make.height.equalTo(self.godsImgView.mas_width);
     }];
     

@@ -25,7 +25,7 @@
 //        self.contentView.backgroundColor = [UIColor cyanColor];
         self.titleLab = [UITool labelWithTextColor:ImportantColor font:BoldFont(WidthRatio(20))];
         self.moreButton = [UITool richButton:UIButtonTypeCustom title:@"查看更多" titleColor:GeneralRedColor font:MediumFont(WidthRatio(14)) bgColor:[UIColor whiteColor] image:ImageNamed(@"home_arrow_right")];
-        
+        [self.moreButton addTarget:self action:@selector(moreButtonAction:) forControlEvents:UIControlEventTouchUpInside];
         [self.contentView addSubview:self.titleLab];
         [self.contentView addSubview:self.moreButton];
         
@@ -48,10 +48,30 @@
 }
 
 - (void)setModel:(ZCHomeEverygodsModel *)model {
-    
+    _model = model;
     self.titleLab.text = model.category_alias;
-    
+    self.moreButton.hidden = [model.category_alias isEqualToString:@"成为搬果小将"];
 }
+
+- (void)moreButtonAction:(UIButton *)button {
+    UIViewController *baseVC = [self viewController];
+    
+    NSDictionary *dic = @{@"type":self.model.category_id};
+    
+    ZCWebViewController *webView = [[ZCWebViewController alloc] initWithPath:@"search-result" parameters:dic];
+    [baseVC.navigationController pushViewController:webView animated:YES];
+}
+
+//- (ZCBaseViewController *)viewController {
+//    UIView *next = self;
+//    while ((next = [next superview])) {
+//        UIResponder *nextResponder = [next nextResponder];
+//        if ([nextResponder isKindOfClass:[ZCBaseViewController class]]) {
+//            return (ZCBaseViewController *)nextResponder;
+//        }
+//    }
+//    return nil;
+//}
 
 
 

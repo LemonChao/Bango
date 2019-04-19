@@ -30,11 +30,16 @@ NS_ASSUME_NONNULL_BEGIN
 /** 标题 */
 @property (nonatomic,copy)NSString *webTitle;
 
+/** h5 页面路径*/
+@property(nonatomic, copy) NSString *pathForH5;
+/** h5 页面参数*/
+@property(nonatomic, copy) NSDictionary *parameters;
+
 /**
  刷新webview
  */
--(void)refreshWebView;
-
+//-(void)refreshWebView;
+- (instancetype)initWithPath:(NSString *)path parameters:(nullable NSDictionary *)parameters;
 - (void)bridgeCallHandler:(NSString *)handleName data:(id)data;
 
 @end

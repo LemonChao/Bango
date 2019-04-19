@@ -19,7 +19,7 @@
 //测试环境
 #define AppBaseUrl                              @"http://ceshi.mr-bango.cn/"
 #define AppPictureBaseUrl                       @"http://admin1.toushizhiku.com/"
-#define AppKeChengBaseUrl                       @"http://oa.mgogo.com/kecheng/"
+#define AppKeChengBaseUrl                       @"http://192.168.0.177:10001/#/"
 #endif
 
 #define AppIconUrl                              @"https://mr-bango.cn/template/wap/default_new/public/css/qianrui/images/logo.png"
@@ -62,5 +62,8 @@
 #define kGods_cartDelete        @"?s=/wap/Goods/cartDelete"
 //添加到购物车，支持批量 (本地保存的商品上传)
 #define kGod_uploadCartFromLocal   @"?s=/wap/Goods/addCart_more"
+
+//会员中心分享好友
+#define kshareAppToFriend       @"?s=/wap/share/shareFriend"
 
 #endif /* InterfaceHeader_h */

@@ -23,7 +23,7 @@
     [encoder encodeObject:self.userTelIsset forKey:@"userTelIsset"];
     [encoder encodeObject:self.nickName forKey:@"nickName"];
     [encoder encodeObject:self.userPasswordStatus forKey:@"userPasswordStatus"];
-
+    [encoder encodeObject:self.userResp forKey:@"userResp"];
 }
 
 - (instancetype)initWithCoder:(NSCoder *)decoder {
@@ -40,7 +40,7 @@
         self.userTelIsset = [decoder decodeObjectForKey:@"userTelIsset"];
         self.nickName = [decoder decodeObjectForKey:@"nickName"];
         self.userPasswordStatus = [decoder decodeObjectForKey:@"userPasswordStatus"];
-
+        self.userResp = [decoder decodeObjectForKey:@"userResp"];
     }
     return self;
 }

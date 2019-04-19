@@ -50,9 +50,18 @@ static NSString *rightCellid = @"ZCClassifyRightCell_id";
     return cell;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    ZCPublicGoodsModel *godsModel = self.dataArray[indexPath.row];
+
+    NSDictionary *dic = @{@"goods_id":godsModel.goods_id};
+    ZCWebViewController *webVC = [[ZCWebViewController alloc] initWithPath:@"goods-detail" parameters:dic];
+    [self.navigationController pushViewController:webVC animated:YES];
+}
+
+
 #pragma mark - setter && getter
 
-- (void)setDataArray:(NSArray<__kindof ZCClassifyGodsModel *> *)dataArray {
+- (void)setDataArray:(NSArray<__kindof ZCPublicGoodsModel *> *)dataArray {
     if (_dataArray == dataArray || [_dataArray isEqual:dataArray]) return;
     
     _dataArray = dataArray;

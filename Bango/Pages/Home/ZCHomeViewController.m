@@ -68,6 +68,13 @@ static NSString *homeFooterid = @"ZCHomeTableFooterView_id";
     UIBarButtonItem *newsItem = [[UIBarButtonItem alloc] initWithCustomView:[self buttonItemWithImage:ImageNamed(@"home_news") title:@"消息" target:self action:@selector(newsButtonItemAction:)]];
     UIBarButtonItem *signItem = [[UIBarButtonItem alloc] initWithCustomView:[self buttonItemWithImage:ImageNamed(@"home_signIn") title:@"签到" target:self action:@selector(signButtonItemAction:)]];
     
+    UIButton *searchButton = [UITool richButton:UIButtonTypeCustom title:@"搜索" titleColor:AssistColor font:MediumFont(14) bgColor:LineColor image:ImageNamed(@"home_search")];
+    searchButton.frame = CGRectMake(WidthRatio(12), 7, SCREEN_WIDTH-88-20-WidthRatio(12+20), 30);
+    MMViewBorderRadius(searchButton, WidthRatio(4), 0, [UIColor clearColor]);
+    [searchButton setImagePosition:ZCImagePositionLeft spacing:WidthRatio(6)];
+    [searchButton addTarget:self action:@selector(searchButtonAction:) forControlEvents:UIControlEventTouchUpInside];
+    [self.navigationController.navigationBar addSubview:searchButton];
+    
     self.navigationItem.rightBarButtonItems = @[newsItem,signItem];
 }
 
@@ -246,14 +253,49 @@ static NSString *homeFooterid = @"ZCHomeTableFooterView_id";
     return nil;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    ZCHomeEverygodsModel *model = self.viewModel.dataArray[indexPath.section];
+    
+    if (self.viewModel.hasTuan) {
+        if (indexPath.section >= 4) {
+            ZCPublicGoodsModel *goods = model.goods_list[indexPath.row];
+            NSDictionary *dic = @{@"goods_id":goods.goods_id};
+            ZCWebViewController *webVC = [[ZCWebViewController alloc] initWithPath:@"goods-detail" parameters:dic];
+            [self.navigationController pushViewController:webVC animated:YES];
+        }
+    }
+    else {
+        if (indexPath.section >= 3) {
+            ZCPublicGoodsModel *goods = model.goods_list[indexPath.row];
+            NSDictionary *dic = @{@"goods_id":goods.goods_id};
+            ZCWebViewController *webVC = [[ZCWebViewController alloc] initWithPath:@"goods-detail" parameters:dic];
+            [self.navigationController pushViewController:webVC animated:YES];
+        }
+    }
 
+}
+
+
+
+#pragma mark - SDCycleScrollViewDelegate
+/** 点击图片回调 */
+- (void)cycleScrollView:(SDCycleScrollView *)cycleScrollView didSelectItemAtIndex:(NSInteger)index {
+    NSDictionary *dic = @{@"goods_id":@"12"};
+    
+    ZCWebViewController *webView = [[ZCWebViewController alloc] initWithPath:@"goods-detail" parameters:dic];
+    [self.navigationController pushViewController:webView animated:YES];
+}
+
+- (void)searchButtonAction:(UIButton *)button {
+    ZCWebViewController *webView = [[ZCWebViewController alloc] initWithPath:@"search" parameters:nil];
+    [self.navigationController pushViewController:webView animated:YES];
+}
 
 - (void)newsButtonItemAction:(UIBarButtonItem *)item {
-    [BaseMethod deleteObjectForKey:UserInfo_UDSKEY];
 }
 
 - (void)signButtonItemAction:(UIBarButtonItem *)item {
-    
 }
 
 

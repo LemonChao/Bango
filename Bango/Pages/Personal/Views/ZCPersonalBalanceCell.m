@@ -34,11 +34,12 @@
         UIView *bgView = [UITool viewWithColor:[UIColor whiteColor]];
         [self.contentView addSubview:bgView];
         
-        self.stack = [[UIStackView alloc] initWithArrangedSubviews:[self subButtons]];
-        self.stack.backgroundColor = [UIColor redColor];
+        self.stack = [[UIStackView alloc] init];
         self.stack.axis = UILayoutConstraintAxisHorizontal;
-        self.stack.distribution = UIStackViewDistributionEqualSpacing;
+        self.stack.distribution = UIStackViewDistributionFillEqually;
         self.stack.alignment = UIStackViewAlignmentFill;
+        self.stack.spacing = WidthRatio(40);
+
         [bgView addSubview:self.stack];
         
         [bgView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -51,37 +52,69 @@
     return self;
 }
 
-
-- (NSArray<__kindof ZCWordsButton *> *)subButtons {
-    NSArray *titls = @[@"余额",@"粉丝",@"签到"];
-    NSMutableArray *array = [NSMutableArray array];
+- (void)setupStackSubViewsWith:(ZCPersonalCenterModel *)model {
+    NSArray *titls = @[@"余额",@"能量值"];
+    if (model && model.level.integerValue != 47) {
+        titls = @[@"奖励",@"余额",@"能量值"];
+    }
+    
     for (int i = 0; i < titls.count; i++) {
         ZCWordsButton *button = [[ZCWordsButton alloc] init];
         button.bottomString = titls[i];
         button.topString = @"0";
-        [array addObject:button];
+        [button addTarget:self action:@selector(balanceButtonAction:) forControlEvents:UIControlEventTouchUpInside];
+        [self.stack addArrangedSubview:button];
     }
-    return array.copy;
 }
 
 
+
+//- (NSArray<__kindof ZCWordsButton *> *)subButtons {
+//    NSArray *titls = @[@"奖励",@"余额",@"能量值"];
+//
+//    NSMutableArray *array = [NSMutableArray array];
+//    for (int i = 0; i < titls.count; i++) {
+//        ZCWordsButton *button = [[ZCWordsButton alloc] init];
+//        button.bottomString = titls[i];
+//        button.topString = @"0";
+//        [button addTarget:self action:@selector(balanceButtonAction:) forControlEvents:UIControlEventTouchUpInside];
+//        [array addObject:button];
+//    }
+//    return array.copy;
+//}
+//
+
 - (void)setModel:(ZCPersonalCenterModel *)model {
-    if (!model) return;
     _model = model;
+    if (!self.stack.arrangedSubviews.count) {
+        [self setupStackSubViewsWith:model];
+    }
     
-    for (ZCWordsButton *button in self.stack.subviews) {
-        if ([button.bottomString isEqualToString:@"余额"]) {
+//    if (!model) return;
+    for (ZCWordsButton *button in self.stack.arrangedSubviews) {
+        if ([button.bottomString isEqualToString:@"奖励"]) {
+            button.topString = model.award;
+        }else if ([button.bottomString isEqualToString:@"余额"]) {
             button.topString = model.tot_money;
-        }else if ([button.bottomString isEqualToString:@"粉丝"]) {
-            button.topString = model.tui_count;
-        }else {
-            button.topString = StringFormat(@"%@天",model.continuous_signs);
-//            button.topString = model.continuous_signs;
+        }else if ([button.bottomString isEqualToString:@"能量值"]) {
+            button.topString = model.energy;
         }
     }
 }
 
-
+- (void)balanceButtonAction:(ZCWordsButton *)button {
+    
+    if ([button.bottomString isEqualToString:@"余额"]) {
+        ZCWebViewController *webVC = [[ZCWebViewController alloc] initWithPath:@"my-balance" parameters:nil];
+        [[self viewController].navigationController pushViewController:webVC animated:YES];
+    }else if ([button.bottomString isEqualToString:@"奖励"]) {
+        ZCWebViewController *webVC = [[ZCWebViewController alloc] initWithPath:@"direct-recommend" parameters:nil];
+        [[self viewController].navigationController pushViewController:webVC animated:YES];
+    }else {
+        ZCWebViewController *webVC = [[ZCWebViewController alloc] initWithPath:@"personal-data" parameters:nil];
+        [[self viewController].navigationController pushViewController:webVC animated:YES];
+    }
+}
 
 @end
 

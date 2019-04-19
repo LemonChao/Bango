@@ -33,7 +33,9 @@
     NSMutableDictionary *parameter = params.mutableCopy;
     UserInfoModel *info = [BaseMethod readObjectWithKey:UserInfo_UDSKEY];
     
-    [parameter setObject:info.asstoken?:@"" forKey:@"asstoken"];
+    if (![params containsObjectForKey:@"asstoken"]) {
+        [parameter setObject:info.asstoken?:@"" forKey:@"asstoken"];
+    }
     
     
     

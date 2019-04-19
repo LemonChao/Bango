@@ -46,6 +46,19 @@ static NSString *cellid = @"ZCTuanCollectionCell_id";
     return cell;
 }
 
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    ZCHomePintuanModel *model = self.pintuanList[indexPath.row];
+    
+    UIViewController *baseVC = [self viewController];
+    
+    NSDictionary *dic = @{@"goods_id":model.goods_id};
+    
+    ZCWebViewController *webVC = [[ZCWebViewController alloc] initWithPath:@"goods-detail" parameters:dic];
+    
+    [baseVC.navigationController pushViewController:webVC animated:YES];
+
+}
+
 
 - (UICollectionView *)collectionView {
     if (!_collectionView) {

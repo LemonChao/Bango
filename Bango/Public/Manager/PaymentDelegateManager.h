@@ -51,8 +51,8 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)loginAlipayPaycompleteParams:(NSString *)auth_V2WithInfo;
 
-// v1.0.1 后续版本可删除
-- (void)v_1LoginAlipayPaycompleteParams:(NSString *)auth_V2WithInfo loginFinish:(void (^)(id))loginFinish;
+//// v1.0.1 后续版本可删除
+//- (void)v_1LoginAlipayPaycompleteParams:(NSString *)auth_V2WithInfo loginFinish:(void (^)(id))loginFinish;
 
 
 @end

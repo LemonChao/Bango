@@ -43,11 +43,13 @@ static NSString *invaluedHeaderid = @"ZCCartInvaluedSectionHeader_id";
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    [self.navigationController setNavigationBarHidden:NO animated:NO];
     [self getData];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    [self.navigationController setNavigationBarHidden:YES animated:NO];
 }
 
 - (void)configCustomNav {
@@ -112,18 +114,18 @@ static NSString *invaluedHeaderid = @"ZCCartInvaluedSectionHeader_id";
     
 }
 
-- (void)executeDeleteCmd:(NSString *)cartids {
-    kShowActivity
-    
-    [[self.viewModel.godsDeleteCmd execute:cartids] subscribeNext:^(id  _Nullable x) {
-        if ([x boolValue]) {
-            [[NSNotificationCenter defaultCenter] postNotificationName:cartValueChangedNotification object:@"refreshNetCart"];
-        }
-    } error:^(NSError * _Nullable error) {
-        
-    }];
-}
-
+//- (void)executeDeleteCmd:(NSString *)cartids {
+//    kShowActivity
+//
+//    [[self.viewModel.godsDeleteCmd execute:cartids] subscribeNext:^(id  _Nullable x) {
+//        if ([x boolValue]) {
+//            [[NSNotificationCenter defaultCenter] postNotificationName:cartValueChangedNotification object:@"refreshNetCart"];
+//        }
+//    } error:^(NSError * _Nullable error) {
+//
+//    }];
+//}
+//
 
 - (void)rightBarButtonAction:(UIBarButtonItem *)item {
     NSArray *selectItems = [self.viewModel indexsForSelectGoods];
@@ -141,7 +143,8 @@ static NSString *invaluedHeaderid = @"ZCCartInvaluedSectionHeader_id";
             [[NSNotificationCenter defaultCenter] postNotificationName:cartValueChangedNotification object:@"refreshNetCart"];
 
         }else {
-            [self executeDeleteCmd:self.viewModel.selectedCartIds];
+//            [self executeDeleteCmd:self.viewModel.selectedCartIds];
+            [self.viewModel.godsDeleteCmd execute:nil];
         }
         
     }];
@@ -266,6 +269,11 @@ static NSString *invaluedHeaderid = @"ZCCartInvaluedSectionHeader_id";
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    ZCCartModel *cartModel = self.viewModel.cartDatas[indexPath.section];
+    ZCPublicGoodsModel *goodsModel = cartModel.shop_goods[indexPath.row];
+    NSDictionary *dic = @{@"goods_id":goodsModel.goods_id};
+    ZCWebViewController *webVC = [[ZCWebViewController alloc] initWithPath:@"goods-detail" parameters:dic];
+    [self.navigationController pushViewController:webVC animated:YES];
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath {

@@ -110,7 +110,16 @@
 }
 
 - (void)jieSuanButtonAction:(UIButton *)button {
-    
+    UserInfoModel *info = [BaseMethod readObjectWithKey:UserInfo_UDSKEY];
+    if (info.asstoken) {
+        
+        NSDictionary *dic = @{@"type":@"1",@"buy_car_ids":self.viewModel.jieSuanCartIds};
+        ZCWebViewController *webVC = [[ZCWebViewController alloc] initWithPath:@"ensure-order" parameters:dic];
+        [[self viewController].navigationController pushViewController:webVC animated:YES];
+    }else {
+        ZCLoginViewController *loginVC = [[ZCLoginViewController alloc] init];
+        [[self viewController] presentViewController:loginVC animated:YES completion:nil];
+    }
 }
 
 

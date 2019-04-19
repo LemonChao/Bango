@@ -116,6 +116,7 @@
         everyGods.goods_list = model.tuijianList;
         everyGods.rowHeight = WidthRatio(135);
         everyGods.category_alias = @"爆款推荐";
+        everyGods.category_id = @"tuijian";
         everyGods.headerHeight = WidthRatio(32);
         everyGods.footerHeight = WidthRatio(25);
         [mArray addObject:everyGods];
@@ -125,6 +126,7 @@
         everyGods.goods_list = model.pintuanList;
         everyGods.rowHeight = WidthRatio(115)*((model.pintuanList.count+1)/2) + WidthRatio(10);
         everyGods.category_alias = @"鲜果一起拼";
+        everyGods.category_id = @"pintuan";
         everyGods.headerHeight = WidthRatio(32);
         everyGods.footerHeight = WidthRatio(25);
         [mArray addObject:everyGods];

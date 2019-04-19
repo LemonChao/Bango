@@ -38,7 +38,6 @@ static NSString *leftCellid = @"ZCClassifyLeftCell_id";
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:NO];
-    
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -50,6 +49,12 @@ static NSString *leftCellid = @"ZCClassifyLeftCell_id";
     
     UIBarButtonItem *newsItem = [[UIBarButtonItem alloc] initWithCustomView:[self buttonItemWithImage:ImageNamed(@"home_news") title:@"消息" target:self action:@selector(newsButtonItemAction:)]];
     UIBarButtonItem *signItem = [[UIBarButtonItem alloc] initWithCustomView:[self buttonItemWithImage:ImageNamed(@"home_signIn") title:@"签到" target:self action:@selector(signButtonItemAction:)]];
+    UIButton *searchButton = [UITool richButton:UIButtonTypeCustom title:@"搜索" titleColor:AssistColor font:MediumFont(14) bgColor:LineColor image:ImageNamed(@"home_search")];
+    searchButton.frame = CGRectMake(WidthRatio(12), 7, SCREEN_WIDTH-88-20-WidthRatio(12+20), 30);
+    MMViewBorderRadius(searchButton, WidthRatio(4), 0, [UIColor clearColor]);
+    [searchButton setImagePosition:ZCImagePositionLeft spacing:WidthRatio(6)];
+    [searchButton addTarget:self action:@selector(searchButtonAction:) forControlEvents:UIControlEventTouchUpInside];
+    [self.navigationController.navigationBar addSubview:searchButton];
 
     self.navigationItem.rightBarButtonItems = @[newsItem,signItem];
 }
@@ -121,7 +126,10 @@ static NSString *leftCellid = @"ZCClassifyLeftCell_id";
 
 
 
-
+- (void)searchButtonAction:(UIButton *)button {
+    ZCWebViewController *webView = [[ZCWebViewController alloc] initWithPath:@"search" parameters:nil];
+    [self.navigationController pushViewController:webView animated:YES];
+}
 
 - (void)newsButtonItemAction:(UIBarButtonItem *)item {
     

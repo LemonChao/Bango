@@ -10,7 +10,7 @@
 #import "TXScrollLabelView.h"
 #import "UIButton+EdgeInsets.h"
 
-@interface ZCHomeNoticeCell ()
+@interface ZCHomeNoticeCell ()<TXScrollLabelViewDelegate>
 
 @property(nonatomic, strong) UIButton *leftButton;
 
@@ -25,11 +25,13 @@
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
+        self.selectionStyle = UITableViewCellSelectionStyleNone;
         UIView *cornerBg = [UITool viewCornerRadius:WidthRatio(16) borderWidth:1.f borderColor:HEX_COLOR(0xF5F5F5)];
         
         self.leftButton = [UITool imageButton:ImageNamed(@"home_notice")];
         UIImage *lineImage = [UIImage imageWithColor:HEX_COLOR(0xF5F5F5) size:CGSizeMake(1, WidthRatio(14))];
         self.rightButton = [UITool richButton:UIButtonTypeCustom title:@"查看" titleColor:ImportantColor font:[UIFont systemFontOfSize:WidthRatio(14) weight:UIFontWeightRegular] bgColor:[UIColor whiteColor] image:lineImage];
+        [self.rightButton addTarget:self action:@selector(rightButtonAction:) forControlEvents:UIControlEventTouchUpInside];
         [self.contentView addSubview:cornerBg];
         [cornerBg addSubview:self.rightButton];
         [cornerBg addSubview:self.scrollLabelView];
@@ -65,6 +67,7 @@
 }
 
 - (void)setNotics:(NSArray<__kindof ZCHomeNoticeModel *> *)notics {
+    _notics = notics;
     NSMutableArray *marray = [NSMutableArray array];
     
     for (ZCHomeNoticeModel *item in notics) {
@@ -73,10 +76,25 @@
     [self.scrollLabelView startScrollingWithArray:marray];
 }
 
+- (void)rightButtonAction:(UIButton *)button {
+    UIViewController *baseVC = [self viewController];
+    ZCWebViewController *webView = [[ZCWebViewController alloc] initWithPath:@"notice-list" parameters:nil];
+    [baseVC.navigationController pushViewController:webView animated:YES];
+}
+
+
+- (void)scrollLabelView:(TXScrollLabelView *)scrollLabelView didClickWithText:(NSString *)text atIndex:(NSInteger)index {
+    ZCHomeNoticeModel *model = self.notics[index];
+    UIViewController *baseVC = [self viewController];
+    NSDictionary *dic = @{@"id":model.notice_id};
+    ZCWebViewController *webView = [[ZCWebViewController alloc] initWithPath:@"notice-detail" parameters:dic];
+    [baseVC.navigationController pushViewController:webView animated:YES];
+}
 
 - (TXScrollLabelView *)scrollLabelView {
     if (!_scrollLabelView) {
         _scrollLabelView = [TXScrollLabelView scrollWithTextArray:nil type:TXScrollLabelViewTypeUpDown velocity:2.5 options:UIViewAnimationOptionCurveEaseInOut inset:UIEdgeInsetsZero];
+        _scrollLabelView.scrollLabelViewDelegate = self;
         _scrollLabelView.textAlignment = NSTextAlignmentLeft;
         _scrollLabelView.scrollInset = UIEdgeInsetsMake(0, 10 , 0, 10);
         _scrollLabelView.scrollSpace = 10;

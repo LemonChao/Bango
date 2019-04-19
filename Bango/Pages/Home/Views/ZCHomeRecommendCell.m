@@ -55,6 +55,17 @@ static NSString *cellid = @"ZCHomeRecommendCollectionCell_id";
     return cell;
 }
 
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    ZCHomeTuijianModel *model = self.tuijianList[indexPath.row];
+    
+    UIViewController *baseVC = [self viewController];
+    
+    NSDictionary *dic = @{@"goods_id":model.goods_id};
+    
+    ZCWebViewController *webVC = [[ZCWebViewController alloc] initWithPath:@"goods-detail" parameters:dic];
+    
+    [baseVC.navigationController pushViewController:webVC animated:YES];
+}
 
 
 - (UICollectionView *)collectionView {

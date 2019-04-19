@@ -22,5 +22,7 @@
 #import "ZCBaseModel.h"
 #import "ZCPublicGoodsModel.h"
 #import "ZCCartManager.h"
+#import "ZCWebViewController.h"
+#import "UIView+viewController.h"
 
 #endif /* ZCHeader_h */

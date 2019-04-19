@@ -36,9 +36,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 /** 推荐的登录方式 0:微信登陆  1:支付宝登陆(存在本地)  2:普通登陆 */
 @property(nonatomic, copy) NSString *loginType;
-
+/** 推荐的登录方式 登录buttonTitle */
 @property(nonatomic, copy) NSString *loginBtnTitle;
 
+/** 登录完成后 获取到用户资料赋值 */
+@property(nonatomic, strong) UserInfoModel *infoModel;
+
+@property(nonatomic, strong) id userResp;
 
 /**
  上传本地商品到购物车，登录完成后执行

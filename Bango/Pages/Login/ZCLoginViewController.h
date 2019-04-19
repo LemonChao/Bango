@@ -16,6 +16,9 @@ NS_ASSUME_NONNULL_BEGIN
 /** 登录结果回调*/
 @property (nonatomic,copy) void (^loginCallback)(NSDictionary *userInfo);
 
+/** 登录完成后返回首页 default YES */
+@property(nonatomic, assign) BOOL completeBackToHome;
+
 @end
 
 NS_ASSUME_NONNULL_END

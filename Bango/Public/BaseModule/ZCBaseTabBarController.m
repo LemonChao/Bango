@@ -16,7 +16,7 @@
 #import "ZCPersonalViewController.h"
 
 
-@interface ZCBaseTabBarController ()
+@interface ZCBaseTabBarController ()<UITabBarControllerDelegate>
 
 @property(nonatomic, strong) ZCBaseNavigationController *homeNav;
 @property(nonatomic, strong) ZCBaseNavigationController *classifyNav;
@@ -34,6 +34,7 @@
     self.viewControllers = @[self.homeNav,self.classifyNav,self.cartNav,self.personalNav];
     self.tabBar.backgroundImage = [UIImage imageWithColor:[UIColor whiteColor]];
     self.tabBar.shadowImage = ImageNamed(@"tab");
+    self.delegate = self;
 }
 
 - (ZCBaseNavigationController *)homeNav {
@@ -105,5 +106,20 @@
 
 }
 
+
+- (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController {
+    
+//    if (viewController == self.viewControllers[3]) {
+//        UserInfoModel *info = [BaseMethod readObjectWithKey:UserInfo_UDSKEY];
+//        if (!info.asstoken) {
+//            ZCLoginViewController *loginVC = [[ZCLoginViewController alloc] init];
+//
+//            [self presentViewController:loginVC animated:YES completion:nil];
+//            return NO;
+//        }
+//
+//     }
+    return YES;
+}
 
 @end

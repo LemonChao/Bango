@@ -17,6 +17,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = BackGroundColor;
+    self.navigationController.interactivePopGestureRecognizer.delegate = (id)self;
     [self configCustomNav];
     [self configViews];
     [self bindViewModel];

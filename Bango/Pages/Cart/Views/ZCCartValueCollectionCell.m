@@ -101,8 +101,8 @@
     [self.godsImgView sd_setImageWithURL:[NSURL URLWithString:model.pic_cover_mid]];
     self.nameLab.text = model.goods_name;
     self.promotionPriceLab.text = model.promotion_price;
-    self.selected = model.isSelected;
-    
+    self.selectButton.selected = model.isSelected;
+
     self.tagImgView1.image = self.tagImgView2.image = nil;
     for (int i = 0; i < model.tagArray.count; i++) {
         if (i == 0) {
@@ -117,7 +117,6 @@
 - (void)setSelected:(BOOL)selected {
     [super setSelected:selected];
 
-    self.selectButton.selected = selected;
 }
 
 

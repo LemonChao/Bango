@@ -15,7 +15,6 @@ NS_ASSUME_NONNULL_BEGIN
 @interface ZCCartViewModel : ZCBaseViewModel
 
 
-
 @property(nonatomic, strong) RACCommand *netCartCmd;
 
 /** 购物车商品总数据 */
@@ -30,15 +29,17 @@ NS_ASSUME_NONNULL_BEGIN
 /** 选中商品的总价 */
 @property(nonatomic, copy) NSNumber *totalPrice;
 
-/** 选中的商品cartIds */
+/** 选中的商品cartIds --批量网络购物车删除用*/
 @property(nonatomic, copy) NSString *selectedCartIds;
+/** 选中商品的goodsIds --批量本地购物车删除用*/
+@property(nonatomic, copy) NSArray *selectedGoodsIds;
 
 /** 选中购物车是否全部商品 */
 @property(nonatomic, strong) NSNumber *selectAll;
 
-/** 选中商品的 goodsIds */
-@property(nonatomic, copy) NSArray *selectedGoodsIds;
 
+/** 商品结算cartIds "cartid:have_num,cartid:have_num" */
+@property(nonatomic, copy) NSString *jieSuanCartIds;
 
 /** 添加到购物车，支持批量 (本地保存的商品上传) */
 @property(nonatomic, strong) RACCommand *addCartCmd;

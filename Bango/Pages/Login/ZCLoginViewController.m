@@ -29,61 +29,43 @@
 
 @implementation ZCLoginViewController
 
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        self.completeBackToHome = YES;
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loginSuccessComplete:) name:loginSuccessNotification object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loginSuccessComplete:) name:loginSuccessNotification object:nil];
 }
 
 - (void)loginSuccessComplete:(NSNotification *)notif {
     NSLog(@"notif_userInfo:%@", notif.userInfo);
 
-    [self dismissViewControllerAnimated:YES completion:^{
-        //保存用户登录信息
-        UserInfoModel *model = [notif.userInfo objectForKey:@"userModel"];
-        [BaseMethod saveObject:model withKey:UserInfo_UDSKEY];
-        [self.viewModel.personDataCmd execute:nil];
-    }];
-    if (self.loginCallback) {
-        self.loginCallback([notif.userInfo objectForKey:@"userResp"]);
-    }
+//    [self dismissViewControllerAnimated:YES completion:^{
+//        //保存用户登录信息
+//        UserInfoModel *model = [notif.userInfo objectForKey:@"userModel"];
+//        [BaseMethod saveObject:model withKey:UserInfo_UDSKEY];
+//        [self.viewModel.personDataCmd execute:nil];
+//    }];
+//    if (self.loginCallback) {
+//        self.loginCallback([notif.userInfo objectForKey:@"userResp"]);
+//    }
+}
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self.navigationController setNavigationBarHidden:YES animated:NO];
+}
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [self.navigationController setNavigationBarHidden:NO animated:NO];
 }
 
-- (void)executeLoginCmd {
-    [[self.viewModel.phoneCmd execute:@{@"username":self.phoneNumberField.text,@"send_param":self.authCodeField.text}] subscribeNext:^(id  _Nullable x) {
-        
-    } error:^(NSError * _Nullable error) {
-        
-    }];
-}
 
-
-- (void)executeAuthCmd {
-    
-    [[self.viewModel.authCodeCmd execute:@{@"phone_number":self.phoneNumberField.text,@"sendstatus":@"3"}] subscribeNext:^(id  _Nullable x) {
-        
-    } error:^(NSError * _Nullable error) {
-        
-    }];
-}
-
-- (void)bindViewModel {
-    
-    //phoneLogin
-    [[self.viewModel.phoneCmd executionSignals] subscribeNext:^(id  _Nullable x) {
-        
-    }];
-    
-    //zhifubaoLogin
-    [[self.viewModel.zhifubaoCmd executionSignals] subscribeNext:^(id  _Nullable x) {
-    }];
-    
-    //wechatLogin
-    [[self.viewModel.wechatCmd executionSignals] subscribeNext:^(id  _Nullable x) {
-        
-    }];
-    
-}
 
 
 - (void)configCustomNav {
@@ -120,6 +102,61 @@
     }];
     
     self.failingBtnView = [[ZCFallingAnimationView alloc] initWithFrame:CGRectMake(0, topDiff, SCREEN_WIDTH, SCREEN_HEIGHT-topDiff)];
+}
+
+
+- (void)executeLoginCmd {
+    [[self.viewModel.phoneCmd execute:@{@"username":self.phoneNumberField.text,@"send_param":self.authCodeField.text}] subscribeNext:^(id  _Nullable x) {
+        
+    } error:^(NSError * _Nullable error) {
+        
+    }];
+}
+
+
+- (void)executeAuthCmd {
+    
+    [[self.viewModel.authCodeCmd execute:@{@"phone_number":self.phoneNumberField.text,@"sendstatus":@"3"}] subscribeNext:^(id  _Nullable x) {
+        
+    } error:^(NSError * _Nullable error) {
+        
+    }];
+}
+
+- (void)bindViewModel {
+    
+    @weakify(self);
+    [RACObserve(self, viewModel.userResp) subscribeNext:^(id _Nullable userResp) {
+        @strongify(self);
+        if (userResp) {
+            [self dismissViewControllerAnimated:YES completion:^{
+                
+                if (self->_completeBackToHome) {
+                    UINavigationController *rootNav =  (UINavigationController *)[[UIApplication sharedApplication].delegate window].rootViewController;
+                    UITabBarController *tabBarVC = (UITabBarController *)rootNav.topViewController;
+                    [tabBarVC setSelectedIndex:0];
+                }
+            }];
+        }
+    }];
+    
+    
+    
+    
+    //phoneLogin
+    //    [[self.viewModel.phoneCmd executionSignals] subscribeNext:^(id  _Nullable x) {
+    //
+    //    }];
+    //
+    //    //zhifubaoLogin
+    //    [[self.viewModel.zhifubaoCmd executionSignals] subscribeNext:^(id  _Nullable x) {
+    //    }];
+    //
+    //    //wechatLogin
+    //    [[self.viewModel.wechatCmd executionSignals] subscribeNext:^(id  _Nullable x) {
+    //
+    //    }];
+    
 }
 
 - (void)authCodeBtnAction:(JKCountDownButton*)button {

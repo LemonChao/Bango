@@ -8,6 +8,7 @@
 
 #import "ZCPersonalDataCell.h"
 #import "ZCPersonalDataCollectionCell.h"
+#import "ShareObject.h"
 
 @interface ZCPersonalDataCell ()<UICollectionViewDelegateFlowLayout,UICollectionViewDataSource>
 
@@ -16,6 +17,8 @@
 @property(nonatomic, strong) UICollectionView *collectionView;
 
 @property(nonatomic, copy) NSArray *dataArray;
+
+@property(nonatomic, copy) NSArray *webPaths;
 
 @end
 
@@ -26,7 +29,7 @@
     if (self) {
         self.backgroundColor = [UIColor clearColor];
         self.selectionStyle = UITableViewCellSelectionStyleNone;
-        
+        self.webPaths = @[@"personal-data",@"direct-recommend",@"share-friend",@"harvest-address",@"my-tuan",@"youhuiquan",@"my-collection",@"my-footprint"];
         UIView *bgView = [UITool viewWithColor:[UIColor whiteColor]];
         UIView *lineView = [UITool viewWithColor:LineColor];
 
@@ -70,6 +73,27 @@
     return cell;
 }
 
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.row == 2) {
+        [self shareFriends];
+    }else{
+        ZCWebViewController *webVC = [[ZCWebViewController alloc] initWithPath:self.webPaths[indexPath.row] parameters:nil];
+        [[self viewController].navigationController pushViewController:webVC animated:YES];
+    }
+}
+
+- (void)shareFriends {
+    [NetWorkManager.sharedManager requestWithUrl:kshareAppToFriend withParameters:@{} withRequestType:POSTTYPE withSuccess:^(id  _Nonnull responseObject) {
+        if (kStatusTrue) {
+            [ShareObject.sharedObject appShareWithParams:responseObject[@"data"]];
+        }else {
+            kShowMessage
+        }
+    } withFailure:^(NSError * _Nonnull error) {
+        kShowError
+    }];
+}
+
 
 #pragma mark - setter && getter
 
@@ -100,7 +124,7 @@
 
 - (NSArray *)dataArray {
     if (!_dataArray) {
-        NSArray *titles = @[@"个人资料",@"实名认证",@"分享好友",@"收货地址",@"我的拼团",@"我的优惠券",@"我的收藏",@"我的足迹"];
+        NSArray *titles = @[@"个人资料",@"我的粉丝",@"分享好友",@"收货地址",@"我的拼团",@"我的优惠券",@"我的收藏",@"我的足迹"];
         NSMutableArray *mArray = [NSMutableArray arrayWithCapacity:titles.count];
 
         for (int i = 0; i < titles.count; i++) {

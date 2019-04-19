@@ -80,6 +80,7 @@
                         }];
                         
                         self.cartDatas = tempArray.copy;
+                        self.selectAll = [NSNumber numberWithBool:NO];
                         [subscriber sendNext:@(1)];
                     }else {
                         kShowMessage;
@@ -103,9 +104,10 @@
         _godsDeleteCmd = [[RACCommand alloc] initWithSignalBlock:^RACSignal * _Nonnull(NSString * _Nullable cartIds) {
             return [RACSignal createSignal:^RACDisposable * _Nullable(id<RACSubscriber>  _Nonnull subscriber) {
                 
-                [NetWorkManager.sharedManager requestWithUrl:kGods_deleteCart withParameters:@{@"del_id":cartIds} withRequestType:POSTTYPE withSuccess:^(id  _Nonnull responseObject) {
+                [NetWorkManager.sharedManager requestWithUrl:kGods_deleteCart withParameters:@{@"del_id":self.selectedCartIds} withRequestType:POSTTYPE withSuccess:^(id  _Nonnull responseObject) {
                     if (kStatusTrue) {
                         [subscriber sendNext:@(1)];
+                        [self.netCartCmd execute:nil];
                     }else {
                         kShowMessage
                         [subscriber sendNext:@(0)];
@@ -180,7 +182,6 @@
     NSMutableArray *selectedArray = [NSMutableArray array];
     NSMutableArray *cartIds = [NSMutableArray array];
     NSMutableArray *goodIds = [NSMutableArray array];
-
     __block BOOL selectAll = YES;
     [self.cartDatas enumerateObjectsUsingBlock:^(__kindof ZCCartModel * _Nonnull model, NSUInteger section, BOOL * _Nonnull stop) {
         
@@ -214,6 +215,25 @@
     return selectedArray;
 }
 
+- (NSString *)jieSuanCartIds {
+    NSMutableArray *jieSuanIds = [NSMutableArray array];
+    [self.cartDatas enumerateObjectsUsingBlock:^(__kindof ZCCartModel * _Nonnull model, NSUInteger section, BOOL * _Nonnull stop) {
+        
+        if(!([model.shop_name isEqualToString:@"推荐商品"] || [model.shop_name isEqualToString:@"失效商品"]))  {
+            
+            NSMutableArray <ZCPublicGoodsModel *> *shopList = model.shop_goods.mutableCopy;
+            ////遍历分区内cell
+            [shopList enumerateObjectsUsingBlock:^(ZCPublicGoodsModel * _Nonnull goodsModel, NSUInteger row, BOOL * _Nonnull stop) {
+                
+                if (goodsModel.isSelected == YES && goodsModel.goods_id) {
+                    NSString *tempString = StringFormat(@"%@:%@", goodsModel.goods_id,goodsModel.have_num);
+                    [jieSuanIds addObject:tempString];
+                }
+            }];
+        }
+    }];
+    return [jieSuanIds componentsJoinedByString:@","];
+}
 
 
 /**

@@ -64,7 +64,14 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, copy) NSString *avatarhead;
 /** 昵称 */
 @property(nonatomic, copy) NSString *user_name;
-
+/** 会员等级 */
+@property(nonatomic, copy) NSString *level;
+/** 等级名称 */
+@property(nonatomic, copy) NSString *jibie;
+/** 能量值 */
+@property(nonatomic, copy) NSString *energy;
+/** 奖励 */
+@property(nonatomic, copy) NSString *award;
 @property(nonatomic, copy) NSArray<__kindof ZCPersonalAdvModel *> *platforms;
 
 //@property(nonatomic, copy) NSString *avatarhead;
@@ -73,6 +80,8 @@ NS_ASSUME_NONNULL_BEGIN
 //@property(nonatomic, copy) NSString *avatarhead;
 //@property(nonatomic, copy) NSString *avatarhead;
 //
+/** 过期model */
+- (instancetype)initWithExpiration;
 
 @end
 

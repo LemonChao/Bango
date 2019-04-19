@@ -29,11 +29,17 @@
             self.loginBtnTitle = @"登录";
         }
         
-//        [[[[NSNotificationCenter defaultCenter] rac_addObserverForName:loginSuccessNotification object:nil] takeUntil:[self rac_willDeallocSignal]] subscribeNext:^(NSNotification *notif) {
-//
-//
-//
-//        }];
+//        [[NSNotificationCenter defaultCenter] postNotificationName:loginSuccessNotification object:nil userInfo:@{@"userModel":model,@"userResp":responseObject}];
+
+        
+        [[[[NSNotificationCenter defaultCenter] rac_addObserverForName:loginSuccessNotification object:nil] takeUntil:[self rac_willDeallocSignal]] subscribeNext:^(NSNotification *notif) {
+
+//            UserInfoModel *model = [notif.userInfo objectForKey:@"userModel"];
+//            [BaseMethod saveObject:model withKey:UserInfo_UDSKEY];
+
+            [self.personDataCmd execute:[notif.userInfo objectForKey:@"userResp"]];
+            
+        }];
     }
     return self;
 }
@@ -67,8 +73,10 @@
             return [RACSignal createSignal:^RACDisposable * _Nullable(id<RACSubscriber>  _Nonnull subscriber) {
                 [NetWorkManager.sharedManager requestWithUrl:kLogin_index withParameters:input withRequestType:POSTTYPE withSuccess:^(id  _Nonnull responseObject) {
                     if (kStatusTrue) {
-                        UserInfoModel *model = [UserInfoModel modelWithDictionary:responseObject[@"data"]];
-                        [[NSNotificationCenter defaultCenter] postNotificationName:loginSuccessNotification object:nil userInfo:@{@"userModel":model,@"userResp":responseObject}];
+//                        UserInfoModel *model = [UserInfoModel modelWithDictionary:responseObject[@"data"]];
+//                        [[NSNotificationCenter defaultCenter] postNotificationName:loginSuccessNotification object:nil userInfo:@{@"userModel":model,@"userResp":responseObject}];
+                        [self.personDataCmd execute:responseObject];
+
                         [subscriber sendNext:@(1)];
                     }else {
                         [WXZTipView showTopWithText:responseObject[@"message"]];
@@ -129,8 +137,9 @@
                         // 注册到自己服务器 并获取用户信息
                         [NetWorkManager.sharedManager requestWithUrl:kLogin_third withParameters:dataDict withRequestType:POSTTYPE withSuccess:^(id  _Nonnull responseObject) {
                             if (kStatusTrue) {
-                                UserInfoModel *model = [UserInfoModel modelWithDictionary:responseObject[@"data"]];
-                                [[NSNotificationCenter defaultCenter] postNotificationName:loginSuccessNotification object:nil userInfo:@{@"userModel":model,@"userResp":responseObject}];
+//                                UserInfoModel *model = [UserInfoModel modelWithDictionary:responseObject[@"data"]];
+//                                [[NSNotificationCenter defaultCenter] postNotificationName:loginSuccessNotification object:nil userInfo:@{@"userModel":model,@"userResp":responseObject}];
+                                [self.personDataCmd execute:responseObject];
                                 [subscriber sendNext:@(1)];
                             }else {
                                 [WXZTipView showCenterWithText:responseObject[@"message"]];
@@ -159,7 +168,7 @@
     if (!_personDataCmd) {
         _personDataCmd = [[RACCommand alloc] initWithSignalBlock:^RACSignal * _Nonnull(id  _Nullable input) {
             return [RACSignal createSignal:^RACDisposable * _Nullable(id<RACSubscriber>  _Nonnull subscriber) {
-                UserInfoModel *origModel = [BaseMethod readObjectWithKey:UserInfo_UDSKEY];
+                UserInfoModel *origModel = [UserInfoModel modelWithDictionary:input[@"data"]];
                 
                 if ([origModel.asstoken isEmptyString]) {
                     [subscriber sendCompleted];
@@ -173,16 +182,20 @@
                         model.txPwdStatus = origModel.txPwdStatus;
                         model.loginType = origModel.loginType;
                         model.loginNum = origModel.loginNum;
+                        model.userResp = input[@"data"];
                         [BaseMethod saveObject:model withKey:UserInfo_UDSKEY];
-                        [subscriber sendNext:@(1)];
+                        self.userResp = input[@"data"];
+                        [subscriber sendNext:model];
                         
                         [self addGoodsToNetCart];
                     }else {
-                        [subscriber sendNext:@(0)];
+                        kShowMessage
+                        [subscriber sendNext:nil];
                     }
                     
                     [subscriber sendCompleted];
                 } withFailure:^(NSError * _Nonnull error) {
+                    kShowError
                     [subscriber sendError:error];
                 }];
                 return nil;

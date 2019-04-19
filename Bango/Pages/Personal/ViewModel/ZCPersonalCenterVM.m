@@ -21,8 +21,8 @@
                         self.model = [ZCPersonalCenterModel modelWithDictionary:responseObject[@"data"]];
                         
                         [subscriber sendNext:@(1)];
-                    }else {
-                        kShowMessage;
+                    }else if ([responseObject[@"status"] integerValue] == -1){//过期
+                        self.model = [[ZCPersonalCenterModel alloc] initWithExpiration];
                         [subscriber sendNext:@(0)];
                     }
                     

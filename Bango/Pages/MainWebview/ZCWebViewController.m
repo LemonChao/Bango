@@ -23,6 +23,7 @@
 #import "UIViewController+LKBubbleView.h"
 #import "CommonTools.h"
 #import "SELUpdateAlert.h"
+#import <AFURLResponseSerialization.h>
 
 
 @interface ZCWebViewController ()<WKScriptMessageHandler,WKNavigationDelegate, WKUIDelegate>
@@ -39,34 +40,58 @@
 
 @implementation ZCWebViewController
 
+- (instancetype)initWithPath:(NSString *)path parameters:(nullable NSDictionary *)parameters
+{
+    self = [super init];
+    if (self) {
+        self.pathForH5 = path;
+        if (!parameters) {
+            parameters = @{};
+        }
+        self.parameters = parameters?:@{};
+        self.urlString = StringFormat(@"%@%@?%@",AppKeChengBaseUrl,self.pathForH5,AFQueryStringFromParameters(self.parameters));
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.view.backgroundColor = [UIColor whiteColor];
     [self webViewLoadRequest];
     [self.bridge setWebViewDelegate:self];
     [self versionUpdateRequest];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self.navigationController setNavigationBarHidden:YES animated:NO];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [self.navigationController setNavigationBarHidden:NO animated:NO];
+}
+
+
 - (void)configViews {
     [self.view addSubview:self.webView];
     
     [self.webView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.mas_equalTo(UIEdgeInsetsZero);
+        make.edges.mas_equalTo(UIEdgeInsetsMake(StatusBarHeight, 0, HomeIndicatorHeight, 0));
     }];
     
-    if (![[NSUserDefaults standardUserDefaults] boolForKey:showGuidePageKey]) {
-        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:showGuidePageKey];
-        DHGuidePageHUD *guidePage = [[DHGuidePageHUD alloc] dh_initWithFrame:self.view.frame imageNameArray:@[@"guide_1",@"guide_2",@"guide_3"] buttonIsHidden:NO];
-        [[UIApplication sharedApplication].keyWindow addSubview:guidePage];
-    }
-
 }
 
-- (void)webViewLoadRequest {
-//    NSString *url = @"http://ceshi.mr-bango.cn/html-src/dist/";
-//    NSString *url = @"192.168.0.139:10001";
-//    NSString *url = @"https://mr-bango.cn/html-src/dist/";
 
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:[AppBaseUrl stringByAppendingString:@"html-src/dist/"]] cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:60];
+- (void)webViewLoadRequest {
+//    NSString *url = @"https://mr-bango.cn/html-src/dist/";@"http://192.168.0.177:10001/#/goods-detail?goods_id=12"
+
+//    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:[AppBaseUrl stringByAppendingString:@"html-src/dist/"]] cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:60];
+    
+//    NSString *urlString = StringFormat(@"%@%@",AppBaseUrl,AFQueryStringFromParameters(self.parameters));
+
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:self.urlString] cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:60];
+
     [self.webView loadRequest:request];
 }
 
@@ -94,8 +119,8 @@
 // JS吊起原生登录
 - (void)startLogin:(WVJBResponseCallback)responseCallback {
     ZCLoginViewController *loginVC = [[ZCLoginViewController alloc] init];
-    UINavigationController *navigationVC = [[UINavigationController alloc] initWithRootViewController:loginVC];
-    [self presentViewController:navigationVC animated:YES completion:nil];
+    ZCBaseNavigationController *navigationVC = [[ZCBaseNavigationController alloc] initWithRootViewController:loginVC];
+    [self.navigationController presentViewController:navigationVC animated:YES completion:nil];
     
     [loginVC setLoginCallback:^(NSDictionary * _Nonnull userInfo) {
         responseCallback(userInfo);
@@ -104,11 +129,37 @@
 }
 
 - (void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message {
+    //JS调用OC方法
+    //message.boby就是JS里传过来的参数
+    NSLog(@"body:%@",message.body);
+    
     NSDictionary * parameter = message.body;
     if ([message.name isEqualToString:gameShareImmediately]) { //立即分享
         [ShareObject.sharedObject shareImmediatelyWithParams:parameter];
+    }else if ([message.name isEqualToString:@"GoToHome"]) {//返回原生
+        [self goToHome];
+    }else if ([message.name isEqualToString:@"logout"]) {//退出登陆
+        [self logoutApp];
     }
 
+}
+
+#pragma mark - 返回首页--
+-(void)goToHome{
+    NSLog(@"count:%ld == %@",self.webView.backForwardList.backList.count, self.webView.backForwardList.backList);
+    for (WKBackForwardListItem *item in self.webView.backForwardList.backList) {
+        NSLog(@"backUrl:%@", item.URL);
+    }
+    if (self.webView.backForwardList.backList.count <= 1) {
+        [self.navigationController popViewControllerAnimated:YES];
+    }else {
+        [self.webView goBack];
+    }
+}
+- (void)logoutApp {
+    [BaseMethod deleteObjectForKey:UserInfo_UDSKEY];
+    
+    [self.tabBarController setSelectedIndex:0];
 }
 
 #pragma mark - setter && getter
@@ -119,7 +170,34 @@
         WeakWebViewScriptMessageDelegate *weakScriptMessageDelegate = [[WeakWebViewScriptMessageDelegate alloc] initWithDelegate:self];
         //注册一个name为jsToOcNoPrams的js方法 设置处理接收JS方法的对象
         [wkUController addScriptMessageHandler:weakScriptMessageDelegate name:gameShareImmediately];
-        
+        [wkUController addScriptMessageHandler:weakScriptMessageDelegate name:@"GoToHome"];
+        [wkUController addScriptMessageHandler:weakScriptMessageDelegate name:@"logout"];
+
+        WKPreferences *preferences = [WKPreferences new];
+        preferences.javaScriptCanOpenWindowsAutomatically = YES;
+        WKWebViewConfiguration *config = [[WKWebViewConfiguration alloc] init];
+        config.userContentController = wkUController;
+
+//    preferences.minimumFontSize = 40.0;
+        config.preferences = preferences;
+        NSMutableDictionary *dic = [NSMutableDictionary new];
+        UserInfoModel *info = [BaseMethod readObjectWithKey:UserInfo_UDSKEY];
+        if (info.asstoken) {
+            dic = info.userResp;
+       }else {
+            dic[@"asstoken"] = @"";
+            dic[@"login_num"] = @"";
+            dic[@"login_type"] = @"";
+            dic[@"tx_pwd_status"] = @"";
+            dic[@"user_headimg"] = @"";
+            dic[@"user_tel"] = @"";
+        }
+        NSLog(@"window.iOSInfo:%@", dic);
+        NSData *data = [NSJSONSerialization dataWithJSONObject:dic options:(NSJSONWritingPrettyPrinted) error:nil];
+        NSString *jsonStr = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        NSString *js = [NSString stringWithFormat:@"window.iOSInfo = %@", jsonStr];
+        WKUserScript *script = [[WKUserScript alloc] initWithSource:js injectionTime:(WKUserScriptInjectionTimeAtDocumentStart) forMainFrameOnly:YES];
+        [config.userContentController addUserScript:script];
         /*
          禁止长按(超链接、图片、文本...)弹出效果
          document.documentElement.style.webkitTouchCallout='none';
@@ -127,12 +205,8 @@
          document.documentElement.style.webkitUserSelect='none'; */
         NSString *jsString = @"document.documentElement.style.webkitTouchCallout='none';document.documentElement.style.webkitUserSelect='none';";
         WKUserScript *noneSelectScript = [[WKUserScript alloc] initWithSource:jsString injectionTime:WKUserScriptInjectionTimeAtDocumentEnd forMainFrameOnly:YES];
-        WKWebViewConfiguration *config = [[WKWebViewConfiguration alloc] init];
-        config.userContentController = wkUController;
         [config.userContentController addUserScript:noneSelectScript];
         
-        //CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-HomeIndicatorHeight)
-//        _webView = [[WKWebView alloc] initWithFrame:CGRectMake(0, StatusBarHeight, SCREEN_WIDTH, SCREEN_HEIGHT-HomeIndicatorHeight-StatusBarHeight) configuration:config];
         _webView = [[WKWebView alloc] initWithFrame:CGRectZero configuration:config];
         if (@available(iOS 11.0, *)) {
             _webView.scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
@@ -305,8 +379,8 @@
 
 /** app推广分享 */
 -(void)shareParams:(NSDictionary *)params ResponseCallback:(WVJBResponseCallback)responseCallback {
-    if (DictIsEmpty(params)) return;
-    [ShareObject.sharedObject appShareWithParams:params];
+//    if (DictIsEmpty(params)) return;
+//    [ShareObject.sharedObject appShareWithParams:params];
 }
 
 /** 拼团的分享 */
@@ -495,19 +569,19 @@
 }
 
 
-#pragma mark ====返回首页==== unused
--(void)goHomeCallback:(WVJBResponseCallback)responseCallback{
-    // 获取本地资源路径
-    NSString *pathStr = [[NSBundle mainBundle] pathForResource:@"index" ofType:@"html" inDirectory:@"dist"];
-    // 通过路径创建本地URL地址
-    NSURL *url = [NSURL fileURLWithPath:pathStr];
-    //     NSURL *url = [NSURL URLWithString:@"http://192.168.0.220:8085/login"];
-    // 创建请求
-    NSURLRequest * request = [NSURLRequest requestWithURL:url];
-    // 通过webView加载请求
-    [self.webView loadRequest:request];
-    
-}
+//#pragma mark ====返回首页==== unused
+//-(void)goHomeCallback:(WVJBResponseCallback)responseCallback{
+//    // 获取本地资源路径
+//    NSString *pathStr = [[NSBundle mainBundle] pathForResource:@"index" ofType:@"html" inDirectory:@"dist"];
+//    // 通过路径创建本地URL地址
+//    NSURL *url = [NSURL fileURLWithPath:pathStr];
+//    //     NSURL *url = [NSURL URLWithString:@"http://192.168.0.220:8085/login"];
+//    // 创建请求
+//    NSURLRequest * request = [NSURLRequest requestWithURL:url];
+//    // 通过webView加载请求
+//    [self.webView loadRequest:request];
+//
+//}
 
 //版本设置
 -(void)setUpVersion:(NSDictionary *)dataDict{
