@@ -8,6 +8,8 @@
 
 #import "ZCCartValueCollectionCell.h"
 #import "ZCCartButton.h"
+#import "UIButton+HXExtension.h"
+
 
 @interface ZCCartValueCollectionCell ()
 
@@ -100,7 +102,7 @@
     _model = model;
     [self.godsImgView sd_setImageWithURL:[NSURL URLWithString:model.pic_cover_mid]];
     self.nameLab.text = model.goods_name;
-    self.promotionPriceLab.text = model.promotion_price;
+    self.promotionPriceLab.text = model.show_promotion_price;
     self.selectButton.selected = model.isSelected;
 
     self.tagImgView1.image = self.tagImgView2.image = nil;
@@ -116,7 +118,6 @@
 
 - (void)setSelected:(BOOL)selected {
     [super setSelected:selected];
-
 }
 
 
@@ -137,7 +138,7 @@
         _selectButton = [UITool imageButton:ImageNamed(@"cart_gods_normal")];
         [_selectButton setImage:ImageNamed(@"cart_gods_select") forState:UIControlStateSelected];
         [_selectButton addTarget:self action:@selector(selectButtonAction:) forControlEvents:UIControlEventTouchUpInside];
-        
+        [_selectButton setEnlargeEdgeWithTop:15 right:10 bottom:15 left:10];
     }
     return _selectButton;
 }

@@ -50,8 +50,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, copy) NSString *max_buy;
 /** 最少购买：限购 0 不限购   */
 @property(nonatomic, copy) NSString *min_buy;
-/** //商品促销价格 */
+/** 商品促销价格 */
 @property(nonatomic, copy) NSString *promotion_price;
+/** ￥商品促销价格 */
+@property(nonatomic, copy) NSString *show_promotion_price;
 @property(nonatomic, copy) NSString *pic_cover_big;
 @property(nonatomic, copy) NSString *pic_cover_mid;
 
@@ -60,7 +62,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, copy) NSArray *tagArray;
 
 //推荐商品model
+/** 市场价 */
 @property(nonatomic, copy) NSString *market_price;
+/** ￥市场价 */
+@property(nonatomic, copy) NSString *show_market_price;
 @property(nonatomic, copy) NSString *goods_type;
 @property(nonatomic, copy) NSString *pic_id;
 @property(nonatomic, copy) NSString *is_hot;

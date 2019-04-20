@@ -9,6 +9,7 @@
 #import "ZCCartButton.h"
 #import "ZCBaseGodsModel.h"
 #import "LCAlertTools.h"
+#import "UIButton+HXExtension.h"
 
 @interface ZCCartButton ()
 /** 购物车 */
@@ -109,10 +110,12 @@
 - (void)updateConstraints {
     [self.addButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.bottom.right.equalTo(self);
+        make.width.equalTo(self.addButton.mas_height);
     }];
     
     [self.divisionButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.bottom.left.equalTo(self);
+        make.width.equalTo(self.addButton.mas_height);
     }];
     
     [self.countLab mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -126,7 +129,7 @@
 
 
 - (CGSize)intrinsicContentSize {
-    return CGSizeMake(76.f, 23.f);
+    return CGSizeMake(76.f+20, 42.f);
 }
 
 

@@ -29,16 +29,9 @@
             self.loginBtnTitle = @"登录";
         }
         
-//        [[NSNotificationCenter defaultCenter] postNotificationName:loginSuccessNotification object:nil userInfo:@{@"userModel":model,@"userResp":responseObject}];
-
-        
         [[[[NSNotificationCenter defaultCenter] rac_addObserverForName:loginSuccessNotification object:nil] takeUntil:[self rac_willDeallocSignal]] subscribeNext:^(NSNotification *notif) {
-
-//            UserInfoModel *model = [notif.userInfo objectForKey:@"userModel"];
-//            [BaseMethod saveObject:model withKey:UserInfo_UDSKEY];
-
-            [self.personDataCmd execute:[notif.userInfo objectForKey:@"userResp"]];
             
+            [self.personDataCmd execute:[notif.userInfo objectForKey:@"userResp"]];
         }];
     }
     return self;
@@ -71,6 +64,8 @@
     if (!_phoneCmd) {
         _phoneCmd = [[RACCommand alloc] initWithSignalBlock:^RACSignal * _Nonnull(NSDictionary  *_Nullable input) {
             return [RACSignal createSignal:^RACDisposable * _Nullable(id<RACSubscriber>  _Nonnull subscriber) {
+//                [MBProgressHUD showActivityText:@"登录中..."];
+                kShowActivityText(@"登录中...")
                 [NetWorkManager.sharedManager requestWithUrl:kLogin_index withParameters:input withRequestType:POSTTYPE withSuccess:^(id  _Nonnull responseObject) {
                     if (kStatusTrue) {
 //                        UserInfoModel *model = [UserInfoModel modelWithDictionary:responseObject[@"data"]];
@@ -79,11 +74,13 @@
 
                         [subscriber sendNext:@(1)];
                     }else {
-                        [WXZTipView showTopWithText:responseObject[@"message"]];
+                        [WXZTipView showCenterWithText:responseObject[@"message"]];
+                        kShowMessage
                         [subscriber sendNext:@(0)];
                     }
                     [subscriber sendCompleted];
                 } withFailure:^(NSError * _Nonnull error) {
+                    kShowError
                     [subscriber sendError:error];
                 }];
                 return nil;
@@ -98,17 +95,20 @@
     if (!_zhifubaoCmd) {
         _zhifubaoCmd = [[RACCommand alloc] initWithSignalBlock:^RACSignal * _Nonnull(NSDictionary  *_Nullable input) {
             return [RACSignal createSignal:^RACDisposable * _Nullable(id<RACSubscriber>  _Nonnull subscriber) {
+                kShowActivityText(@"授权中...")
                 [NetWorkManager.sharedManager requestWithUrl:kLogin_alipay withParameters:@{} withRequestType:POSTTYPE withSuccess:^(id  _Nonnull responseObject) {
                     
                     if (kStatusTrue) {
+                        kHidHud
                         [PaymentDelegateManager.sharedPaymentManager loginAlipayPaycompleteParams:responseObject[@"data"]];
                         [subscriber sendNext:@(1)];
                     }else {
-                        [WXZTipView showTopWithText:responseObject[@"message"]];
+                        kShowMessage
                         [subscriber sendNext:@(0)];
                     }
                     [subscriber sendCompleted];
                 } withFailure:^(NSError * _Nonnull error) {
+                    kShowError
                     [subscriber sendError:error];
                 }];
                 return nil;
@@ -123,6 +123,7 @@
         _wechatCmd = [[RACCommand alloc] initWithSignalBlock:^RACSignal * _Nonnull(NSDictionary  *_Nullable input) {
             return [RACSignal createSignal:^RACDisposable * _Nullable(id<RACSubscriber>  _Nonnull subscriber) {
                 
+                kShowActivityText(@"授权中...")
                 [ShareSDK authorize:SSDKPlatformTypeWechat settings:nil onStateChanged:^(SSDKResponseState state, SSDKUser *user, NSError *error) {
                     if (state == SSDKResponseStateSuccess){
                         NSDictionary *dataDict = @{@"type":@"0",
@@ -132,27 +133,24 @@
                                                    @"sex":[NSString stringWithFormat:@"%ld",(long)user.gender]
                                                    };
                         
-//                        [WXZTipView showCenterWithText:@"微信授权成功"];
-
+                        kShowActivityText(@"登陆中...")
                         // 注册到自己服务器 并获取用户信息
                         [NetWorkManager.sharedManager requestWithUrl:kLogin_third withParameters:dataDict withRequestType:POSTTYPE withSuccess:^(id  _Nonnull responseObject) {
                             if (kStatusTrue) {
-//                                UserInfoModel *model = [UserInfoModel modelWithDictionary:responseObject[@"data"]];
-//                                [[NSNotificationCenter defaultCenter] postNotificationName:loginSuccessNotification object:nil userInfo:@{@"userModel":model,@"userResp":responseObject}];
                                 [self.personDataCmd execute:responseObject];
                                 [subscriber sendNext:@(1)];
                             }else {
-                                [WXZTipView showCenterWithText:responseObject[@"message"]];
+                                kShowMessage
                                 [subscriber sendNext:@(0)];
                             }
                             [subscriber sendCompleted];
                         } withFailure:^(NSError * _Nonnull error) {
-                            [WXZTipView showCenterWithText:error.localizedDescription];
+                            kShowError
                             [subscriber sendError:error];
                         }];
 
                     }else{
-                        [WXZTipView showCenterWithText:@"微信授权失败"];
+                        [MBProgressHUD showText:@"授权失败..."];
                         [subscriber sendError:error];
                     }
                 }];
@@ -174,9 +172,10 @@
                     [subscriber sendCompleted];
                     return nil;
                 }
-                
+                kShowActivityText(@"更新资料...")
                 [NetWorkManager.sharedManager requestWithUrl:kMember_personData withParameters:@{@"asstoken":origModel.asstoken} withRequestType:POSTTYPE withSuccess:^(id  _Nonnull responseObject) {
                     if (kStatusTrue) {
+                        kHidHud;
                         UserInfoModel *model = [UserInfoModel modelWithDictionary:responseObject[@"data"]];
                         model.asstoken = origModel.asstoken;
                         model.txPwdStatus = origModel.txPwdStatus;

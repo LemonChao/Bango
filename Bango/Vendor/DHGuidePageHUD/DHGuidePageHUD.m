@@ -70,21 +70,18 @@
             if (i == imageNameArray.count-1 && isHidden == NO) {
                 [imageView setUserInteractionEnabled:YES];
                 UIButton *startButton = [[UIButton alloc]init];
-                [startButton setImage:ImageNamed(@"lijitiyan_guide") forState:UIControlStateNormal];
+                [startButton setImage:nil forState:UIControlStateNormal];
                 [startButton setTitleColor:[UIColor whiteColor ] forState:UIControlStateNormal];
                 [startButton.titleLabel setFont:[UIFont systemFontOfSize:WidthRatio(25)]];
                 startButton.imageView.contentMode = UIViewContentModeScaleAspectFit;
-//                [startButton setBackgroundImage:[UIImage imageNamed:@"GuideImage.bundle/guideImage_button_backgound"] forState:UIControlStateNormal];
-//                [startButton setImage:[[UIImage imageNamed:@"GuideImage.bundle/guideImage_button_backgound"] imageWithColor:HEX_COLOR(0x54a8dd)] forState:UIControlStateNormal];
                 [startButton addTarget:self action:@selector(startButtonAction:) forControlEvents:UIControlEventTouchUpInside];
                 [imageView addSubview:startButton];
                 [startButton mas_makeConstraints:^(MASConstraintMaker *make) {
                     make.centerX.mas_equalTo(imageView.mas_centerX);
                     make.bottom.mas_equalTo(imageView.mas_bottom).offset(-(DDScreenH - DDScreenH*0.93));
-                    make.width.mas_equalTo(WidthRatio(170));
-                    make.height.mas_equalTo(HeightRatio(45));
+                    make.width.mas_equalTo(DDScreenW);
+                    make.height.mas_equalTo(DDScreenH/2);
                 }];
-//                MMViewBorderRadius(startButton, 5, 0, [UIColor clearColor]);
             }
         }
         
@@ -96,7 +93,6 @@
         self.imagePageControl.currentPageIndicatorTintColor = HEX_COLOR(0x9A58D2);
         [self addSubview:self.imagePageControl];
         self.imagePageControl.hidden = YES;
-        
     }
     return self;
 }

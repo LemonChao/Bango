@@ -91,7 +91,7 @@ static NSString *homeFooterid = @"ZCHomeTableFooterView_id";
     
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         @strongify(self);
-        [self getDataWithCaches:@"0"];
+        [self getDataWithCaches:@"1"];
     }];
     
     self.tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:nil];

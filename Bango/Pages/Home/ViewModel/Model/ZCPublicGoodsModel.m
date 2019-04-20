@@ -24,12 +24,14 @@
     [encoder encodeObject:self.max_buy forKey:@"max_buy"];
     [encoder encodeObject:self.min_buy forKey:@"min_buy"];
     [encoder encodeObject:self.promotion_price forKey:@"promotion_price"];
+    [encoder encodeObject:self.show_promotion_price forKey:@"show_promotion_price"];
     [encoder encodeObject:self.pic_cover_big forKey:@"pic_cover_big"];
     [encoder encodeObject:self.pic_cover_mid forKey:@"pic_cover_mid"];
     [encoder encodeBool:self.selected forKey:@"selected"];
     [encoder encodeObject:self.tagArray forKey:@"tagArray"];
     //推荐商品
     [encoder encodeObject:self.market_price forKey:@"market_price"];
+    [encoder encodeObject:self.show_market_price forKey:@"show_market_price"];
     [encoder encodeObject:self.goods_type forKey:@"goods_type"];
     [encoder encodeObject:self.pic_id forKey:@"pic_id"];
     [encoder encodeObject:self.is_hot forKey:@"is_hot"];
@@ -61,12 +63,14 @@
         self.max_buy = [decoder decodeObjectForKey:@"max_buy"];
         self.min_buy = [decoder decodeObjectForKey:@"min_buy"];
         self.promotion_price = [decoder decodeObjectForKey:@"promotion_price"];
+        self.show_promotion_price = [decoder decodeObjectForKey:@"show_promotion_price"];
         self.pic_cover_big = [decoder decodeObjectForKey:@"pic_cover_big"];
         self.pic_cover_mid = [decoder decodeObjectForKey:@"pic_cover_mid"];
         self.selected = [decoder decodeBoolForKey:@"selected"];
         self.tagArray = [decoder decodeObjectForKey:@"tagArray"];
         // 推荐商品
         self.market_price = [decoder decodeObjectForKey:@"market_price"];
+        self.show_market_price = [decoder decodeObjectForKey:@"show_market_price"];
         self.goods_type = [decoder decodeObjectForKey:@"goods_type"];
         self.pic_id = [decoder decodeObjectForKey:@"pic_id"];
         self.is_hot = [decoder decodeObjectForKey:@"is_hot"];
@@ -89,8 +93,8 @@
 // 你可以在这里对数据进行校验，如果校验不通过，可以返回 NO，则该 Model 会被忽略。
 // 你也可以在这里做一些自动转换不能完成的工作。
 - (BOOL)modelCustomTransformFromDictionary:(NSDictionary *)dic {
-    _promotion_price = StringFormat(@"￥%@",_promotion_price);
-    _market_price = StringFormat(@"￥%@",_market_price);
+    _show_promotion_price = StringFormat(@"￥%@",_promotion_price);
+    _show_market_price = StringFormat(@"￥%@",_market_price);
 
     NSString *cart_id = [NSString stringWithFormat:@"%@",dic[@"cart_id"]];
     

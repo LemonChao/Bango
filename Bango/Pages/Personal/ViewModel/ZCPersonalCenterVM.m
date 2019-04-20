@@ -22,6 +22,9 @@
                         
                         [subscriber sendNext:@(1)];
                     }else if ([responseObject[@"status"] integerValue] == -1){//过期
+                        UserInfoModel *info = [BaseMethod readObjectWithKey:UserInfo_UDSKEY];
+                        info.asstoken = nil;
+                        [BaseMethod saveObject:info withKey:UserInfo_UDSKEY];
                         self.model = [[ZCPersonalCenterModel alloc] initWithExpiration];
                         [subscriber sendNext:@(0)];
                     }

@@ -119,11 +119,13 @@
 //自动缓存，成功后更新
 - (void)requestWithUrl:(NSString *)url withParameters:(NSDictionary *)params withRequestType:(NetWorkType)requestType responseCache:(void (^)(id responseObject))caches withSuccess:(void (^)(id responseObject))success withFailure:(void (^)(NSError *error))failure
 {
-
-    if (DictIsEmpty(params)) {
-        params = @{};
-    }
+    
     NSMutableDictionary *parameter = params.mutableCopy;
+    UserInfoModel *info = [BaseMethod readObjectWithKey:UserInfo_UDSKEY];
+    
+    if (![params containsObjectForKey:@"asstoken"]) {
+        [parameter setObject:info.asstoken?:@"" forKey:@"asstoken"];
+    }
 
     //读取缓存
     id obj = [ZCNetworkCache httpCacheForURL:url parameters:parameter];

@@ -111,9 +111,9 @@
     [self.godsImgView sd_setImageWithURL:[NSURL URLWithString:model.pic_cover_mid]];
     self.nameLab.text = model.goods_name;
     self.descriptLab.text = model.introduction;
-    self.promotionPriceLab.text = model.promotion_price;
+    self.promotionPriceLab.text = model.show_promotion_price;
     self.cartButton.baseModel = model;
-    NSMutableAttributedString *attText = [[NSMutableAttributedString alloc] initWithString:model.market_price];
+    NSMutableAttributedString *attText = [[NSMutableAttributedString alloc] initWithString:model.show_market_price];
     attText.strikethroughStyle = NSUnderlineStyleSingle;
     attText.strikethroughColor = AssistColor;
     self.marketPriceLab.attributedText = attText;

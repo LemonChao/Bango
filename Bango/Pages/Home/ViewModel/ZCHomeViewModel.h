@@ -25,6 +25,7 @@ NS_ASSUME_NONNULL_BEGIN
 /** 是否存在拼团 */
 @property(nonatomic, assign, getter=hasTuan) BOOL tuan;
 
+@property(nonatomic, copy) NSNumber *completeSuccess;
 @end
 
 NS_ASSUME_NONNULL_END

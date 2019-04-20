@@ -24,6 +24,8 @@
 
 #define kShowActivity   [MBProgressHUD showActivityText:nil];
 
+#define kShowActivityText(Text) [MBProgressHUD showActivityText:Text];
+
 #define kHidHud         [MBProgressHUD hideHud];
 /** 设置view圆角和边框 */
 #define MMViewBorderRadius(View, Radius, Width, Color)\

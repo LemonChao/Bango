@@ -72,15 +72,16 @@
 //                    });
 //                    return;//v1.0.1 之前h5调用支付宝SDK登陆
 //                }
+                kShowActivityText(@"登陆中...")
                 [NetWorkManager.sharedManager requestWithUrl:kLogin_alipay_auth withParameters:@{@"auth_code":resultDic[@"result"]} withRequestType:POSTTYPE withSuccess:^(id  _Nonnull responseObject) {
                     if (kStatusTrue) {
                         UserInfoModel *model = [UserInfoModel modelWithDictionary:responseObject[@"data"]];
                         [[NSNotificationCenter defaultCenter] postNotificationName:loginSuccessNotification object:nil userInfo:@{@"userModel":model,@"userResp":responseObject}];
                     }else {
-                        [WXZTipView showCenterWithText:responseObject[@"message"]];
+                        kShowMessage
                     }
                 }withFailure:^(NSError * _Nonnull error) {
-                    [WXZTipView showCenterWithText:error.localizedDescription];
+                    kShowError
                 }];
             }];
         }else {

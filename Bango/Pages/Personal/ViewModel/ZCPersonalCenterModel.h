@@ -62,8 +62,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, copy) NSString *virtual_wait_evaluate;
 /** 头像 */
 @property(nonatomic, copy) NSString *avatarhead;
-/** 昵称 */
+/** 用户名 */
 @property(nonatomic, copy) NSString *user_name;
+/** 昵称 */
+@property(nonatomic, copy) NSString *nick_name;
 /** 会员等级 */
 @property(nonatomic, copy) NSString *level;
 /** 等级名称 */

@@ -15,22 +15,22 @@
         _classifyCmd = [[RACCommand alloc] initWithSignalBlock:^RACSignal * _Nonnull(id  _Nullable input) {
             return [[RACSignal createSignal:^RACDisposable * _Nullable(id<RACSubscriber>  _Nonnull subscriber) {
                 [NetWorkManager.sharedManager requestWithUrl:kAllCategory_home withParameters:@{} withRequestType:POSTTYPE responseCache:^(id  _Nonnull responseObject) {
-
+                    
                     self.dataArray = [NSArray modelArrayWithClass:[ZCClassifyModel class] json:responseObject[@"data"]];
-
+                    [subscriber sendNext:@(1)];
                 } withSuccess:^(id  _Nonnull responseObject) {
                     if (kStatusTrue) {
                         self.dataArray = [NSArray modelArrayWithClass:[ZCClassifyModel class] json:responseObject[@"data"]];
                         [subscriber sendNext:@(1)];
                     }else {
-                        [MBProgressHUD showText:responseObject[@"message"]];
+                        kShowMessage
                         [subscriber sendNext:@(0)];
                     }
 
                     [subscriber sendCompleted];
 
                 } withFailure:^(NSError * _Nonnull error) {
-                    [MBProgressHUD showText:error.localizedDescription];
+                    kShowError
                     [subscriber sendError:error];
                 }];
 

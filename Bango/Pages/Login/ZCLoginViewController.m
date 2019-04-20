@@ -104,14 +104,14 @@
     self.failingBtnView = [[ZCFallingAnimationView alloc] initWithFrame:CGRectMake(0, topDiff, SCREEN_WIDTH, SCREEN_HEIGHT-topDiff)];
 }
 
-
-- (void)executeLoginCmd {
-    [[self.viewModel.phoneCmd execute:@{@"username":self.phoneNumberField.text,@"send_param":self.authCodeField.text}] subscribeNext:^(id  _Nullable x) {
-        
-    } error:^(NSError * _Nullable error) {
-        
-    }];
-}
+//
+//- (void)executeLoginCmd {
+//    [[self.viewModel.phoneCmd execute:@{@"username":self.phoneNumberField.text,@"send_param":self.authCodeField.text}] subscribeNext:^(id  _Nullable x) {
+//
+//    } error:^(NSError * _Nullable error) {
+//
+//    }];
+//}
 
 
 - (void)executeAuthCmd {
@@ -134,6 +134,8 @@
                 if (self->_completeBackToHome) {
                     UINavigationController *rootNav =  (UINavigationController *)[[UIApplication sharedApplication].delegate window].rootViewController;
                     UITabBarController *tabBarVC = (UITabBarController *)rootNav.topViewController;
+                    UINavigationController *nav = tabBarVC.selectedViewController;
+                    [nav popToRootViewControllerAnimated:NO];
                     [tabBarVC setSelectedIndex:0];
                 }
             }];
@@ -186,7 +188,9 @@
 }
 
 - (void)loginAction:(UIButton *)button {
-    [self executeLoginCmd];
+    [self.view endEditing:YES];
+    [self.viewModel.phoneCmd execute:@{@"username":self.phoneNumberField.text,@"send_param":self.authCodeField.text}];
+
 }
 
 // 切换到手机号吗登录
@@ -200,7 +204,7 @@
     //快速登陆
     UIView *fastContentView = [UIView new];
     UserInfoModel *model = [BaseMethod readObjectWithKey:UserInfo_UDSKEY];
-    UIImageView *portraitView = [UITool imageViewImage:model.avatar placeHolder:ImageNamed(@"placeHolder") contentMode:UIViewContentModeScaleAspectFill cornerRadius:WidthRatio(37) borderWidth:0 borderColor:[UIColor clearColor]];
+    UIImageView *portraitView = [UITool imageViewImage:model.avatarhead placeHolder:ImageNamed(@"placeHolder") contentMode:UIViewContentModeScaleAspectFill cornerRadius:WidthRatio(37) borderWidth:0 borderColor:[UIColor clearColor]];
 
     UIButton *loginButton = [UITool wordButton:self.viewModel.loginBtnTitle titleColor:[UIColor whiteColor] font:MediumFont(17) bgColor:HEX_COLOR(0xFD1617)];
     MMViewBorderRadius(loginButton, WidthRatio(22), 0, [UIColor clearColor]);

@@ -35,9 +35,6 @@ static NSString *invaluedHeaderid = @"ZCCartInvaluedSectionHeader_id";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deleteGodsToRefreshCart:) name:deleteGodsToRefreshCartNotification object:nil];
-//    [MBProgressHUD showActivityText:nil];
 }
 
 
@@ -310,11 +307,6 @@ static NSString *invaluedHeaderid = @"ZCCartInvaluedSectionHeader_id";
         _viewModel = [[ZCCartViewModel alloc] init];
     }
     return _viewModel;
-}
-
-- (void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:deleteGodsToRefreshCartNotification object:nil];
-    
 }
 
 @end

@@ -34,7 +34,7 @@
         UIView *bgView = [UITool viewWithColor:[UIColor whiteColor]];
         [self.contentView addSubview:bgView];
         
-        self.stack = [[UIStackView alloc] init];
+        self.stack = [[UIStackView alloc] initWithArrangedSubviews:[self subButtons]];
         self.stack.axis = UILayoutConstraintAxisHorizontal;
         self.stack.distribution = UIStackViewDistributionFillEqually;
         self.stack.alignment = UIStackViewAlignmentFill;
@@ -53,44 +53,43 @@
 }
 
 - (void)setupStackSubViewsWith:(ZCPersonalCenterModel *)model {
-    NSArray *titls = @[@"余额",@"能量值"];
-    if (model && model.level.integerValue != 47) {
-        titls = @[@"奖励",@"余额",@"能量值"];
-    }
     
-    for (int i = 0; i < titls.count; i++) {
+    
+    if (model.level.integerValue <= 47 && self.stack.arrangedSubviews.count == 3) {//需要减一个
+        ZCWordsButton *jiangli = self.stack.arrangedSubviews[0];
+        [self.stack removeArrangedSubview:jiangli];
+        [jiangli removeFromSuperview];
+    }else if (model.level.integerValue > 47 && self.stack.arrangedSubviews.count == 2) {//需要加一个
         ZCWordsButton *button = [[ZCWordsButton alloc] init];
-        button.bottomString = titls[i];
+        button.bottomString = @"奖励";
         button.topString = @"0";
         [button addTarget:self action:@selector(balanceButtonAction:) forControlEvents:UIControlEventTouchUpInside];
-        [self.stack addArrangedSubview:button];
+        [self.stack insertArrangedSubview:button atIndex:0];
     }
 }
 
 
 
-//- (NSArray<__kindof ZCWordsButton *> *)subButtons {
-//    NSArray *titls = @[@"奖励",@"余额",@"能量值"];
-//
-//    NSMutableArray *array = [NSMutableArray array];
-//    for (int i = 0; i < titls.count; i++) {
-//        ZCWordsButton *button = [[ZCWordsButton alloc] init];
-//        button.bottomString = titls[i];
-//        button.topString = @"0";
-//        [button addTarget:self action:@selector(balanceButtonAction:) forControlEvents:UIControlEventTouchUpInside];
-//        [array addObject:button];
-//    }
-//    return array.copy;
-//}
-//
+- (NSArray<__kindof ZCWordsButton *> *)subButtons {
+    NSArray *titls = @[@"余额",@"能量值"];
+
+    NSMutableArray *array = [NSMutableArray array];
+    for (int i = 0; i < titls.count; i++) {
+        ZCWordsButton *button = [[ZCWordsButton alloc] init];
+        button.bottomString = titls[i];
+        button.topString = @"0";
+        [button addTarget:self action:@selector(balanceButtonAction:) forControlEvents:UIControlEventTouchUpInside];
+        [array addObject:button];
+    }
+    return array.copy;
+}
 
 - (void)setModel:(ZCPersonalCenterModel *)model {
-    _model = model;
-    if (!self.stack.arrangedSubviews.count) {
-        [self setupStackSubViewsWith:model];
-    }
+    if (!model) return;
     
-//    if (!model) return;
+    _model = model;
+    [self setupStackSubViewsWith:model];
+
     for (ZCWordsButton *button in self.stack.arrangedSubviews) {
         if ([button.bottomString isEqualToString:@"奖励"]) {
             button.topString = model.award;
@@ -103,17 +102,18 @@
 }
 
 - (void)balanceButtonAction:(ZCWordsButton *)button {
-    
     if ([button.bottomString isEqualToString:@"余额"]) {
         ZCWebViewController *webVC = [[ZCWebViewController alloc] initWithPath:@"my-balance" parameters:nil];
         [[self viewController].navigationController pushViewController:webVC animated:YES];
-    }else if ([button.bottomString isEqualToString:@"奖励"]) {
-        ZCWebViewController *webVC = [[ZCWebViewController alloc] initWithPath:@"direct-recommend" parameters:nil];
-        [[self viewController].navigationController pushViewController:webVC animated:YES];
-    }else {
-        ZCWebViewController *webVC = [[ZCWebViewController alloc] initWithPath:@"personal-data" parameters:nil];
-        [[self viewController].navigationController pushViewController:webVC animated:YES];
     }
+//    else if ([button.bottomString isEqualToString:@"奖励"]) {
+//        ZCWebViewController *webVC = [[ZCWebViewController alloc] initWithPath:@"direct-recommend" parameters:nil];
+//        [[self viewController].navigationController pushViewController:webVC animated:YES];
+//    }else {
+//        ZCWebViewController *webVC = [[ZCWebViewController alloc] initWithPath:@"personal-data" parameters:nil];
+//        [[self viewController].navigationController pushViewController:webVC animated:YES];
+//    }
+
 }
 
 @end

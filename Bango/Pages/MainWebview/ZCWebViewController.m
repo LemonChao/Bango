@@ -45,11 +45,8 @@
     self = [super init];
     if (self) {
         self.pathForH5 = path;
-        if (!parameters) {
-            parameters = @{};
-        }
         self.parameters = parameters?:@{};
-        self.urlString = StringFormat(@"%@%@?%@",AppKeChengBaseUrl,self.pathForH5,AFQueryStringFromParameters(self.parameters));
+        self.urlString = StringFormat(@"%@html-src/dist/#/%@?%@",AppBaseUrl,self.pathForH5,AFQueryStringFromParameters(self.parameters));
     }
     return self;
 }
@@ -146,7 +143,7 @@
 
 #pragma mark - 返回首页--
 -(void)goToHome{
-    NSLog(@"count:%ld == %@",self.webView.backForwardList.backList.count, self.webView.backForwardList.backList);
+    NSLog(@"count:%lu == %@",(unsigned long)self.webView.backForwardList.backList.count, self.webView.backForwardList.backList);
     for (WKBackForwardListItem *item in self.webView.backForwardList.backList) {
         NSLog(@"backUrl:%@", item.URL);
     }
@@ -157,9 +154,11 @@
     }
 }
 - (void)logoutApp {
-    [BaseMethod deleteObjectForKey:UserInfo_UDSKEY];
-    
-    [self.tabBarController setSelectedIndex:0];
+    UserInfoModel *info = [BaseMethod readObjectWithKey:UserInfo_UDSKEY];
+    info.asstoken = nil;
+    [BaseMethod saveObject:info withKey:UserInfo_UDSKEY];
+    [self.navigationController popViewControllerAnimated:YES];
+
 }
 
 #pragma mark - setter && getter

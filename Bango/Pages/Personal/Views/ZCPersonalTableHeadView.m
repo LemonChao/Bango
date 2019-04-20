@@ -67,13 +67,13 @@
     
     [self.avatarButton sd_setImageWithURL:[NSURL URLWithString:model.avatarhead] forState:UIControlStateNormal placeholderImage:ImageNamed(@"portrait_placeholder_normal") completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
         if (image) {
-            UIImage *img = [image imageByResizeToSize:CGSizeMake(WidthRatio(64), WidthRatio(64)) contentMode:UIViewContentModeScaleAspectFill];
-            UIImage *roundImg = [img imageByRoundCornerRadius:WidthRatio(32) borderWidth:WidthRatio(2) borderColor:[UIColor whiteColor]];
+            UIImage *img = [image imageByResizeToSize:CGSizeMake(WidthRatio(200), WidthRatio(200)) contentMode:UIViewContentModeScaleAspectFill];
+            UIImage *roundImg = [img imageByRoundCornerRadius:WidthRatio(100) borderWidth:4.f borderColor:[UIColor whiteColor]];
             [self->_avatarButton setImage:roundImg forState:UIControlStateNormal];
             [self->_avatarButton setImage:roundImg forState:UIControlStateHighlighted];
         }
     }];
-    self.userNameLab.text = model.user_name;
+    self.userNameLab.text = model.nick_name;
     self.bangoLab.text = model.jibie;
 }
 
@@ -103,6 +103,7 @@
     if (!_avatarButton) {
         _avatarButton = [UITool imageButton:ImageNamed(@"portrait_placeholder_normal")];
         [_avatarButton addTarget:self action:@selector(avatarButtonAction:) forControlEvents:UIControlEventTouchUpInside];
+        _avatarButton.imageView.contentMode = UIViewContentModeScaleAspectFill;
     }
     return _avatarButton;
 }

@@ -29,9 +29,8 @@ static NSString *leftCellid = @"ZCClassifyLeftCell_id";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    kShowActivity;
     [self getData];
-    
-    
 }
 
 
@@ -80,20 +79,17 @@ static NSString *leftCellid = @"ZCClassifyLeftCell_id";
 
 
 - (void)getData {
-//    [[self.viewModel.classifyCmd execute:nil] subscribeNext:^(id  _Nullable x) {
-//
-//    } error:^(NSError * _Nullable error) {
-//
-//    }];
-    
-    [[[self.viewModel.classifyCmd execute:nil] doNext:^(id  _Nullable x) {
-        
-    }] subscribeNext:^(id  _Nullable x) {
+    [[self.viewModel.classifyCmd execute:nil] subscribeNext:^(id  _Nullable x) {
         if ([x boolValue]) {
+            kHidHud;
             [self.leftTableView reloadData];
+            if (self.viewModel.dataArray.count) {
+                [self.leftTableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] animated:NO scrollPosition:UITableViewScrollPositionNone];
+                ZCClassifyModel *model = self.viewModel.dataArray[0];
+                self.rightVC.dataArray = model.good_list;
+            }
         }
     } error:^(NSError * _Nullable error) {
-        
     }];
 
 }

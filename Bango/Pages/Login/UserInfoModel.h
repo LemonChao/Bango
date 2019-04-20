@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface UserInfoModel : NSObject
 
 /** 加密token */
-@property(nonatomic, copy) NSString *asstoken;
+@property(nullable, nonatomic, copy) NSString *asstoken;
 
 /** 提现密码状态 0:未设置  1:已设置 */
 @property(nonatomic, copy) NSString *txPwdStatus;
