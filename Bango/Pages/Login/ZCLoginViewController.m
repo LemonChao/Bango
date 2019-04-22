@@ -141,24 +141,6 @@
             }];
         }
     }];
-    
-    
-    
-    
-    //phoneLogin
-    //    [[self.viewModel.phoneCmd executionSignals] subscribeNext:^(id  _Nullable x) {
-    //
-    //    }];
-    //
-    //    //zhifubaoLogin
-    //    [[self.viewModel.zhifubaoCmd executionSignals] subscribeNext:^(id  _Nullable x) {
-    //    }];
-    //
-    //    //wechatLogin
-    //    [[self.viewModel.wechatCmd executionSignals] subscribeNext:^(id  _Nullable x) {
-    //
-    //    }];
-    
 }
 
 - (void)authCodeBtnAction:(JKCountDownButton*)button {

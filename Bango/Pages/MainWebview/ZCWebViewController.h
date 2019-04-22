@@ -29,7 +29,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,assign)BOOL isNavigationHidden;
 /** 标题 */
 @property (nonatomic,copy)NSString *webTitle;
-
+/** 顶部间距 */
+@property(nonatomic, assign) CGFloat topInset;
+/** 底部间距 */
+@property(nonatomic, assign) CGFloat bottomInset;
 /** h5 页面路径*/
 @property(nonatomic, copy) NSString *pathForH5;
 /** h5 页面参数*/

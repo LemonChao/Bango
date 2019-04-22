@@ -42,6 +42,17 @@
     [self.view addSubview:self.customNavBar];
 }
 
+//控制StatusBar是否隐藏
+- (BOOL)prefersStatusBarHidden
+{
+    return NO;
+}
+//控制StatusBar显示模式
+- (UIStatusBarStyle)preferredStatusBarStyle
+{
+    return UIStatusBarStyleDefault;
+}
+
 #pragma mark - initView
 - (void)setBgViewCorlor
 {

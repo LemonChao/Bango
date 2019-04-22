@@ -47,11 +47,12 @@
     
     SSUIShareSheetConfiguration *config = [[SSUIShareSheetConfiguration alloc] init];
     config.style = SSUIActionSheetStyleSystem;
-    config.columnPortraitCount = 3;
+    config.columnPortraitCount = 4;
     config.menuBackgroundColor = [UIColor whiteColor];
     config.cancelButtonHidden = YES;
-    config.itemTitleFont = MediumFont(WidthRatio(12));
+    config.itemTitleFont = MediumFont(WidthRatio(10));
     config.itemTitleColor = MinorColor;
+    config.itemAlignment = SSUIItemAlignmentCenter;
     
     [ShareSDK showShareActionSheet:nil
                        customItems:items

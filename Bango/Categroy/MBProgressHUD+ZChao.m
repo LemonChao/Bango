@@ -131,6 +131,18 @@ static CGFloat duration = 2.f;
     return hud;
 }
 
++ (void)showCheckMarkWithText:(NSString *)text {
+    MBProgressHUD *hud = [self showHudMode:MBProgressHUDModeCustomView text:text];
+    UIImage *image = [[UIImage imageNamed:@"Checkmark"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    hud.customView = [[UIImageView alloc] initWithImage:image];
+    // Looks a bit nicer if we make it square.
+    hud.square = YES;
+    // Optional label text.
+    hud.label.text = text;
+    
+    [hud hideAnimated:YES afterDelay:2.f];
+}
+
 + (void)hideHud {
     [sharedHud hideAnimated:YES];
 }

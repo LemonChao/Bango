@@ -8,7 +8,7 @@
 
 #import "AppDelegateManager.h"
 #import "ZCBaseTabBarController.h"
-
+#import "ZCBaseNavigationController.h"
 /** 导航栏 */
 #import <WRNavigationBar/WRNavigationBar.h>
 #import <IQKeyboardManager/IQKeyboardManager.h>
@@ -35,7 +35,7 @@
 }
 
 - (void)didFinishLaunchingWithOptions:(NSDictionary *)launchOptions withWindow:(UIWindow *)window {
-    UINavigationController *rootNav = [[UINavigationController alloc] initWithRootViewController:[[ZCBaseTabBarController alloc]init]];
+    ZCBaseNavigationController *rootNav = [[ZCBaseNavigationController alloc] initWithRootViewController:[[ZCBaseTabBarController alloc]init]];
     rootNav.navigationBar.hidden = YES;
     
     window.rootViewController = rootNav;

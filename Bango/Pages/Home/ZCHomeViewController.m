@@ -19,6 +19,8 @@
 #import "SDCycleScrollView.h"
 #import "ZCHomeTableHeaderFooterView.h"
 #import "DHGuidePageHUD.h"
+#import "UpdataViewModel.h"
+
 @interface ZCHomeViewController ()<UITableViewDataSource,UITableViewDelegate,SDCycleScrollViewDelegate>
 /** 轮播图 */
 @property (nonatomic, strong) SDCycleScrollView *cycleView;
@@ -51,6 +53,7 @@ static NSString *homeFooterid = @"ZCHomeTableFooterView_id";
     
     [MBProgressHUD showActivityText:nil];
     [self getDataWithCaches:@"1"];
+    [[[UpdataViewModel alloc]init].updateCmd execute:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -91,7 +94,7 @@ static NSString *homeFooterid = @"ZCHomeTableFooterView_id";
     
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         @strongify(self);
-        [self getDataWithCaches:@"1"];
+        [self getDataWithCaches:@"0"];
     }];
     
     self.tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:nil];
@@ -106,7 +109,7 @@ static NSString *homeFooterid = @"ZCHomeTableFooterView_id";
 - (void)getDataWithCaches:(NSString *)caches {
     
     @weakify(self);
-    [[self.viewModel.homeCmd execute:caches] subscribeNext:^(id  _Nullable x) {
+    [[self.viewModel.homeCmd execute:caches] subscribeNext:^(NSNumber *_Nullable x) {
         @strongify(self);
         if ([x boolValue]) {
             [MBProgressHUD hideHud];
@@ -117,8 +120,10 @@ static NSString *homeFooterid = @"ZCHomeTableFooterView_id";
             }
         }
         
-        [self.tableView.mj_header endRefreshing];
-        [self.tableView.mj_footer endRefreshingWithNoMoreData];
+        if (x.integerValue == 1) {
+            [self.tableView.mj_header endRefreshing];
+            [self.tableView.mj_footer endRefreshingWithNoMoreData];
+        }
     } error:^(NSError * _Nullable error) {
         [self.tableView.mj_header endRefreshing];
         [self.tableView.mj_footer endRefreshingWithNoMoreData];
@@ -293,9 +298,11 @@ static NSString *homeFooterid = @"ZCHomeTableFooterView_id";
 }
 
 - (void)newsButtonItemAction:(UIBarButtonItem *)item {
+    [MBProgressHUD showText:@"暂未开放,敬请期待"];
 }
 
 - (void)signButtonItemAction:(UIBarButtonItem *)item {
+    [MBProgressHUD showText:@"暂未开放,敬请期待"];
 }
 
 

@@ -56,7 +56,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, copy) NSString *show_promotion_price;
 @property(nonatomic, copy) NSString *pic_cover_big;
 @property(nonatomic, copy) NSString *pic_cover_mid;
-
+@property(nonatomic, assign) BOOL is_pin;
 @property(nonatomic, assign, getter=isSelected) BOOL selected;
 /** 商品标签 */
 @property(nonatomic, copy) NSArray *tagArray;

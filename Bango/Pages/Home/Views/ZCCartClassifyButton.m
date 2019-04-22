@@ -1,17 +1,18 @@
 //
-//  ZCCartButton.m
+//  ZCCartClassifyButton.m
 //  Bango
 //
-//  Created by zchao on 2019/4/3.
+//  Created by zchao on 2019/4/22.
 //  Copyright © 2019 zchao. All rights reserved.
 //
 
-#import "ZCCartButton.h"
+#import "ZCCartClassifyButton.h"
 #import "ZCBaseGodsModel.h"
 #import "LCAlertTools.h"
 #import "UIButton+HXExtension.h"
 
-@interface ZCCartButton ()
+
+@interface ZCCartClassifyButton ()
 /** 购物车 */
 @property(nonatomic, strong) UIButton *cartButton;
 
@@ -30,8 +31,7 @@
 
 @end
 
-@implementation ZCCartButton
-
+@implementation ZCCartClassifyButton
 
 - (void)setBaseModel:(ZCBaseGodsModel *)baseModel {
     _baseModel = baseModel;
@@ -42,13 +42,13 @@
     self = [super init];
     if (self) {
         [self commonInit];
-        @weakify(self);
-        RAC(self.countLab, text) = RACObserve(self, baseModel.have_num);
+//        @weakify(self);
+//        RAC(self.countLab, text) = RACObserve(self, baseModel.have_num);
         
-        [RACObserve(self, baseModel.hide) subscribeNext:^(id  _Nullable x) {
-            @strongify(self);
-            self.divisionButton.hidden = self.countLab.hidden = self.addButton.selected = [x boolValue];
-        }];
+//        [RACObserve(self, baseModel.hide) subscribeNext:^(id  _Nullable x) {
+//            @strongify(self);
+//            self.divisionButton.hidden = self.countLab.hidden = self.addButton.selected = [x boolValue];
+//        }];
     }
     return self;
 }
@@ -58,22 +58,22 @@
     self = [super initWithFrame:frame];
     if (self) {
         [self commonInit];
-        @weakify(self);
-//        RAC(self.countLab, text) = RACObserve(self, baseModel.have_num);
-        [RACObserve(self, baseModel.have_num) subscribeNext:^(id  _Nullable x) {
-            self.countLab.text = x;
-        }];
-        [RACObserve(self, baseModel.hide) subscribeNext:^(id  _Nullable x) {
-            @strongify(self);
-            self.divisionButton.hidden = self.countLab.hidden = self.addButton.selected = [x boolValue];
-        }];
+//        @weakify(self);
+        //        RAC(self.countLab, text) = RACObserve(self, baseModel.have_num);
+//        [RACObserve(self, baseModel.have_num) subscribeNext:^(id  _Nullable x) {
+//            self.countLab.text = x;
+//        }];
+//        [RACObserve(self, baseModel.hide) subscribeNext:^(id  _Nullable x) {
+//            @strongify(self);
+//            self.divisionButton.hidden = self.countLab.hidden = self.addButton.selected = [x boolValue];
+//        }];
     }
     return self;
 }
 
 
 - (void)commonInit {
-    self.addButton = [UITool imageButton:ImageNamed(@"home_add")];
+    self.addButton = [UITool imageButton:ImageNamed(@"tabBar3_select")];
     [self.addButton setImage:ImageNamed(@"tabBar3_select") forState:UIControlStateSelected];
     self.divisionButton = [UITool imageButton:ImageNamed(@"home_division")];
     self.countLab = [UITool labelWithTextColor:ImportantColor font:MediumFont(WidthRatio(14)) alignment:NSTextAlignmentCenter];
@@ -133,7 +133,6 @@
                     [subscriber sendCompleted];
                     return nil;
                 }
-                
                 [self executeCmdWithSubscriber:subscriber type:@"0"];
                 return nil;
             }];
@@ -149,7 +148,7 @@
         _divisionCmd = [[RACCommand alloc] initWithSignalBlock:^RACSignal * _Nonnull(id  _Nullable input) {
             return [RACSignal createSignal:^RACDisposable * _Nullable(id<RACSubscriber>  _Nonnull subscriber) {
                 @strongify(self);
-
+                
                 UserInfoModel *info = [BaseMethod readObjectWithKey:UserInfo_UDSKEY];
                 if (StringIsEmpty(info.asstoken)) {//本地操作
                     if (self.baseModel.have_num.integerValue == 1 && self.baseModel.deleteEnsure) { //二次确认
@@ -178,7 +177,7 @@
                 if (self.baseModel.have_num.integerValue == 1 && self.baseModel.deleteEnsure) { //二次确认
                     
                     [LCAlertTools showTipAlertViewWith:[UIApplication sharedApplication].keyWindow.rootViewController title:@"您确定删除该商品吗" message:nil cancelTitle:@"取消" defaultTitle:@"确定" cancelHandler:^{
-//                        [subscriber sendNext:@(0)];
+                        //                        [subscriber sendNext:@(0)];
                         [subscriber sendCompleted];
                     } defaultHandler:^{
                         [self executeCmdWithSubscriber:subscriber type:@"1"];
@@ -196,7 +195,7 @@
 
 
 - (void)executeCmdWithSubscriber:(id<RACSubscriber>  _Nonnull) subscriber type:(NSString *)type{
-    
+    kShowActivity
     UserInfoModel *info = [BaseMethod readObjectWithKey:UserInfo_UDSKEY];
     NSDictionary *dic = @{@"asstoken":info.asstoken,
                           @"goods_id":self.baseModel.goods_id,
@@ -204,6 +203,7 @@
     
     [NetWorkManager.sharedManager requestWithUrl:kGods_cartAdjustNum withParameters:dic withRequestType:POSTTYPE withSuccess:^(id  _Nonnull responseObject) {
         if (kStatusTrue) {
+            [MBProgressHUD showCheckMarkWithText:@"操作完成"];
             self.baseModel.have_num = StringFormat(@"%@", responseObject[@"data"]);
             self.baseModel.hide = ![self.baseModel.have_num boolValue];
             
@@ -225,5 +225,6 @@
         [subscriber sendError:error];
     }];
 }
+
 
 @end

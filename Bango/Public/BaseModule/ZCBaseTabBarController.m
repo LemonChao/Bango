@@ -44,8 +44,8 @@
         _homeNav.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"首页" image:[[UIImage imageNamed:@"tabBar0_normal"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] selectedImage:[[UIImage imageNamed:@"tabBar0_select"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
         [_homeNav.tabBarItem setTitleTextAttributes:@{NSForegroundColorAttributeName:HEX_COLOR(0x0C0B0B)} forState:UIControlStateNormal];
         [_homeNav.tabBarItem setTitleTextAttributes:@{NSForegroundColorAttributeName:GeneralRedColor} forState:UIControlStateSelected];
-//        _homeNav.tabBarItem.titlePositionAdjustment = UIOffsetMake (0,-2);
-//        _homeNav.tabBarItem.imageInsets = UIEdgeInsetsMake(-1, 0, 1, 0);
+        _homeNav.tabBarItem.titlePositionAdjustment = UIOffsetMake (0,-2);
+        _homeNav.tabBarItem.imageInsets = UIEdgeInsetsMake(-1, 0, 1, 0);
 
     }
     return _homeNav;
@@ -58,8 +58,8 @@
         _classifyNav.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"分类" image:[[UIImage imageNamed:@"tabBar1_normal"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] selectedImage:[[UIImage imageNamed:@"tabBar1_select"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
         [_classifyNav.tabBarItem setTitleTextAttributes:@{NSForegroundColorAttributeName:HEX_COLOR(0x0C0B0B)} forState:UIControlStateNormal];
         [_classifyNav.tabBarItem setTitleTextAttributes:@{NSForegroundColorAttributeName:GeneralRedColor} forState:UIControlStateSelected];
-//        _classifyNav.tabBarItem.imageInsets = UIEdgeInsetsMake(-1, 0, 1, 0);
-//        _classifyNav.tabBarItem.titlePositionAdjustment = UIOffsetMake (0,-2);
+        _classifyNav.tabBarItem.imageInsets = UIEdgeInsetsMake(-1, 0, 1, 0);
+        _classifyNav.tabBarItem.titlePositionAdjustment = UIOffsetMake (0,-2);
 
     }
     return _classifyNav;
@@ -73,8 +73,9 @@
         _findNav.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"发现" image:[[UIImage imageNamed:@"tabBar2_normal"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] selectedImage:[[UIImage imageNamed:@"tabBar2_select"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
         [_findNav.tabBarItem setTitleTextAttributes:@{NSForegroundColorAttributeName:HEX_COLOR(0x0C0B0B)} forState:UIControlStateNormal];
         [_findNav.tabBarItem setTitleTextAttributes:@{NSForegroundColorAttributeName:GeneralRedColor} forState:UIControlStateSelected];
-//        _findNav.tabBarItem.imageInsets = UIEdgeInsetsMake(-1, 0, 1, 0);
-    }
+        _findNav.tabBarItem.imageInsets = UIEdgeInsetsMake(-1, 0, 1, 0);
+        _findNav.tabBarItem.titlePositionAdjustment = UIOffsetMake (0,-2);
+   }
     return _findNav;
 }
 
@@ -87,7 +88,8 @@
         _cartNav.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"购物车" image:[[UIImage imageNamed:@"tabBar3_normal"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] selectedImage:[[UIImage imageNamed:@"tabBar3_select"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
         [_cartNav.tabBarItem setTitleTextAttributes:@{NSForegroundColorAttributeName:HEX_COLOR(0x0C0B0B)} forState:UIControlStateNormal];
         [_cartNav.tabBarItem setTitleTextAttributes:@{NSForegroundColorAttributeName:GeneralRedColor} forState:UIControlStateSelected];
-//        _cartNav.tabBarItem.imageInsets = UIEdgeInsetsMake(-1, 0, 1, 0);
+        _cartNav.tabBarItem.imageInsets = UIEdgeInsetsMake(-1, 0, 1, 0);
+        _cartNav.tabBarItem.titlePositionAdjustment = UIOffsetMake (0,-2);
     }
     return _cartNav;
 
@@ -100,15 +102,16 @@
         _personalNav.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"会员中心" image:[[UIImage imageNamed:@"tabBar4_normal"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] selectedImage:[[UIImage imageNamed:@"tabBar4_select"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
         [_personalNav.tabBarItem setTitleTextAttributes:@{NSForegroundColorAttributeName:HEX_COLOR(0x0C0B0B)} forState:UIControlStateNormal];
         [_personalNav.tabBarItem setTitleTextAttributes:@{NSForegroundColorAttributeName:GeneralRedColor} forState:UIControlStateSelected];
-//        _personalNav.tabBarItem.imageInsets = UIEdgeInsetsMake(-1, 0, 1, 0);
+        _personalNav.tabBarItem.imageInsets = UIEdgeInsetsMake(-1, 0, 1, 0);
+        _personalNav.tabBarItem.titlePositionAdjustment = UIOffsetMake (0,-2);
     }
     return _personalNav;
 
 }
 
 
-- (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController {
-    
+//- (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController {
+
 //    if (viewController == self.viewControllers[3]) {
 //        UserInfoModel *info = [BaseMethod readObjectWithKey:UserInfo_UDSKEY];
 //        if (!info.asstoken) {
@@ -119,7 +122,7 @@
 //        }
 //
 //     }
-    return YES;
-}
+//    return YES;
+//}
 
 @end

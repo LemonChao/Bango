@@ -15,7 +15,7 @@
     if (!_homeCmd) {
         @weakify(self);
         _homeCmd = [[RACCommand alloc] initWithSignalBlock:^RACSignal * _Nonnull(NSString   * _Nullable useCache) {
-            return [[RACSignal createSignal:^RACDisposable * _Nullable(id<RACSubscriber>  _Nonnull subscriber) {
+            return [RACSignal createSignal:^RACDisposable * _Nullable(id<RACSubscriber>  _Nonnull subscriber) {
                 
                 [NetWorkManager.sharedManager requestWithUrl:kIndex_home withParameters:@{} withRequestType:POSTTYPE responseCache:^(id  _Nonnull responseObject) {
                     @strongify(self);
@@ -24,7 +24,7 @@
                         self.home = model;
                         self.advImages = [self buildAdvImagesWithModel:model];
                         self.dataArray = [self buildDataArrayWithModel:model];
-                        [subscriber sendNext:@(1)];
+                        [subscriber sendNext:@(2)];
                     }
                 } withSuccess:^(id  _Nonnull responseObject) {
                     @strongify(self);
@@ -45,50 +45,8 @@
                     kShowError
                     [subscriber sendError:error];
                 }];
-                
                 return nil;
-            }] doNext:^(id  _Nullable x) {
-                
             }];
-            
-            
-//            return [[RACSignal createSignal:^RACDisposable * _Nullable(id<RACSubscriber>  _Nonnull subscriber) {
-//
-//                [NetWorkManager.sharedManager requestWithUrl:kIndex_home withParameters:@{} withRequestType:POSTTYPE responseCache:^(id  _Nonnull responseObject) {
-//                    @strongify(self);
-//                    if (kStatusTrue && [useCache boolValue]) {
-//                        ZCHomeModel *model = [ZCHomeModel modelWithDictionary:responseObject[@"data"]];
-//                        self.home = model;
-//                        self.advImages = [self buildAdvImagesWithModel:model];
-//                        self.dataArray = [self buildDataArrayWithModel:model];
-//                        [subscriber sendNext:@(1)];
-//                        [subscriber sendCompleted];
-//                    }
-//                } withSuccess:^(id  _Nonnull responseObject) {
-//                    @strongify(self);
-//                    if (kStatusTrue) {
-//                        ZCHomeModel *model = [ZCHomeModel modelWithDictionary:responseObject[@"data"]];
-//                        self.home = model;
-//                        self.advImages = [self buildAdvImagesWithModel:model];
-//                        self.dataArray = [self buildDataArrayWithModel:model];
-//                        [subscriber sendNext:@(1)];
-//
-//                    }else {
-//                        [MBProgressHUD showText:responseObject[@"message"]];
-//                        [subscriber sendNext:@(0)];
-//                    }
-//
-//                    [subscriber sendCompleted];
-//                } withFailure:^(NSError * _Nonnull error) {
-//                    [MBProgressHUD showText:error.localizedDescription];
-//                    [subscriber sendError:error];
-//                }];
-//
-//                return nil;
-//            }] doNext:^(id  _Nullable x) {
-//
-//            }];
-            
         }];
     }
     return _homeCmd;

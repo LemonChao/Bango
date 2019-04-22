@@ -42,7 +42,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, copy) NSString *jieSuanCartIds;
 
 /** 添加到购物车，支持批量 (本地保存的商品上传) */
-@property(nonatomic, strong) RACCommand *addCartCmd;
+//@property(nonatomic, strong) RACCommand *addCartCmd;
 
 /** 计算商品总价 */
 -(void)calculateTotalPrice;

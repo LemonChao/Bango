@@ -192,6 +192,8 @@
 		6CBC1706225C935F000C9682 /* ZCPersonalDataCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CBC1705225C935F000C9682 /* ZCPersonalDataCollectionCell.m */; };
 		6CC724FF2255ECFE00EFA3BA /* ZCClassifyViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CC724FE2255ECFE00EFA3BA /* ZCClassifyViewModel.m */; };
 		6CC725022255F8A000EFA3BA /* ZCClassifyModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CC725012255F8A000EFA3BA /* ZCClassifyModel.m */; };
+		6CCE282B226DADBA002841A4 /* UpdataViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CCE282A226DADBA002841A4 /* UpdataViewModel.m */; };
+		6CCE282E226DD672002841A4 /* ZCCartClassifyButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CCE282D226DD672002841A4 /* ZCCartClassifyButton.m */; };
 		6CD407CE2254451300120310 /* ZCTuanCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CD407CD2254451300120310 /* ZCTuanCollectionCell.m */; };
 		6CD407D12254561500120310 /* ZCHomeNoticeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CD407D02254561500120310 /* ZCHomeNoticeCell.m */; };
 		6CD407D72254922C00120310 /* TXScrollLabelView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CD407D52254922C00120310 /* TXScrollLabelView.m */; };
@@ -712,6 +714,10 @@
 		6CC724FE2255ECFE00EFA3BA /* ZCClassifyViewModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZCClassifyViewModel.m; sourceTree = "<group>"; };
 		6CC725002255F8A000EFA3BA /* ZCClassifyModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZCClassifyModel.h; sourceTree = "<group>"; };
 		6CC725012255F8A000EFA3BA /* ZCClassifyModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZCClassifyModel.m; sourceTree = "<group>"; };
+		6CCE2829226DADBA002841A4 /* UpdataViewModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UpdataViewModel.h; sourceTree = "<group>"; };
+		6CCE282A226DADBA002841A4 /* UpdataViewModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UpdataViewModel.m; sourceTree = "<group>"; };
+		6CCE282C226DD672002841A4 /* ZCCartClassifyButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZCCartClassifyButton.h; sourceTree = "<group>"; };
+		6CCE282D226DD672002841A4 /* ZCCartClassifyButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZCCartClassifyButton.m; sourceTree = "<group>"; };
 		6CD407CC2254451300120310 /* ZCTuanCollectionCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZCTuanCollectionCell.h; sourceTree = "<group>"; };
 		6CD407CD2254451300120310 /* ZCTuanCollectionCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZCTuanCollectionCell.m; sourceTree = "<group>"; };
 		6CD407CF2254561500120310 /* ZCHomeNoticeCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZCHomeNoticeCell.h; sourceTree = "<group>"; };
@@ -1199,6 +1205,7 @@
 		6CB2A0F62230B7F300CEC1CB /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				6CCE2828226DAD6E002841A4 /* UpdateVersion */,
 				6CD407D22254922C00120310 /* TXScrollLabelView */,
 				6CE96DCB2241F83A0028CA0E /* IDCardRecognition */,
 				6C532319223A311A00FB7FCC /* ZCUITool */,
@@ -1689,6 +1696,15 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		6CCE2828226DAD6E002841A4 /* UpdateVersion */ = {
+			isa = PBXGroup;
+			children = (
+				6CCE2829226DADBA002841A4 /* UpdataViewModel.h */,
+				6CCE282A226DADBA002841A4 /* UpdataViewModel.m */,
+			);
+			path = UpdateVersion;
+			sourceTree = "<group>";
+		};
 		6CD407D22254922C00120310 /* TXScrollLabelView */ = {
 			isa = PBXGroup;
 			children = (
@@ -1877,6 +1893,8 @@
 				6CE6E3652252F87900D1F046 /* ScrollTopButton.m */,
 				6CD407DC2254CF6400120310 /* ZCCartButton.h */,
 				6CD407DD2254CF6400120310 /* ZCCartButton.m */,
+				6CCE282C226DD672002841A4 /* ZCCartClassifyButton.h */,
+				6CCE282D226DD672002841A4 /* ZCCartClassifyButton.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -2231,6 +2249,7 @@
 				6CB2A2F822310B5C00CEC1CB /* YTKChainRequest+AnimatingAccessory.m in Sources */,
 				6CE96E012241F83B0028CA0E /* JQAVCaptureViewController.m in Sources */,
 				6CB2A2B022310B5C00CEC1CB /* HXDatePhotoInteractiveTransition.m in Sources */,
+				6CCE282E226DD672002841A4 /* ZCCartClassifyButton.m in Sources */,
 				6C3D3EBE2232572E00932F4B /* DataVerifier.m in Sources */,
 				6CB2A2EA22310B5C00CEC1CB /* HXEasyCustomShareView.m in Sources */,
 				6CB2A2BD22310B5C00CEC1CB /* HXCustomCollectionReusableView.m in Sources */,
@@ -2366,6 +2385,7 @@
 				6CB2A31D22310B5C00CEC1CB /* JQZXCapture.m in Sources */,
 				6CB2A2F622310B5C00CEC1CB /* YTKAnimatingRequestAccessory.m in Sources */,
 				6CB2A2B822310B5C00CEC1CB /* HXDatePhotoViewController.m in Sources */,
+				6CCE282B226DADBA002841A4 /* UpdataViewModel.m in Sources */,
 				6CB2A2CF22310B5C00CEC1CB /* YTKBatchRequest.m in Sources */,
 				6CA37F0D224E3F3100E6FC5C /* ZCCartViewController.m in Sources */,
 				6CB2A2F322310B5C00CEC1CB /* WB_Request.m in Sources */,

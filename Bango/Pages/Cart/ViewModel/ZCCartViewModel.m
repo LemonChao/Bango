@@ -103,7 +103,7 @@
     if (!_godsDeleteCmd) {
         _godsDeleteCmd = [[RACCommand alloc] initWithSignalBlock:^RACSignal * _Nonnull(NSString * _Nullable cartIds) {
             return [RACSignal createSignal:^RACDisposable * _Nullable(id<RACSubscriber>  _Nonnull subscriber) {
-                
+                kShowActivity
                 [NetWorkManager.sharedManager requestWithUrl:kGods_deleteCart withParameters:@{@"del_id":self.selectedCartIds} withRequestType:POSTTYPE withSuccess:^(id  _Nonnull responseObject) {
                     if (kStatusTrue) {
                         [subscriber sendNext:@(1)];
@@ -125,49 +125,49 @@
 }
 
 
-- (RACCommand *)addCartCmd {
-    if (!_addCartCmd) {
-        _addCartCmd = [[RACCommand alloc] initWithSignalBlock:^RACSignal * _Nonnull(id  _Nullable input) {
-            return [RACSignal createSignal:^RACDisposable * _Nullable(id<RACSubscriber>  _Nonnull subscriber) {
-                
-                [NetWorkManager.sharedManager requestWithUrl:kGod_uploadCartFromLocal withParameters:@{@"goods_id":[self goodsIds]} withRequestType:POSTTYPE withSuccess:^(id  _Nonnull responseObject) {
-                    
-                    if (kStatusTrue) {
-                        [BaseMethod deleteObjectForKey:ZCGoodsDictionary_UDSKey];
-                        [subscriber sendNext:@(1)];
-                    }else {
-                        kShowMessage
-                        [subscriber sendNext:@(0)];
-                    }
-                    [subscriber sendCompleted];
-                } withFailure:^(NSError * _Nonnull error) {
-                    kShowError
-                    [subscriber sendError:error];
-                }];
-                return nil;
-            }];
-        }];
-    }
-    return _addCartCmd;
-}
+//- (RACCommand *)addCartCmd {
+//    if (!_addCartCmd) {
+//        _addCartCmd = [[RACCommand alloc] initWithSignalBlock:^RACSignal * _Nonnull(id  _Nullable input) {
+//            return [RACSignal createSignal:^RACDisposable * _Nullable(id<RACSubscriber>  _Nonnull subscriber) {
+//                
+//                [NetWorkManager.sharedManager requestWithUrl:kGod_uploadCartFromLocal withParameters:@{@"goods_id":[self goodsIds]} withRequestType:POSTTYPE withSuccess:^(id  _Nonnull responseObject) {
+//                    
+//                    if (kStatusTrue) {
+//                        [BaseMethod deleteObjectForKey:ZCGoodsDictionary_UDSKey];
+//                        [subscriber sendNext:@(1)];
+//                    }else {
+//                        kShowMessage
+//                        [subscriber sendNext:@(0)];
+//                    }
+//                    [subscriber sendCompleted];
+//                } withFailure:^(NSError * _Nonnull error) {
+//                    kShowError
+//                    [subscriber sendError:error];
+//                }];
+//                return nil;
+//            }];
+//        }];
+//    }
+//    return _addCartCmd;
+//}
 
 
 
 // 计算选中的总价
 -(void)calculateTotalPrice {
     
+    __block NSUInteger totalPrice = 0;
     [self.cartDatas enumerateObjectsUsingBlock:^(__kindof ZCCartModel * _Nonnull model, NSUInteger idx, BOOL * _Nonnull stop) {
         if(!([model.shop_name isEqualToString:@"推荐商品"] || [model.shop_name isEqualToString:@"失效商品"]))  {
             
-            NSUInteger totalPrice = 0;
             for (ZCPublicGoodsModel *goods in model.shop_goods) {
                 if (goods.isSelected) {
                     totalPrice += goods.promotion_price.integerValue * goods.have_num.intValue;
                 }
             }
-            self.totalPrice = [NSNumber numberWithUnsignedInteger:totalPrice];
         }
     }];
+    self.totalPrice = [NSNumber numberWithUnsignedInteger:totalPrice];
 }
 
 

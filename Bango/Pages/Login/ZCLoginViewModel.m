@@ -45,11 +45,12 @@
                     if (kStatusTrue) {
                         [subscriber sendNext:@(1)];
                     }else {
-                        [WXZTipView showTopWithText:responseObject[@"message"]];
+                        kShowMessage
                         [subscriber sendNext:@(0)];
                     }
                     [subscriber sendCompleted];
                 } withFailure:^(NSError * _Nonnull error) {
+                    kShowError
                     [subscriber sendError:error];
                 }];
                 return nil;
@@ -74,7 +75,6 @@
 
                         [subscriber sendNext:@(1)];
                     }else {
-                        [WXZTipView showCenterWithText:responseObject[@"message"]];
                         kShowMessage
                         [subscriber sendNext:@(0)];
                     }
@@ -216,11 +216,11 @@
         if (kStatusTrue) {
             [BaseMethod deleteObjectForKey:ZCGoodsDictionary_UDSKey];
         }else {
-            [self performSelector:@selector(addGoodsToNetCart) withObject:nil afterDelay:5];
+//            [self performSelector:@selector(addGoodsToNetCart) withObject:nil afterDelay:5];
         }
         kShowMessage;
     } withFailure:^(NSError * _Nonnull error) {
-        [self performSelector:@selector(addGoodsToNetCart) withObject:nil afterDelay:5];
+//        [self performSelector:@selector(addGoodsToNetCart) withObject:nil afterDelay:5];
         kShowError
     }];
 }

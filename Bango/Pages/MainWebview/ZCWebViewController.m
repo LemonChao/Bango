@@ -40,12 +40,25 @@
 
 @implementation ZCWebViewController
 
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        self.topInset = StatusBarHeight;
+        self.bottomInset = HomeIndicatorHeight;
+    }
+    return self;
+}
+
 - (instancetype)initWithPath:(NSString *)path parameters:(nullable NSDictionary *)parameters
 {
     self = [super init];
     if (self) {
+        self.topInset = StatusBarHeight;
+        self.bottomInset = HomeIndicatorHeight;
         self.pathForH5 = path;
         self.parameters = parameters?:@{};
+//        self.urlString = StringFormat(@"%@html-src/dist/#/%@?%@",AppBaseUrl,self.pathForH5,AFQueryStringFromParameters(self.parameters));
         self.urlString = StringFormat(@"%@html-src/dist/#/%@?%@",AppBaseUrl,self.pathForH5,AFQueryStringFromParameters(self.parameters));
     }
     return self;
@@ -56,7 +69,6 @@
     self.view.backgroundColor = [UIColor whiteColor];
     [self webViewLoadRequest];
     [self.bridge setWebViewDelegate:self];
-    [self versionUpdateRequest];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -74,10 +86,15 @@
     [self.view addSubview:self.webView];
     
     [self.webView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.mas_equalTo(UIEdgeInsetsMake(StatusBarHeight, 0, HomeIndicatorHeight, 0));
+        make.edges.mas_equalTo(UIEdgeInsetsMake(self.topInset, 0, self.bottomInset, 0));
     }];
-    
 }
+
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
+}
+
+
 
 
 - (void)webViewLoadRequest {
@@ -108,7 +125,7 @@
             }
         }
     } withFailure:^(NSError * _Nonnull error) {
-        [WXZTipView showCenterWithText:error.localizedDescription];
+        kShowError
     }];
     
 }
@@ -567,21 +584,6 @@
     NSLog(@"当前版本是：%@",app_Version);
 }
 
-
-//#pragma mark ====返回首页==== unused
-//-(void)goHomeCallback:(WVJBResponseCallback)responseCallback{
-//    // 获取本地资源路径
-//    NSString *pathStr = [[NSBundle mainBundle] pathForResource:@"index" ofType:@"html" inDirectory:@"dist"];
-//    // 通过路径创建本地URL地址
-//    NSURL *url = [NSURL fileURLWithPath:pathStr];
-//    //     NSURL *url = [NSURL URLWithString:@"http://192.168.0.220:8085/login"];
-//    // 创建请求
-//    NSURLRequest * request = [NSURLRequest requestWithURL:url];
-//    // 通过webView加载请求
-//    [self.webView loadRequest:request];
-//
-//}
-
 //版本设置
 -(void)setUpVersion:(NSDictionary *)dataDict{
     if (dataDict != nil) {
@@ -622,8 +624,8 @@
     // app版本
     NSString *app_Version = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
     if (![NSString isNOTNull:[CommonTools getVersionString]]&&![app_Version isEqualToString:[CommonTools getVersionString]]) {
-        BOOL hasNewVersion = [CommonTools IsHasNewVersion] ;
-        BOOL isForce =  [CommonTools IsForce] ;
+        BOOL hasNewVersion = [CommonTools IsHasNewVersion];
+        BOOL isForce =  [CommonTools IsForce];
         if (hasNewVersion) {
             if (isForce) {
                 dispatch_async(dispatch_get_main_queue(), ^{
@@ -687,60 +689,6 @@
     }
     return nil;
 }
-
-//#pragma mark ====分享朋友圈 v1.0.1====
-//-(void)shareParamResponseCallback:(WVJBResponseCallback)responseCallback{
-//    NSDictionary *params = @{@"nick_name":@"s1o6jdxeQXKO",
-//                             @"shareAddress":@"https://mr-bango.cn/index.php/wap/login/tui_regeist?invite_uid=920&source=1",
-//                             @"erweima":@"https://mr-bango.cn/public/uploads/qrcode/20190325/H.png",
-//                             @"title":@"搬果将",
-//                             @"descript":@"带给你初恋的味道",
-//                             @"user_headimg":@"https://mr-bango.cn/upload/web_common/default_head.png",
-//                             @"logo":@"https://mr-bango.cn/template/wap/default_new/public/css/qianrui/images/logo.png",
-//                             };
-//
-//    [ShareObject.sharedObject appShareWithParams:params];
-//
-//}
-//
-//- (void)LoginAlipay:(NSArray *)parm ResponseCallback:(WVJBResponseCallback)responseCallback {
-//    if (parm.count <= 0) return;
-//    [PaymentDelegateManager.sharedPaymentManager v_1LoginAlipayPaycompleteParams:parm[0] loginFinish:^(id response) {
-//        responseCallback(response);
-//    }];
-//}
-//
-//- (void)LoginWeChatCallback:(WVJBResponseCallback)responseCallback {
-//    [ShareSDK authorize:SSDKPlatformTypeWechat settings:nil onStateChanged:^(SSDKResponseState state, SSDKUser *user, NSError *error) {
-//        if (state == SSDKResponseStateSuccess){
-//            NSDictionary *dataDict = @{@"type":@"0",
-//                                       @"uid":user.uid,
-//                                       @"nickname":user.nickname,
-//                                       @"user_headimg":user.icon,
-//                                       @"sex":[NSString stringWithFormat:@"%ld",(long)user.gender]
-//                                       };
-//            NSDictionary *dict = @{@"status":@"1",
-//                                   @"data"  :dataDict,
-//                                   @"msg"    :@"操作成功"
-//                                   };
-//            responseCallback(dict);
-//        }else{
-//            NSLog(@"error = %@",error);
-//            NSDictionary *dict = @{@"status":@"0",
-//                                   @"data"  :@{},
-//                                   @"msg"    :@"s授权失败"
-//                                   };
-//            responseCallback(dict);
-//            [WXZTipView showCenterWithText:@"微信授权失败"];
-//        }
-//    }];
-//
-//}
-//
-//
-//
-
-
 
 
 

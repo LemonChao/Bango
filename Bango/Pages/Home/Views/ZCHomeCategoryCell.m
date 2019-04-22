@@ -56,15 +56,22 @@ static NSString *cellid = @"ZCCategoryCollectionCell_id";
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     
-    ZCHomeCategoryModel *model = self.categoryList[indexPath.row];
     
-    UIViewController *baseVC = [self viewController];
+    ZCHomeCategoryModel *model = self.categoryList[indexPath.row];
+    if ([model.category_name isEqualToString:@"果果大冒险"]) {
+        UserInfoModel *info = [BaseMethod readObjectWithKey:UserInfo_UDSKEY];
+        
+        ZCWebViewController *webVC = [[ZCWebViewController alloc] init];
+        webVC.urlString = StringFormat(@"%@?asstoken=%@",AppGuoGuoBaseUrl, info.asstoken?:@"");
+        webVC.topInset = StatusBarHeight;
+        webVC.bottomInset = 0.f;
+        [[self viewController].navigationController pushViewController:webVC animated:YES];
+        return;
+    }
     
     NSDictionary *dic = @{@"category_id":model.category_id,@"key_word@":model.category_name};
-    
     ZCWebViewController *webVC = [[ZCWebViewController alloc] initWithPath:@"search-result" parameters:dic];
-    
-    [baseVC.navigationController pushViewController:webVC animated:YES];
+    [[self viewController].navigationController pushViewController:webVC animated:YES];
 }
 
 

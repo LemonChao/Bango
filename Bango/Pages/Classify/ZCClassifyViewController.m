@@ -116,23 +116,17 @@ static NSString *leftCellid = @"ZCClassifyLeftCell_id";
     self.rightVC.dataArray = model.good_list;
 }
 
-
-
-
-
-
-
 - (void)searchButtonAction:(UIButton *)button {
     ZCWebViewController *webView = [[ZCWebViewController alloc] initWithPath:@"search" parameters:nil];
     [self.navigationController pushViewController:webView animated:YES];
 }
 
 - (void)newsButtonItemAction:(UIBarButtonItem *)item {
-    
+    [MBProgressHUD showText:@"暂未开放,敬请期待"];
 }
 
 - (void)signButtonItemAction:(UIBarButtonItem *)item {
-    
+    [MBProgressHUD showText:@"暂未开放,敬请期待"];
 }
 
 #pragma mark - setter && getter

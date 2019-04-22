@@ -82,6 +82,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (instancetype)showHudMode:(MBProgressHUDMode)model text:(nullable NSString *)text;
 
+/**
+ 对号 + text
+ 在window上 text为nil或@"" 只显示 对号
+ 
+ @param text text
+ */
++ (void)showCheckMarkWithText:(NSString *)text;
 
 + (void)hideHud;
 

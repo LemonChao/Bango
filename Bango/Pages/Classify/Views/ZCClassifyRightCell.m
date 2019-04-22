@@ -7,7 +7,7 @@
 //
 
 #import "ZCClassifyRightCell.h"
-#import "ZCCartButton.h"
+#import "ZCCartClassifyButton.h"
 #import "UIImageView+WebCache.h"
 
 
@@ -26,7 +26,7 @@
 @property(nonatomic, strong) UILabel *promotionPriceLab;
 
 /** 购物车 */
-@property(nonatomic, strong) ZCCartButton *cartButton;
+@property(nonatomic, strong) ZCCartClassifyButton *cartButton;
 
 /** 购物车内容view */
 @property(nonatomic, strong) UIView *cartContentView;
@@ -153,9 +153,9 @@
     return _marketPriceLab;
 }
 
-- (ZCCartButton *)cartButton {
+- (ZCCartClassifyButton *)cartButton {
     if (!_cartButton) {
-        _cartButton = [[ZCCartButton alloc] init];
+        _cartButton = [[ZCCartClassifyButton alloc] init];
     }
     return _cartButton;
 }

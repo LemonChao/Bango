@@ -22,6 +22,8 @@
 @property(nonatomic, strong) UITableView *tableView;
 
 @property(nonatomic, strong) ZCPersonalCenterVM *viewModel;
+
+@property(nonatomic, assign) BOOL changeDefault;
 @end
 
 static NSString *tableHeaderid = @"UITableViewHeaderView_id";
@@ -79,12 +81,19 @@ static NSString *dataCellid = @"ZCPersonalDataCell_id";
     }];
 }
 
+- (UIStatusBarStyle)preferredStatusBarStyle
+{
+    if (self.changeDefault) {
+        return UIStatusBarStyleDefault;
+    }
+    return UIStatusBarStyleLightContent;
+}
+
+
 - (void)getData {
     [[self.viewModel.memberCmd execute:nil] subscribeNext:^(id  _Nullable x) {
         if ([x boolValue]) {
             kHidHud;
-//            [(ZCPersonalTableHeadView *)self.tableView.tableHeaderView setModel:self.viewModel.model];
-//            [self.tableView reloadData];
         }
         [(ZCPersonalTableHeadView *)self.tableView.tableHeaderView setModel:self.viewModel.model];
         [self.tableView reloadData];
@@ -175,18 +184,21 @@ static NSString *dataCellid = @"ZCPersonalDataCell_id";
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     CGFloat offsetY = scrollView.contentOffset.y;
-    if (offsetY > NAVBAR_COLORCHANGE_POINT)
+    self.changeDefault = offsetY > NAVBAR_COLORCHANGE_POINT;
+    if (self.changeDefault)
     {
         CGFloat alpha = (offsetY - NAVBAR_COLORCHANGE_POINT) / NavBarHeight;
         [self.customNavBar wr_setBackgroundAlpha:alpha];
         [self.customNavBar wr_setTintColor:[[UIColor blackColor] colorWithAlphaComponent:alpha]];
         self.customNavBar.title = @"会员中心";
+        [self setNeedsStatusBarAppearanceUpdate];
     }
     else
     {
         [self.customNavBar wr_setBackgroundAlpha:0];
         [self.customNavBar wr_setTintColor:[UIColor whiteColor]];
         self.customNavBar.title = nil;
+        [self setNeedsStatusBarAppearanceUpdate];
     }
 }
 

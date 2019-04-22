@@ -90,7 +90,7 @@
 }
 
 - (void)selectAllButtonAction:(UIButton *)button {
-    if (self.viewModel.onlyTuijian) return;
+    if (self.viewModel.cartDatas.count<2) return;
     
     BOOL selected = ![self.viewModel.selectAll boolValue];
     

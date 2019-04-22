@@ -137,7 +137,9 @@
     UserInfoModel *info = [BaseMethod readObjectWithKey:UserInfo_UDSKEY];
     
     ZCWebViewController *webVC = [[ZCWebViewController alloc] init];
-    webVC.urlString = StringFormat(@"%@?asstoken=%@",AppGuoGuoBaseUrl, info.asstoken);
+    webVC.urlString = StringFormat(@"%@?asstoken=%@",AppGuoGuoBaseUrl, info.asstoken?:@"");
+    webVC.topInset = StatusBarHeight;
+    webVC.bottomInset = 0;
     [[self viewController].navigationController pushViewController:webVC animated:YES];
 }
 - (void)powerViewAction:(ZCWelfareButton *)button {
