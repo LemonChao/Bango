@@ -134,8 +134,10 @@
 
 
 - (void)guoguoViewAction:(ZCWelfareButton *)button {
+    UserInfoModel *info = [BaseMethod readObjectWithKey:UserInfo_UDSKEY];
+    
     ZCWebViewController *webVC = [[ZCWebViewController alloc] init];
-    webVC.urlString = @"https://mr-bango.cn/GuoGuoGame/";
+    webVC.urlString = StringFormat(@"%@?asstoken=%@",AppGuoGuoBaseUrl, info.asstoken);
     [[self viewController].navigationController pushViewController:webVC animated:YES];
 }
 - (void)powerViewAction:(ZCWelfareButton *)button {

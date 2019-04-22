@@ -14,12 +14,12 @@
 //生产环境
 #define AppBaseUrl                              @"https://mr-bango.cn/"
 #define AppPictureBaseUrl                       @"https://appapi.toushijinfu.com/"
-#define AppKeChengBaseUrl                       @"http://kecheng.toushijinfu.com/"
+#define AppGuoGuoBaseUrl                        @"https://mr-bango.cn/GuoGuoGame/"
 #else
 //测试环境
 #define AppBaseUrl                              @"http://ceshi.mr-bango.cn/"
 #define AppPictureBaseUrl                       @"http://admin1.toushizhiku.com/"
-#define AppKeChengBaseUrl                       @"http://192.168.0.177:10001/#/"
+#define AppGuoGuoBaseUrl                        @"http://ceshi.mr-bango.cn/GuoGuoGame/"
 #endif
 
 #define AppIconUrl                              @"https://mr-bango.cn/template/wap/default_new/public/css/qianrui/images/logo.png"
