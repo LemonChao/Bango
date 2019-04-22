@@ -9,7 +9,7 @@
 #ifndef InterfaceHeader_h
 #define InterfaceHeader_h
 
-#define kOnLine   0
+#define kOnLine   1
 #if kOnLine
 //生产环境
 #define AppBaseUrl                              @"https://mr-bango.cn/"
@@ -18,6 +18,7 @@
 #else
 //测试环境
 #define AppBaseUrl                              @"http://ceshi.mr-bango.cn/"
+//#define AppBaseUrl                              @"http://guoguo.mr-bango.cn/"
 #define AppPictureBaseUrl                       @"http://admin1.toushizhiku.com/"
 #define AppGuoGuoBaseUrl                        @"http://ceshi.mr-bango.cn/GuoGuoGame/"
 #endif
