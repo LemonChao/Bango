@@ -73,12 +73,6 @@
 
 @end
 
-//@implementation ZCHomeGodsModel
-//
-//
-//
-//@end
-
 
 @implementation ZCHomeEverygodsModel
 

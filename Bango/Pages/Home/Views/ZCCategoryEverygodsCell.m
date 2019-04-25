@@ -39,6 +39,7 @@
     
     if (self) {
         self.selectionStyle = UITableViewCellSelectionStyleNone;
+        self.backgroundColor = [UIColor whiteColor];
         [self.contentView addSubview:self.godsImgView];
         [self.contentView addSubview:self.descriptLab];
 //        [self.contentView addSubview:self.cartContentView];

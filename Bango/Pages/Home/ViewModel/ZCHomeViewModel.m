@@ -84,7 +84,8 @@
     if (model.pintuanList.count) {
         ZCHomeEverygodsModel *everyGods = [[ZCHomeEverygodsModel alloc] init];
         everyGods.goods_list = model.pintuanList;
-        everyGods.rowHeight = WidthRatio(115)*((model.pintuanList.count+1)/2) + WidthRatio(10);
+        everyGods.rowHeight = WidthRatio(115)*((model.pintuanList.count+1)/2) + WidthRatio(5);
+
         everyGods.category_alias = @"鲜果一起拼";
         everyGods.category_id = @"pintuan";
         everyGods.headerHeight = WidthRatio(32);

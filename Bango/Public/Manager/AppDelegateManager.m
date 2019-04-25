@@ -37,7 +37,6 @@
 - (void)didFinishLaunchingWithOptions:(NSDictionary *)launchOptions withWindow:(UIWindow *)window {
     ZCBaseNavigationController *rootNav = [[ZCBaseNavigationController alloc] initWithRootViewController:[[ZCBaseTabBarController alloc]init]];
     rootNav.navigationBar.hidden = YES;
-    
     window.rootViewController = rootNav;
     
     [self handleFunction:launchOptions withWindow:window];
@@ -144,6 +143,22 @@
 
 #pragma mark - PrivateMethod
 - (void)handleFunction:(NSDictionary *)launchOptions withWindow:(UIWindow *)window {
+    
+    NSString *onlineV = [[NSUserDefaults standardUserDefaults] objectForKey:saveAppVersionKey];
+    NSString *currentV = [AppVersion stringByReplacingOccurrencesOfString:@"." withString:@""];
+    if (currentV.integerValue > onlineV.integerValue) {
+        //当前是新版本,更新版本号记录,赋值
+        //新版本启动首次启动 resetUserDefaults
+        NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
+        [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
+        
+        [[NSUserDefaults standardUserDefaults] setObject:currentV forKey:saveAppVersionKey];
+    }else {
+        NSLog(@"旧版本 firstlaunch");
+    }
+
+    
+    
     [self setupIQKeyBoard];
     //Required
     //notice: 3.0.0 及以后版本注册可以这样写，也可以继续用之前的注册方式

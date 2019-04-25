@@ -38,6 +38,12 @@
 #define UserInfo_UDSKEY             @"UserInfo_NSUserDefaultsKey"
 #define ZCCartManager_UDSKey        @"ZCCartManagerSaved_NSUserDefaultsKey"
 #define ZCGoodsDictionary_UDSKey    @"ZCGoodsDictionary_NSUserDefaultsKey"
+// 手机信息model key
+#define IphoneInfoModel_UDSKEY      @"IphoneInfoModel_NSUserDefaultsKey"
+//
+#define showGuidePageKey            @"showdhGuidePage_Key"
+#define saveAppVersionKey           @"saveAppVersionKey_NSUserDefaultsKey"
+
 #define mark - JSBridgeFunctionName
 #define gameShareImmediately            @"shareImmediatelyWithParams"
 

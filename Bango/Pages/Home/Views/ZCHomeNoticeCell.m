@@ -26,6 +26,7 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         self.selectionStyle = UITableViewCellSelectionStyleNone;
+        self.backgroundColor = [UIColor whiteColor];
         UIView *cornerBg = [UITool viewCornerRadius:WidthRatio(16) borderWidth:1.f borderColor:HEX_COLOR(0xF5F5F5)];
         
         self.leftButton = [UITool imageButton:ImageNamed(@"home_notice")];

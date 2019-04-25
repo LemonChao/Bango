@@ -22,7 +22,7 @@
 - (instancetype)initWithReuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithReuseIdentifier:reuseIdentifier];
     if (self) {
-//        self.contentView.backgroundColor = [UIColor cyanColor];
+        self.contentView.backgroundColor = [UIColor whiteColor];
         self.titleLab = [UITool labelWithTextColor:ImportantColor font:BoldFont(WidthRatio(20))];
         self.moreButton = [UITool richButton:UIButtonTypeCustom title:@"查看更多" titleColor:GeneralRedColor font:MediumFont(WidthRatio(14)) bgColor:[UIColor whiteColor] image:ImageNamed(@"home_arrow_right")];
         [self.moreButton addTarget:self action:@selector(moreButtonAction:) forControlEvents:UIControlEventTouchUpInside];
@@ -87,7 +87,7 @@
     
     self = [super initWithReuseIdentifier:reuseIdentifier];
     if (self) {
-//        self.contentView.backgroundColor = [UIColor cyanColor];
+        self.contentView.backgroundColor = [UIColor whiteColor];
 
         UIView *lineView = [UITool viewWithColor:LineColor];
         [self.contentView addSubview:lineView];
@@ -95,7 +95,6 @@
         [lineView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.edges.mas_equalTo(UIEdgeInsetsMake(WidthRatio(5), WidthRatio(12), WidthRatio(12), WidthRatio(12)));
         }];
-        
     }
     return self;
 }
@@ -112,7 +111,7 @@
 - (instancetype)initWithReuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithReuseIdentifier:reuseIdentifier];
     if (self) {
-//        self.contentView.backgroundColor = [UIColor yellowColor];
+        self.contentView.backgroundColor = [UIColor whiteColor];
     }
     return self;
 }

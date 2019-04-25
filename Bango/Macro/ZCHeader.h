@@ -24,5 +24,6 @@
 #import "ZCCartManager.h"
 #import "ZCWebViewController.h"
 #import "UIView+viewController.h"
+#import "MJStaticImageHeader.h"
 
 #endif /* ZCHeader_h */

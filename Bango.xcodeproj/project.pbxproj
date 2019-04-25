@@ -234,6 +234,7 @@
 		6CE96E072241F83B0028CA0E /* JQIDCardScaningView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CE96DEE2241F83B0028CA0E /* JQIDCardScaningView.m */; };
 		6CE96E082241F83B0028CA0E /* LHSIDCardScaningView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CE96DEF2241F83B0028CA0E /* LHSIDCardScaningView.m */; };
 		6CE96E092241F83B0028CA0E /* RectManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CE96DF42241F83B0028CA0E /* RectManager.m */; };
+		6CEBD0FA226EF66000D16947 /* MJStaticImageHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CEBD0F9226EF66000D16947 /* MJStaticImageHeader.m */; };
 		6CF8E402224F2B3B00C45220 /* ZCFindViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CF8E401224F2B3B00C45220 /* ZCFindViewController.m */; };
 		6CF8E405224F42BF00C45220 /* ZCHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CF8E404224F42BF00C45220 /* ZCHomeViewController.m */; };
 		6CF8E408224F577100C45220 /* UIButton+EdgeInsets.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CF8E407224F577100C45220 /* UIButton+EdgeInsets.m */; };
@@ -789,6 +790,8 @@
 		6CE96DF12241F83B0028CA0E /* LHSIDCardScaningView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LHSIDCardScaningView.h; sourceTree = "<group>"; };
 		6CE96DF32241F83B0028CA0E /* RectManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RectManager.h; sourceTree = "<group>"; };
 		6CE96DF42241F83B0028CA0E /* RectManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RectManager.m; sourceTree = "<group>"; };
+		6CEBD0F8226EF66000D16947 /* MJStaticImageHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MJStaticImageHeader.h; sourceTree = "<group>"; };
+		6CEBD0F9226EF66000D16947 /* MJStaticImageHeader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MJStaticImageHeader.m; sourceTree = "<group>"; };
 		6CF8E400224F2B3B00C45220 /* ZCFindViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZCFindViewController.h; sourceTree = "<group>"; };
 		6CF8E401224F2B3B00C45220 /* ZCFindViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZCFindViewController.m; sourceTree = "<group>"; };
 		6CF8E403224F42BF00C45220 /* ZCHomeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZCHomeViewController.h; sourceTree = "<group>"; };
@@ -1205,6 +1208,7 @@
 		6CB2A0F62230B7F300CEC1CB /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				6CEBD0F7226EF62300D16947 /* MJDIY */,
 				6CCE2828226DAD6E002841A4 /* UpdateVersion */,
 				6CD407D22254922C00120310 /* TXScrollLabelView */,
 				6CE96DCB2241F83A0028CA0E /* IDCardRecognition */,
@@ -1857,6 +1861,15 @@
 			path = Tool;
 			sourceTree = "<group>";
 		};
+		6CEBD0F7226EF62300D16947 /* MJDIY */ = {
+			isa = PBXGroup;
+			children = (
+				6CEBD0F8226EF66000D16947 /* MJStaticImageHeader.h */,
+				6CEBD0F9226EF66000D16947 /* MJStaticImageHeader.m */,
+			);
+			path = MJDIY;
+			sourceTree = "<group>";
+		};
 		6CF8E3FF224F2B0300C45220 /* Find */ = {
 			isa = PBXGroup;
 			children = (
@@ -2236,6 +2249,7 @@
 				6C53231E223A311A00FB7FCC /* CornerShadowView.m in Sources */,
 				6CB2A2BA22310B5C00CEC1CB /* HXDatePhotoViewPresentTransition.m in Sources */,
 				6C0477AA223C908100B32A4D /* ShareObject.m in Sources */,
+				6CEBD0FA226EF66000D16947 /* MJStaticImageHeader.m in Sources */,
 				6CB2A2C522310B5C00CEC1CB /* HXAlbumModel.m in Sources */,
 				6CB2A2A222310B5C00CEC1CB /* NSArray+JSON.m in Sources */,
 				6CB2A2EB22310B5C00CEC1CB /* HXShareScrollView.m in Sources */,
@@ -2575,7 +2589,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = Bango/Bango.entitlements;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = TYVC4FRF5U;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2595,6 +2610,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.ly.banguojiang;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = Banguojiang_adHoc;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -2606,7 +2622,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = Bango/Bango.entitlements;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = TYVC4FRF5U;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2626,6 +2643,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.ly.banguojiang;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = Banguojiang_adHoc;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

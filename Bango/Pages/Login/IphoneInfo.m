@@ -10,6 +10,43 @@
 
 @implementation IphoneInfo
 
++ (instancetype)sharedIphoneInfo {
+    static IphoneInfo *info = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        info = [BaseMethod readObjectWithKey:IphoneInfoModel_UDSKEY];
+        if (!info) {
+            info = [[IphoneInfo alloc] init];
+            [info setupIphoneInfo];
+        }
+    });
+    return info;
+}
+
+
+
+- (void)setupIphoneInfo {
+    
+    self.systemVersion = [[UIDevice currentDevice] systemVersion];
+    self.appVersion = AppVersion;
+    self.uuid = @"uuid";
+    self.channel = @"AppStore";
+    self.net = @"wifi";
+    self.iphone = @"iPhone";
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:showGuidePageKey]) {//已安装
+        self.firstInstall = @0;
+        
+    }else {//首次安装
+        NSString *timeStamp = [NSString stringWithFormat:@"%0.f", [[NSDate date] timeIntervalSince1970]];
+        self.firstInstall = @1;
+        self.installtime = timeStamp;
+    }
+
+    
+    [BaseMethod saveObject:self withKey:IphoneInfoModel_UDSKEY];
+}
+
+
 - (id)initWithCoder:(NSCoder *)coder {
     if (self = [super init]) {
         _systemVersion = [coder decodeObjectForKey:@"systemVersion"];

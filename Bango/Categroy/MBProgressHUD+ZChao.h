@@ -88,7 +88,7 @@ NS_ASSUME_NONNULL_BEGIN
  
  @param text text
  */
-+ (void)showCheckMarkWithText:(NSString *)text;
++ (void)showCheckMarkWithText:(nullable NSString *)text;
 
 + (void)hideHud;
 

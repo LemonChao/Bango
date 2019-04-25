@@ -131,7 +131,7 @@ static CGFloat duration = 2.f;
     return hud;
 }
 
-+ (void)showCheckMarkWithText:(NSString *)text {
++ (void)showCheckMarkWithText:(nullable NSString *)text {
     MBProgressHUD *hud = [self showHudMode:MBProgressHUDModeCustomView text:text];
     UIImage *image = [[UIImage imageNamed:@"Checkmark"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     hud.customView = [[UIImageView alloc] initWithImage:image];

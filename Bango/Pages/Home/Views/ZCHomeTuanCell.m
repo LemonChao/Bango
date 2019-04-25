@@ -22,6 +22,7 @@ static NSString *cellid = @"ZCTuanCollectionCell_id";
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
+        self.backgroundColor = [UIColor whiteColor];
         [self.contentView addSubview:self.collectionView];
         [self.collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.edges.mas_equalTo(UIEdgeInsetsMake(WidthRatio(5), WidthRatio(12), WidthRatio(5), WidthRatio(12)));
@@ -56,7 +57,6 @@ static NSString *cellid = @"ZCTuanCollectionCell_id";
     ZCWebViewController *webVC = [[ZCWebViewController alloc] initWithPath:@"goods-detail" parameters:dic];
     
     [baseVC.navigationController pushViewController:webVC animated:YES];
-
 }
 
 
@@ -64,7 +64,7 @@ static NSString *cellid = @"ZCTuanCollectionCell_id";
     if (!_collectionView) {
         
         UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
-        layout.itemSize = CGSizeMake((SCREEN_WIDTH-WidthRatio(24+5))/2, WidthRatio(110));
+        layout.itemSize = CGSizeMake(floorf((SCREEN_WIDTH-WidthRatio(24+5))/2), floorf(WidthRatio(110)));
         layout.minimumInteritemSpacing = WidthRatio(5);
         layout.minimumLineSpacing = WidthRatio(5);
         layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;

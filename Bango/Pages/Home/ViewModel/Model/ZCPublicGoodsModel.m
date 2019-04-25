@@ -41,6 +41,7 @@
     [encoder encodeObject:self.pic_cover_small forKey:@"pic_cover_small"];
     // baseGoodsModel
     [encoder encodeObject:self.have_num forKey:@"have_num"];
+    [encoder encodeBool:self.is_pin forKey:@"is_pin"];
     [encoder encodeBool:self.hide forKey:@"hide"];
     [encoder encodeObject:self.goods_id forKey:@"goods_id"];
     [encoder encodeBool:self.deleteEnsure forKey:@"deleteEnsure"];
@@ -80,6 +81,7 @@
         self.pic_cover_small = [decoder decodeObjectForKey:@"pic_cover_small"];
         // baseGoodsModel
         self.have_num = [decoder decodeObjectForKey:@"have_num"];
+        self.is_pin = [decoder decodeBoolForKey:@"is_pin"];
         self.hide = [decoder decodeBoolForKey:@"hide"];
         self.goods_id = [decoder decodeObjectForKey:@"goods_id"];
         self.deleteEnsure = [decoder decodeBoolForKey:@"deleteEnsure"];
@@ -106,7 +108,6 @@
     NSString *have_num = [NSString stringWithFormat:@"%@",dic[@"have_num"]];
     
     self.hide = ![have_num boolValue];
-    
     return YES;
 }
 

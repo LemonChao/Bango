@@ -80,8 +80,8 @@
     self.divisionButton.hidden = self.countLab.hidden = YES;
     [self.countLab setContentHuggingPriority:UILayoutPriorityFittingSizeLevel forAxis:UILayoutConstraintAxisHorizontal];
     [self addSubview:self.addButton];
-    [self addSubview:self.divisionButton];
-    [self addSubview:self.countLab];
+//    [self addSubview:self.divisionButton];
+//    [self addSubview:self.countLab];
     
     
     self.addButton.rac_command = self.addCmd;
@@ -97,23 +97,23 @@
         make.width.equalTo(self.addButton.mas_height);
     }];
     
-    [self.divisionButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.bottom.left.equalTo(self);
-        make.width.equalTo(self.addButton.mas_height);
-    }];
-    
-    [self.countLab mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.bottom.equalTo(self);
-        make.left.equalTo(self.divisionButton.mas_right);
-        make.right.equalTo(self.addButton.mas_left);
-    }];
+//    [self.divisionButton mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.bottom.left.equalTo(self);
+//        make.width.equalTo(self.addButton.mas_height);
+//    }];
+//
+//    [self.countLab mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.bottom.equalTo(self);
+//        make.left.equalTo(self.divisionButton.mas_right);
+//        make.right.equalTo(self.addButton.mas_left);
+//    }];
     
     [super updateConstraints];
 }
 
 
 - (CGSize)intrinsicContentSize {
-    return CGSizeMake(76.f+20, 42.f);
+    return CGSizeMake(24.f, 24.f);
 }
 
 
@@ -123,7 +123,12 @@
         _addCmd = [[RACCommand alloc] initWithSignalBlock:^RACSignal * _Nonnull(id  _Nullable input) {
             return [RACSignal createSignal:^RACDisposable * _Nullable(id<RACSubscriber>  _Nonnull subscriber) {
                 @strongify(self);
-                
+                if (self.baseModel.is_pin) {
+                    [MBProgressHUD showText:@"拼团商品不能添加购物车"];
+                    [subscriber sendCompleted];
+                    return nil;
+                }
+
                 UserInfoModel *info = [BaseMethod readObjectWithKey:UserInfo_UDSKEY];
                 if (StringIsEmpty(info.asstoken)) {//存本地
                     self.baseModel.have_num = [NSString stringWithFormat:@"%ld", self.baseModel.have_num.integerValue+1];
@@ -203,7 +208,7 @@
     
     [NetWorkManager.sharedManager requestWithUrl:kGods_cartAdjustNum withParameters:dic withRequestType:POSTTYPE withSuccess:^(id  _Nonnull responseObject) {
         if (kStatusTrue) {
-            [MBProgressHUD showCheckMarkWithText:@"操作完成"];
+            [MBProgressHUD showCheckMarkWithText:nil];
             self.baseModel.have_num = StringFormat(@"%@", responseObject[@"data"]);
             self.baseModel.hide = ![self.baseModel.have_num boolValue];
             

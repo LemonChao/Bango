@@ -172,7 +172,7 @@
                     [subscriber sendCompleted];
                     return nil;
                 }
-                kShowActivityText(@"更新资料...")
+                kShowActivityText(@"同步中...")
                 [NetWorkManager.sharedManager requestWithUrl:kMember_personData withParameters:@{@"asstoken":origModel.asstoken} withRequestType:POSTTYPE withSuccess:^(id  _Nonnull responseObject) {
                     if (kStatusTrue) {
                         kHidHud;

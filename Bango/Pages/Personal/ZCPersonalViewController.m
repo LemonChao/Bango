@@ -75,7 +75,7 @@ static NSString *dataCellid = @"ZCPersonalDataCell_id";
         make.edges.equalTo(self.view);
     }];
     
-    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+    self.tableView.mj_header = [MJStaticImageHeader headerWithRefreshingBlock:^{
         @strongify(self);
         [self getData];
     }];
@@ -138,7 +138,11 @@ static NSString *dataCellid = @"ZCPersonalDataCell_id";
         return WidthRatio(130);
     }
     else if (indexPath.section == 2) {
-        return WidthRatio(220);
+        if ([self.viewModel.model.guo_open boolValue]) {
+            return WidthRatio(218);
+        }else {
+            return WidthRatio(138);
+        }
     }
     else if (indexPath.section == 3) {
         return WidthRatio(214)+2;

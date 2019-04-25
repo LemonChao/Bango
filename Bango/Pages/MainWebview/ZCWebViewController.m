@@ -57,9 +57,18 @@
         self.topInset = StatusBarHeight;
         self.bottomInset = HomeIndicatorHeight;
         self.pathForH5 = path;
-        self.parameters = parameters?:@{};
-//        self.urlString = StringFormat(@"%@html-src/dist/#/%@?%@",AppBaseUrl,self.pathForH5,AFQueryStringFromParameters(self.parameters));
-        self.urlString = StringFormat(@"%@html-src/dist/#/%@?%@",AppBaseUrl,self.pathForH5,AFQueryStringFromParameters(self.parameters));
+        self.parameters = parameters?:@{};//
+        if ([path isEqualToString:@"GuoGuoGame"]) {
+            self.urlString = StringFormat(@"%@/%@?%@",AppBaseUrl,self.pathForH5,AFQueryStringFromParameters(self.parameters));
+        }else {
+            self.urlString = StringFormat(@"%@html-src/dist/#/%@?%@",AppBaseUrl,self.pathForH5,AFQueryStringFromParameters(self.parameters));
+        }
+//        if ([path isEqualToString:@"GuoGuoGame"]) {
+//            self.urlString = StringFormat(@"%@/%@?%@",AppBaseUrl,self.pathForH5,AFQueryStringFromParameters(self.parameters));
+//        }else {
+//            self.urlString = StringFormat(@"%@/#/%@?%@",@"http://192.168.0.126:10002",self.pathForH5,AFQueryStringFromParameters(self.parameters));
+//        }
+
     }
     return self;
 }
@@ -90,11 +99,20 @@
     }];
 }
 
-- (UIStatusBarStyle)preferredStatusBarStyle {
-    return UIStatusBarStyleLightContent;
+//控制StatusBar是否隐藏
+- (BOOL)prefersStatusBarHidden
+{
+    if ([self.pathForH5 isEqualToString:@"GuoGuoGame"]) {
+        return YES;
+    }
+    return NO;
 }
-
-
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    if ([self.pathForH5 isEqualToString:@"GuoGuoGame"]) {
+        return UIStatusBarStyleLightContent;
+    }
+    return UIStatusBarStyleDefault;
+}
 
 
 - (void)webViewLoadRequest {
@@ -151,7 +169,7 @@
     if ([message.name isEqualToString:gameShareImmediately]) { //立即分享
         [ShareObject.sharedObject shareImmediatelyWithParams:parameter];
     }else if ([message.name isEqualToString:@"GoToHome"]) {//返回原生
-        [self goToHome];
+        [self goToHome:message.body];
     }else if ([message.name isEqualToString:@"logout"]) {//退出登陆
         [self logoutApp];
     }
@@ -159,11 +177,21 @@
 }
 
 #pragma mark - 返回首页--
--(void)goToHome{
+-(void)goToHome:(NSString *)level{
     NSLog(@"count:%lu == %@",(unsigned long)self.webView.backForwardList.backList.count, self.webView.backForwardList.backList);
     for (WKBackForwardListItem *item in self.webView.backForwardList.backList) {
         NSLog(@"backUrl:%@", item.URL);
     }
+    
+    if (StringIsEmpty(level) || level.integerValue == 0) {
+        UINavigationController *rootNav =  (UINavigationController *)[[UIApplication sharedApplication].delegate window].rootViewController;
+        UITabBarController *tabBarVC = (UITabBarController *)rootNav.topViewController;
+        UINavigationController *nav = tabBarVC.selectedViewController;
+        [nav popToRootViewControllerAnimated:NO];
+        [tabBarVC setSelectedIndex:0];
+        return;
+    }
+    
     if (self.webView.backForwardList.backList.count <= 1) {
         [self.navigationController popViewControllerAnimated:YES];
     }else {
@@ -401,9 +429,11 @@
 
 /** 拼团的分享 */
 -(void)shareURLAuthenticationParam:(NSArray *)parm {
+    if (![parm[0] isKindOfClass:[NSDictionary class]]) return;
+    
     NSDictionary *parms = parm[0];
     if (DictIsEmpty(parms)) return;
-    
+
     [ShareObject.sharedObject groupShareWithText:parms[@"description"] images:parms[@"imgSrc"] url:parms[@"shareAddress"] title:parms[@"title"]];
 }
 

@@ -113,7 +113,7 @@
 
 
 - (CGSize)intrinsicContentSize {
-    return CGSizeMake(76.f+20, 42.f);
+    return CGSizeMake(76.f, 22.f);
 }
 
 
@@ -123,6 +123,11 @@
         _addCmd = [[RACCommand alloc] initWithSignalBlock:^RACSignal * _Nonnull(id  _Nullable input) {
             return [RACSignal createSignal:^RACDisposable * _Nullable(id<RACSubscriber>  _Nonnull subscriber) {
                 @strongify(self);
+                if (self.baseModel.is_pin) {
+                    [MBProgressHUD showText:@"拼团商品不能添加购物车"];
+                    [subscriber sendCompleted];
+                    return nil;
+                }
                 
                 UserInfoModel *info = [BaseMethod readObjectWithKey:UserInfo_UDSKEY];
                 if (StringIsEmpty(info.asstoken)) {//存本地

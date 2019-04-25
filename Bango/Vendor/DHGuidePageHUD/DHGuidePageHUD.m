@@ -63,9 +63,11 @@
                 [guidePageView addSubview:imageView];
             } else {
                 imageView.image = [UIImage imageNamed:imageNameArray[i]];
+                imageView.contentMode = UIViewContentModeScaleToFill;
+                imageView.clipsToBounds = YES;
                 [guidePageView addSubview:imageView];
             }
-            
+
             // 设置在最后一张图片上显示进入体验按钮
             if (i == imageNameArray.count-1 && isHidden == NO) {
                 [imageView setUserInteractionEnabled:YES];

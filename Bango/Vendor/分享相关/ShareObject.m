@@ -52,7 +52,7 @@
     config.cancelButtonHidden = YES;
     config.itemTitleFont = MediumFont(WidthRatio(10));
     config.itemTitleColor = MinorColor;
-    config.itemAlignment = SSUIItemAlignmentCenter;
+    config.itemAlignment = SSUIItemAlignmentLeft;
     
     [ShareSDK showShareActionSheet:nil
                        customItems:items

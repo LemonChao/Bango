@@ -22,6 +22,9 @@ NS_ASSUME_NONNULL_BEGIN
 /** 数量为1 删除需要确认 */
 @property(nonatomic, assign) BOOL deleteEnsure;
 
+/** 是否拼团商品，拼团商品不能添加购物车 */
+@property(nonatomic, assign) BOOL is_pin;
+
 @end
 
 NS_ASSUME_NONNULL_END

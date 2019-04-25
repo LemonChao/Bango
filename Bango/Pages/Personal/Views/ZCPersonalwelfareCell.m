@@ -29,7 +29,7 @@
 @property(nonatomic, strong) ZCWelfareButton *powerView;
 
 @property(nonatomic, strong) ZCWelfareButton *guoguoView;
-
+@property(nonatomic, strong) UIView *topBgView;
 @end
 
 
@@ -41,35 +41,45 @@
         self.backgroundColor = [UIColor clearColor];
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         UIView *bgView = [UITool viewWithColor:[UIColor whiteColor]];
+        bgView.clipsToBounds = YES;
         UIView *lineView = [UITool viewWithColor:LineColor];
-        
+        UIView *guoBgView = [UITool viewWithColor:[UIColor whiteColor]];
         [self.contentView addSubview:bgView];
         [bgView addSubview:self.titleLable];
         [bgView addSubview:lineView];
 //        [bgView addSubview:self.powerView];
+        [bgView addSubview:guoBgView];
+        self.topBgView = bgView;
         [bgView addSubview:self.guoguoView];
 
         [self.contentView addSubview:self.leftButton];
         [self.contentView addSubview:self.rightButton];
         
+//        [bgView mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.edges.mas_equalTo(UIEdgeInsetsMake(0, WidthRatio(12), WidthRatio(98+14)+1, WidthRatio(12)));
+//        }];
         [bgView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.edges.mas_equalTo(UIEdgeInsetsMake(0, WidthRatio(12), WidthRatio(98), WidthRatio(12)));
+            make.top.equalTo(self.contentView);
+            make.left.right.equalTo(self.contentView).inset(WidthRatio(12));
+            make.height.mas_equalTo(WidthRatio(40));
         }];
         
         [self.titleLable mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(bgView).inset(WidthRatio(10));
-            make.top.equalTo(bgView).inset(WidthRatio(13));
+            make.top.equalTo(bgView);
+            make.height.mas_equalTo(WidthRatio(40));
         }];
 
         [lineView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(bgView).inset(WidthRatio(40));
+//            make.top.equalTo(bgView).inset(WidthRatio(40));
+            make.top.equalTo(self.titleLable.mas_bottom);
             make.left.right.equalTo(bgView);
             make.height.mas_equalTo(1);
         }];
         
         [self.guoguoView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(bgView).inset(WidthRatio(10));
-            make.top.equalTo(lineView.mas_bottom).offset(WidthRatio(14));
+            make.top.equalTo(self.titleLable.mas_bottom).offset(WidthRatio(15));
             make.height.mas_equalTo(WidthRatio(50));
         }];
         
@@ -92,7 +102,6 @@
             make.size.equalTo(self.leftButton);
             make.top.equalTo(self.leftButton);
         }];
-        
     }
     return self;
 }
@@ -113,6 +122,9 @@
         }
     }];
     
+    [self.topBgView mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.height.mas_equalTo([model.guo_open boolValue]?WidthRatio(120):WidthRatio(40));
+    }];
 }
 
 
@@ -136,10 +148,9 @@
 - (void)guoguoViewAction:(ZCWelfareButton *)button {
     UserInfoModel *info = [BaseMethod readObjectWithKey:UserInfo_UDSKEY];
     
-    ZCWebViewController *webVC = [[ZCWebViewController alloc] init];
-    webVC.urlString = StringFormat(@"%@?asstoken=%@",AppGuoGuoBaseUrl, info.asstoken?:@"");
-    webVC.topInset = StatusBarHeight;
-    webVC.bottomInset = 0;
+    ZCWebViewController *webVC = [[ZCWebViewController alloc] initWithPath:@"GuoGuoGame" parameters:@{@"asstoken":info.asstoken?:@""}];
+    webVC.topInset = 0.f;
+    webVC.bottomInset = 0.f;
     [[self viewController].navigationController pushViewController:webVC animated:YES];
 }
 - (void)powerViewAction:(ZCWelfareButton *)button {

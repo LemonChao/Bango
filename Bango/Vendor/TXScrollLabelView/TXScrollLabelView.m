@@ -263,6 +263,7 @@ typedef NS_ENUM(NSInteger, TXScrollLabelType) {
 
 - (void)setTx_scrollContentSize:(CGRect)tx_scrollContentSize{
     _tx_scrollContentSize = tx_scrollContentSize;
+    
     self.frame = _tx_scrollContentSize;
 }
 

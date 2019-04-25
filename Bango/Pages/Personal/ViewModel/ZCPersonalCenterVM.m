@@ -19,7 +19,6 @@
                     @strongify(self);
                     if (kStatusTrue) {
                         self.model = [ZCPersonalCenterModel modelWithDictionary:responseObject[@"data"]];
-                        
                         [subscriber sendNext:@(1)];
                     }else if ([responseObject[@"status"] integerValue] == -1){//过期
                         UserInfoModel *info = [BaseMethod readObjectWithKey:UserInfo_UDSKEY];

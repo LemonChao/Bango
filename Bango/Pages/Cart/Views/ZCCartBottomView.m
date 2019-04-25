@@ -34,7 +34,6 @@
         }];
         
         RAC(self.selectAllBtn,selected) = [RACObserve(self, viewModel.selectAll) skip:1];
-        
     }
     return self;
 }

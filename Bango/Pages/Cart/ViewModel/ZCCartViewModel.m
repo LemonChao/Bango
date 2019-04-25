@@ -156,18 +156,18 @@
 // 计算选中的总价
 -(void)calculateTotalPrice {
     
-    __block NSUInteger totalPrice = 0;
+    __block CGFloat totalPrice = 0.f;
     [self.cartDatas enumerateObjectsUsingBlock:^(__kindof ZCCartModel * _Nonnull model, NSUInteger idx, BOOL * _Nonnull stop) {
         if(!([model.shop_name isEqualToString:@"推荐商品"] || [model.shop_name isEqualToString:@"失效商品"]))  {
             
             for (ZCPublicGoodsModel *goods in model.shop_goods) {
                 if (goods.isSelected) {
-                    totalPrice += goods.promotion_price.integerValue * goods.have_num.intValue;
+                    totalPrice += goods.promotion_price.floatValue * goods.have_num.floatValue;
                 }
             }
         }
     }];
-    self.totalPrice = [NSNumber numberWithUnsignedInteger:totalPrice];
+    self.totalPrice = [NSNumber numberWithFloat:totalPrice];
 }
 
 

@@ -25,7 +25,7 @@ static NSString *cellid = @"ZCCategoryCollectionCell_id";
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     
     if (self) {
-        
+        self.backgroundColor = [UIColor whiteColor];
         [self.contentView addSubview:self.collectionView];
         [self.collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.edges.mas_equalTo(UIEdgeInsetsMake(0, WidthRatio(12), 0, WidthRatio(12)));
@@ -61,9 +61,8 @@ static NSString *cellid = @"ZCCategoryCollectionCell_id";
     if ([model.category_name isEqualToString:@"果果大冒险"]) {
         UserInfoModel *info = [BaseMethod readObjectWithKey:UserInfo_UDSKEY];
         
-        ZCWebViewController *webVC = [[ZCWebViewController alloc] init];
-        webVC.urlString = StringFormat(@"%@?asstoken=%@",AppGuoGuoBaseUrl, info.asstoken?:@"");
-        webVC.topInset = StatusBarHeight;
+        ZCWebViewController *webVC = [[ZCWebViewController alloc] initWithPath:@"GuoGuoGame" parameters:@{@"asstoken":info.asstoken?:@""}];
+        webVC.topInset = 0.f;
         webVC.bottomInset = 0.f;
         [[self viewController].navigationController pushViewController:webVC animated:YES];
         return;
@@ -79,7 +78,7 @@ static NSString *cellid = @"ZCCategoryCollectionCell_id";
 - (UICollectionView *)collectionView {
     if (!_collectionView) {
         UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
-        layout.itemSize = CGSizeMake(WidthRatio(62), WidthRatio(94));
+        layout.itemSize = CGSizeMake(WidthRatio(70), WidthRatio(94));
         layout.minimumInteritemSpacing = WidthRatio(30);
         layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
         

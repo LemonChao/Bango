@@ -7,7 +7,7 @@
 //
 
 #import "ZCCartTuijianCollectionCell.h"
-#import "ZCCartButton.h"
+#import "ZCCartClassifyButton.h"
 
 @interface ZCCartTuijianCollectionCell ()
 
@@ -24,7 +24,7 @@
 @property(nonatomic, strong) UILabel *promotionPriceLab;
 
 /** 购物车 */
-@property(nonatomic, strong) ZCCartButton *cartButton;
+@property(nonatomic, strong) ZCCartClassifyButton *cartButton;
 @end
 
 
@@ -83,61 +83,6 @@
     }];
     
 }
-// 只适应高度
-//- (void)initConstraints {
-//    [self.contentView mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.mas_equalTo(0);
-//        make.width.mas_equalTo(WidthRatio(((SCREEN_WIDTH-WidthRatio(29))/2)));
-//        make.bottom.equalTo(self.marketPriceLab).offset(WidthRatio(10));
-//    }];
-//
-//
-//    [self.godsImgView mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.right.left.equalTo(self.contentView);
-//        make.height.mas_equalTo(WidthRatio(173));
-//        make.width.mas_equalTo(WidthRatio(((SCREEN_WIDTH-WidthRatio(29))/2)));
-////        make.size.mas_equalTo(CGSizeMake(((SCREEN_WIDTH-WidthRatio(29))/2), WidthRatio(173)));
-//    }];
-//
-//    [self.nameLab mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.left.right.equalTo(self.contentView).inset(WidthRatio(8));
-//        make.top.equalTo(self.godsImgView.mas_bottom).offset(WidthRatio(10));
-//    }];
-//
-//    [self.descriptLab mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.equalTo(self.nameLab.mas_bottom).offset(WidthRatio(10));
-//        make.left.right.equalTo(self.nameLab);
-//    }];
-//
-//
-//    [self.cartButton mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.right.equalTo(self.contentView).inset(WidthRatio(8));
-//        make.top.equalTo(self.descriptLab.mas_bottom).offset(WidthRatio(15));
-//    }];
-//
-//    [self.promotionPriceLab mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.equalTo(self.cartButton);
-//        make.left.equalTo(self.nameLab);
-//    }];
-//
-//    [self.marketPriceLab mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.left.equalTo(self.nameLab);
-//        make.top.equalTo(self.promotionPriceLab.mas_bottom).offset(WidthRatio(10));
-////        make.bottom.equalTo(self.contentView);
-//    }];
-//
-//}
-//
-//- (UICollectionViewLayoutAttributes *)preferredLayoutAttributesFittingAttributes:(UICollectionViewLayoutAttributes *)layoutAttributes {
-//    [self setNeedsLayout];
-//    [self layoutIfNeeded];
-//    CGSize size = [self.contentView systemLayoutSizeFittingSize:layoutAttributes.size];
-//    CGRect newFrame = layoutAttributes.frame;
-//    newFrame.size.height = size.height;
-//    layoutAttributes.frame = newFrame;
-//    return layoutAttributes;
-//}
-
 
 - (void)setModel:(ZCPublicGoodsModel *)model {
     _model = model;
@@ -191,9 +136,9 @@
     return _marketPriceLab;
 }
 
-- (ZCCartButton *)cartButton {
+- (ZCCartClassifyButton *)cartButton {
     if (!_cartButton) {
-        _cartButton = [[ZCCartButton alloc] init];
+        _cartButton = [[ZCCartClassifyButton alloc] init];
     }
     return _cartButton;
 }

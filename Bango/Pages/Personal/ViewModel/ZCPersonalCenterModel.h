@@ -74,6 +74,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, copy) NSString *energy;
 /** 奖励 */
 @property(nonatomic, copy) NSString *award;
+/** 个人中心的游戏是否开启 1:开启 */
+@property(nonatomic, copy) NSString *guo_open;
 @property(nonatomic, copy) NSArray<__kindof ZCPersonalAdvModel *> *platforms;
 
 //@property(nonatomic, copy) NSString *avatarhead;

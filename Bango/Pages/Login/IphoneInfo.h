@@ -31,6 +31,9 @@ NS_ASSUME_NONNULL_BEGIN
 /** app新版本首次启动 */
 @property (nonatomic, strong) NSNumber *appVerFirstLaunch;
 
+- (void)setupIphoneInfo;
+
++ (instancetype)sharedIphoneInfo;
 
 @end
 

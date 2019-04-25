@@ -20,6 +20,7 @@
 #import "ZCHomeTableHeaderFooterView.h"
 #import "DHGuidePageHUD.h"
 #import "UpdataViewModel.h"
+#import "WRNavigationBar.h"
 
 @interface ZCHomeViewController ()<UITableViewDataSource,UITableViewDelegate,SDCycleScrollViewDelegate>
 /** 轮播图 */
@@ -49,11 +50,12 @@ static NSString *homeFooterid = @"ZCHomeTableFooterView_id";
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:showGuidePageKey];
         DHGuidePageHUD *guidePage = [[DHGuidePageHUD alloc] dh_initWithFrame:self.view.frame imageNameArray:@[@"guide_1",@"guide_2",@"guide_3"] buttonIsHidden:NO];
         [[UIApplication sharedApplication].keyWindow addSubview:guidePage];
+    }else {
+        [MBProgressHUD showActivityText:nil];
+        [[[UpdataViewModel alloc]init].updateCmd execute:nil];
     }
     
-    [MBProgressHUD showActivityText:nil];
     [self getDataWithCaches:@"1"];
-    [[[UpdataViewModel alloc]init].updateCmd execute:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -67,17 +69,17 @@ static NSString *homeFooterid = @"ZCHomeTableFooterView_id";
 }
 
 - (void)configCustomNav {
-    
+//    [super setupNavBar];
     UIBarButtonItem *newsItem = [[UIBarButtonItem alloc] initWithCustomView:[self buttonItemWithImage:ImageNamed(@"home_news") title:@"消息" target:self action:@selector(newsButtonItemAction:)]];
     UIBarButtonItem *signItem = [[UIBarButtonItem alloc] initWithCustomView:[self buttonItemWithImage:ImageNamed(@"home_signIn") title:@"签到" target:self action:@selector(signButtonItemAction:)]];
-    
+
     UIButton *searchButton = [UITool richButton:UIButtonTypeCustom title:@"搜索" titleColor:AssistColor font:MediumFont(14) bgColor:LineColor image:ImageNamed(@"home_search")];
     searchButton.frame = CGRectMake(WidthRatio(12), 7, SCREEN_WIDTH-88-20-WidthRatio(12+20), 30);
     MMViewBorderRadius(searchButton, WidthRatio(4), 0, [UIColor clearColor]);
     [searchButton setImagePosition:ZCImagePositionLeft spacing:WidthRatio(6)];
     [searchButton addTarget:self action:@selector(searchButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.navigationController.navigationBar addSubview:searchButton];
-    
+
     self.navigationItem.rightBarButtonItems = @[newsItem,signItem];
 }
 
@@ -88,11 +90,8 @@ static NSString *homeFooterid = @"ZCHomeTableFooterView_id";
     [self.view addSubview:button];
     
     @weakify(self);
-    [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-       make.edges.equalTo(self.view);
-    }];
     
-    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+    self.tableView.mj_header = [MJStaticImageHeader headerWithRefreshingBlock:^{
         @strongify(self);
         [self getDataWithCaches:@"0"];
     }];
@@ -141,6 +140,8 @@ static NSString *homeFooterid = @"ZCHomeTableFooterView_id";
     return everyModel.footerHeight;
 
 }
+
+#pragma mark - UITableViewDelegate
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     if (section < 2) {
@@ -281,6 +282,39 @@ static NSString *homeFooterid = @"ZCHomeTableFooterView_id";
 
 }
 
+#pragma mark - UIScrollViewDelegate
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    static float newy = 0;
+    static float oldy = 0;
+    static BOOL expland = YES;
+    newy= scrollView.contentOffset.y;
+    if ((newy - oldy >= 8)&& newy > 0 && expland) { //上滚(非反弹上滚)，速度合格,展开状态
+        [UIView animateWithDuration:0.3 animations:^{
+            [self setNavigationBarTransformProgress:1];
+        } completion:^(BOOL finished) {
+            expland = NO;
+        }];
+    }
+
+    if (oldy-newy >= 8 && !expland) {//下拉,速度合格,收回状态
+        [UIView animateWithDuration:0.3 animations:^{
+            [self setNavigationBarTransformProgress:0];
+        } completion:^(BOOL finished) {
+            expland = YES;
+        }];
+    }
+    oldy = newy;
+}
+
+- (void)setNavigationBarTransformProgress:(CGFloat)progress
+{
+    [self.navigationController.navigationBar wr_setTranslationY:(-44 * progress)];
+    self.tableView.top = -44 * progress;
+    self.tableView.height = SCREEN_HEIGHT-NavBarHeight-TabBarHeight+44*progress;
+    // 有系统的返回按钮，所以 hasSystemBackIndicator = YES
+    [self.navigationController.navigationBar wr_setBarButtonItemsAlpha:(1 - progress) hasSystemBackIndicator:YES];
+}
+
 
 
 #pragma mark - SDCycleScrollViewDelegate
@@ -310,10 +344,12 @@ static NSString *homeFooterid = @"ZCHomeTableFooterView_id";
 
 - (UITableView *)tableView {
     if (!_tableView) {
-        _tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
+        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-NavBarHeight-TabBarHeight) style:UITableViewStyleGrouped];
+//        _tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
         _tableView.dataSource = self;
         _tableView.delegate = self;
         UIView *header = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, WidthRatio(164))];
+        header.backgroundColor = [UIColor whiteColor];
         [header addSubview:self.cycleView];
         _tableView.tableHeaderView = header;
         _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -327,7 +363,7 @@ static NSString *homeFooterid = @"ZCHomeTableFooterView_id";
         [_tableView registerClass:[ZCHomeTableHeaderView class] forHeaderFooterViewReuseIdentifier:homeHeaderid];
         [_tableView registerClass:[ZCHomeTableFooterView class] forHeaderFooterViewReuseIdentifier:homeFooterid];
         _tableView.tableFooterView = [UIView new];
-        _tableView.backgroundColor = [UIColor whiteColor];
+        _tableView.backgroundColor = HEX_COLOR(0xf5f5f5);
     }
     return _tableView;
 }

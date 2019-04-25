@@ -80,7 +80,7 @@ static NSString *invaluedHeaderid = @"ZCCartInvaluedSectionHeader_id";
     }];
 
     @weakify(self);
-    self.collectionView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+    self.collectionView.mj_header = [MJStaticImageHeader headerWithRefreshingBlock:^{
         @strongify(self);
         [self getData];
     }];
@@ -288,12 +288,6 @@ static NSString *invaluedHeaderid = @"ZCCartInvaluedSectionHeader_id";
         _collectionView.delegate = self;
         _collectionView.showsVerticalScrollIndicator = NO;
         _collectionView.allowsMultipleSelection = YES;
-//        if (@available(iOS 11.0, *)) {
-//            _collectionView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
-//        } else {
-//            self.automaticallyAdjustsScrollViewInsets = NO;
-//        }
-
         [_collectionView registerClass:[ZCCartValueCollectionCell class] forCellWithReuseIdentifier:valueCellid];
         [_collectionView registerClass:[ZCCartTuijianCollectionCell class] forCellWithReuseIdentifier:cellid];
         [_collectionView registerClass:[ZCCartEmptySectionHeader class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:headerid];
