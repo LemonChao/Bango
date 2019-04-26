@@ -70,6 +70,9 @@
 		6CA37F0D224E3F3100E6FC5C /* ZCCartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CA37F0C224E3F3100E6FC5C /* ZCCartViewController.m */; };
 		6CA37F10224E3F6100E6FC5C /* ZCClassifyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CA37F0F224E3F6100E6FC5C /* ZCClassifyViewController.m */; };
 		6CA37F13224E3F7300E6FC5C /* ZCPersonalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CA37F12224E3F7300E6FC5C /* ZCPersonalViewController.m */; };
+		6CA449CC22719CDA0095E854 /* PGIndexBannerSubiew.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CA449C822719CDA0095E854 /* PGIndexBannerSubiew.m */; };
+		6CA449CD22719CDA0095E854 /* NewPagedFlowView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CA449C922719CDA0095E854 /* NewPagedFlowView.m */; };
+		6CA449D32271A3EE0095E854 /* ZCHomePagedFlowView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CA449D22271A3EE0095E854 /* ZCHomePagedFlowView.m */; };
 		6CA92FBE2266D55C00C4D54A /* WebpageUrls.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6CA92FBD2266D55C00C4D54A /* WebpageUrls.plist */; };
 		6CA92FC1226709F900C4D54A /* UIView+viewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CA92FC0226709F900C4D54A /* UIView+viewController.m */; };
 		6CAE0A672240951B004D4A68 /* ZCBaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CAE0A662240951B004D4A68 /* ZCBaseView.m */; };
@@ -464,6 +467,12 @@
 		6CA37F0F224E3F6100E6FC5C /* ZCClassifyViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZCClassifyViewController.m; sourceTree = "<group>"; };
 		6CA37F11224E3F7300E6FC5C /* ZCPersonalViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZCPersonalViewController.h; sourceTree = "<group>"; };
 		6CA37F12224E3F7300E6FC5C /* ZCPersonalViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZCPersonalViewController.m; sourceTree = "<group>"; };
+		6CA449C822719CDA0095E854 /* PGIndexBannerSubiew.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGIndexBannerSubiew.m; sourceTree = "<group>"; };
+		6CA449C922719CDA0095E854 /* NewPagedFlowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewPagedFlowView.m; sourceTree = "<group>"; };
+		6CA449CA22719CDA0095E854 /* PGIndexBannerSubiew.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGIndexBannerSubiew.h; sourceTree = "<group>"; };
+		6CA449CB22719CDA0095E854 /* NewPagedFlowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewPagedFlowView.h; sourceTree = "<group>"; };
+		6CA449D12271A3EE0095E854 /* ZCHomePagedFlowView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZCHomePagedFlowView.h; sourceTree = "<group>"; };
+		6CA449D22271A3EE0095E854 /* ZCHomePagedFlowView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZCHomePagedFlowView.m; sourceTree = "<group>"; };
 		6CA92FBD2266D55C00C4D54A /* WebpageUrls.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = WebpageUrls.plist; sourceTree = "<group>"; };
 		6CA92FBF226709F900C4D54A /* UIView+viewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIView+viewController.h"; sourceTree = "<group>"; };
 		6CA92FC0226709F900C4D54A /* UIView+viewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIView+viewController.m"; sourceTree = "<group>"; };
@@ -1188,6 +1197,17 @@
 			path = Personal;
 			sourceTree = "<group>";
 		};
+		6CA449C722719CDA0095E854 /* NewPagedFlowView */ = {
+			isa = PBXGroup;
+			children = (
+				6CA449CB22719CDA0095E854 /* NewPagedFlowView.h */,
+				6CA449C922719CDA0095E854 /* NewPagedFlowView.m */,
+				6CA449CA22719CDA0095E854 /* PGIndexBannerSubiew.h */,
+				6CA449C822719CDA0095E854 /* PGIndexBannerSubiew.m */,
+			);
+			path = NewPagedFlowView;
+			sourceTree = "<group>";
+		};
 		6CB2A0F52230B75400CEC1CB /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
@@ -1208,6 +1228,7 @@
 		6CB2A0F62230B7F300CEC1CB /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				6CA449C722719CDA0095E854 /* NewPagedFlowView */,
 				6CEBD0F7226EF62300D16947 /* MJDIY */,
 				6CCE2828226DAD6E002841A4 /* UpdateVersion */,
 				6CD407D22254922C00120310 /* TXScrollLabelView */,
@@ -1882,6 +1903,8 @@
 		6CF8E76B224F6F9600C45220 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				6CA449D12271A3EE0095E854 /* ZCHomePagedFlowView.h */,
+				6CA449D22271A3EE0095E854 /* ZCHomePagedFlowView.m */,
 				6CD407CF2254561500120310 /* ZCHomeNoticeCell.h */,
 				6CD407D02254561500120310 /* ZCHomeNoticeCell.m */,
 				6CF8E76E224F70FA00C45220 /* ZCHomeCategoryCell.h */,
@@ -2236,6 +2259,7 @@
 				6CB2A2A622310B5C00CEC1CB /* UIView+TBFrame.m in Sources */,
 				6CB2A2AB22310B5C00CEC1CB /* HXPhoto3DTouchViewController.m in Sources */,
 				6C3D3EB52232572E00932F4B /* Order.m in Sources */,
+				6CA449D32271A3EE0095E854 /* ZCHomePagedFlowView.m in Sources */,
 				6CB2A2BC22310B5C00CEC1CB /* UIImage+HXExtension.m in Sources */,
 				6C3D3EBC2232572E00932F4B /* DataSigner.m in Sources */,
 				6CB2A32022310B5C00CEC1CB /* JQZXingWrapper.m in Sources */,
@@ -2297,6 +2321,7 @@
 				6CB2A2A722310B5C00CEC1CB /* HXCustomCameraViewController.m in Sources */,
 				6CA37F13224E3F7300E6FC5C /* ZCPersonalViewController.m in Sources */,
 				6CF8E776224F72DA00C45220 /* ZCHomeTuanCell.m in Sources */,
+				6CA449CC22719CDA0095E854 /* PGIndexBannerSubiew.m in Sources */,
 				6C3D3EB42232572E00932F4B /* MobilePaymentManager.m in Sources */,
 				6C497DEA222FC72100C592D0 /* AppDelegate.m in Sources */,
 				6CB2A2A022310B5C00CEC1CB /* UIView_extra.m in Sources */,
@@ -2410,6 +2435,7 @@
 				6CB2A29A22310B5C00CEC1CB /* UIViewController+Extension.m in Sources */,
 				6CB2A2C422310B5C00CEC1CB /* HXPhotoSubViewCell.m in Sources */,
 				6CB2A2CB22310B5C00CEC1CB /* YTKNetworkConfig.m in Sources */,
+				6CA449CD22719CDA0095E854 /* NewPagedFlowView.m in Sources */,
 				6C3D3EBB2232572E00932F4B /* NSDataEx.m in Sources */,
 				6CD8B332225B009800092056 /* ZCClassifyLeftCell.m in Sources */,
 				6CB2A2BB22310B5C00CEC1CB /* HXCustomCameraController.m in Sources */,
@@ -2610,7 +2636,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.ly.banguojiang;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = Banguojiang_adHoc;
+				PROVISIONING_PROFILE_SPECIFIER = Banguojiang_Distribution;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -2643,7 +2669,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.ly.banguojiang;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = Banguojiang_adHoc;
+				PROVISIONING_PROFILE_SPECIFIER = Banguojiang_Distribution;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

@@ -85,7 +85,7 @@ static CGFloat duration = 2.f;
 + (void)showDetailText:(NSString *)text offsetY:(CGFloat)offsetY time:(NSTimeInterval)time {
     MBProgressHUD *hud = [self createMBProgressHUD];
     hud.mode = MBProgressHUDModeText;
-    
+    hud.label.text = nil;
     hud.detailsLabel.text = text;
     hud.detailsLabel.font = SystemFont(14);
     hud.offset = CGPointMake(0, offsetY);

@@ -21,6 +21,8 @@
 #import "DHGuidePageHUD.h"
 #import "UpdataViewModel.h"
 #import "WRNavigationBar.h"
+#import "ZCHomePagedFlowView.h"
+
 
 @interface ZCHomeViewController ()<UITableViewDataSource,UITableViewDelegate,SDCycleScrollViewDelegate>
 /** 轮播图 */
@@ -115,7 +117,10 @@ static NSString *homeFooterid = @"ZCHomeTableFooterView_id";
             [self.tableView reloadData];
             
             if (self.viewModel.advImages.count) {
-                self.cycleView.imageURLStringsGroup = self.viewModel.advImages;
+//                self.cycleView.imageURLStringsGroup = self.viewModel.advImages;
+                [(ZCHomePagedFlowView *)self.tableView.tableHeaderView setLunbos:self.viewModel.home.lunbo];
+                [self.tableView reloadData];
+
             }
         }
         
@@ -345,12 +350,9 @@ static NSString *homeFooterid = @"ZCHomeTableFooterView_id";
 - (UITableView *)tableView {
     if (!_tableView) {
         _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-NavBarHeight-TabBarHeight) style:UITableViewStyleGrouped];
-//        _tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
         _tableView.dataSource = self;
         _tableView.delegate = self;
-        UIView *header = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, WidthRatio(164))];
-        header.backgroundColor = [UIColor whiteColor];
-        [header addSubview:self.cycleView];
+        ZCHomePagedFlowView *header = [[ZCHomePagedFlowView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, WidthRatio(164))];
         _tableView.tableHeaderView = header;
         _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         [_tableView registerClass:[ZCHomeNoticeCell class] forCellReuseIdentifier:noticeCellid];
