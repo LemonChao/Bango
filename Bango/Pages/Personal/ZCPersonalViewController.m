@@ -188,7 +188,14 @@ static NSString *dataCellid = @"ZCPersonalDataCell_id";
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     CGFloat offsetY = scrollView.contentOffset.y;
-    self.changeDefault = offsetY > (WidthRatio(84)-NavBarHeight/2);
+    
+    static BOOL needUpdate = NO;
+    needUpdate = offsetY > (WidthRatio(84)-NavBarHeight/2);
+    if (needUpdate != self.changeDefault) {//减少调用次数
+        self.changeDefault = needUpdate;
+        [self setNeedsStatusBarAppearanceUpdate];
+    }
+    
     if (offsetY < NAVBAR_COLORCHANGE_POINT || offsetY == 0)
     {
         [self.customNavBar wr_setBackgroundAlpha:0];
@@ -202,8 +209,6 @@ static NSString *dataCellid = @"ZCPersonalDataCell_id";
         [self.customNavBar wr_setTintColor:[[UIColor blackColor] colorWithAlphaComponent:alpha]];
         self.customNavBar.title = @"会员中心";
     }
-    
-    [self setNeedsStatusBarAppearanceUpdate];
 
 }
 
