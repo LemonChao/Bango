@@ -52,6 +52,10 @@
 {
     return UIStatusBarStyleDefault;
 }
+//控制StatusBar动画方式
+- (UIStatusBarAnimation)preferredStatusBarUpdateAnimation {
+    return UIStatusBarAnimationFade;
+}
 
 #pragma mark - initView
 - (void)setBgViewCorlor

@@ -220,6 +220,11 @@ static NSString *dataCellid = @"ZCPersonalDataCell_id";
         _tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
         _tableView.separatorStyle = UITableViewCellSelectionStyleNone;
         _tableView.backgroundColor = [UIColor clearColor];
+        _tableView.dataSource = self;
+        _tableView.delegate = self;
+        _tableView.estimatedRowHeight = 0;
+        _tableView.estimatedSectionFooterHeight = 0;
+        _tableView.estimatedSectionHeaderHeight = 0;
         ZCPersonalTableHeadView *header = [[ZCPersonalTableHeadView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, WidthRatio(84)+NavBarHeight)];
         _tableView.tableHeaderView = header;
         if (@available(iOS 11.0, *)) {
@@ -233,8 +238,6 @@ static NSString *dataCellid = @"ZCPersonalDataCell_id";
         [_tableView registerClass:[ZCPersonalDataCell class] forCellReuseIdentifier:dataCellid];
         [_tableView registerClass:[UITableViewHeaderFooterView class] forHeaderFooterViewReuseIdentifier:tableHeaderid];
         [_tableView registerClass:[UITableViewHeaderFooterView class] forHeaderFooterViewReuseIdentifier:tableFooterid];
-        _tableView.dataSource = self;
-        _tableView.delegate = self;
     }
     return _tableView;
 }
