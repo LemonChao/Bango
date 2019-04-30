@@ -296,7 +296,7 @@
     return destDateString;
 }
 #pragma mark - 获取距离现在多久（几分钟前，几小时前，几天前）
-+ (NSString *) compareCurrentTime:(NSString *)str
++ (NSString *)compareCurrentTime:(NSString *)str
 {
 //    //把字符串转为NSdate
 //    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
@@ -357,6 +357,32 @@
     
     return returnString;
 }
+
+- (NSString *)timeStampStringSinceNow {
+    NSDate *timeDate = [NSDate dateWithTimeIntervalSince1970:self.doubleValue];
+    
+    //得到与当前时间差
+    NSTimeInterval time = fabs([[NSDate date] timeIntervalSinceDate:timeDate]);
+    
+    NSString *returnString = @"";
+    if(time < 60)
+        returnString = @"刚刚";
+    else if(time >=60 && time < 3600)
+        returnString = [NSString stringWithFormat:@"%.0f分钟前",time/60];
+    else if(time >= 3600 && time < 3600 * 24)
+        returnString = [NSString stringWithFormat:@"%.0f小时前",time/(60 * 60)];
+    else if(time >= 3600 * 24 && time < 3600 * 24 * 30)
+        returnString = [NSString stringWithFormat:@"%.0f天前",time/(60 * 60 * 24)];
+    else if(time >= 3600 * 24 * 30 && time < 3600 * 24 * 30 * 12)
+        returnString = [NSString stringWithFormat:@"%.0f月前",time/(60 * 60 * 24 * 30)];
+    else if(time >= 3600 * 24 * 30 * 12)
+        returnString = [NSString stringWithFormat:@"%.0f年前",time/(60 * 60 * 24 * 30 * 12)];
+    
+    return returnString;
+}
+
+
+
 #pragma mark - 手机号加密
 /**
  *手机号加密
@@ -431,6 +457,10 @@
     return [dateFormatter stringFromDate:newDate];
 }
 - (NSString *)timeStampTurnTime{
+    return [self stringFromeTimestampWithDataFormat:@"yyyy-MM-dd HH:mm:ss"];
+}
+
+- (NSString *)stringFromeTimestampWithDataFormat:(NSString *)dataFormat {
     if ([NSString isNOTNull:self]) {
         return @"";
     }
@@ -439,11 +469,12 @@
     NSDate *date               = [NSDate dateWithTimeIntervalSince1970:interval];
     
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-    NSString *dateString       = [formatter stringFromDate: date];
-    NSLog(@"服务器返回的时间戳对应的时间是:%@",dateString);
+    [formatter setDateFormat:dataFormat];
+    NSString *dateString       = [formatter stringFromDate:date];
     return dateString;
 }
+
+
 #pragma mark ===将时间字符串的字符清除===
 -(NSString *)formattingDate{
     NSString *str = self;

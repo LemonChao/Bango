@@ -24,13 +24,14 @@
 #import "ZCHomePagedFlowView.h"
 #import "ZCNewsCenterViewController.h"
 #import "UIView+BadgeValue.h"
+#import "ZCSystemNoticeVM.h"
 
 @interface ZCHomeViewController ()<UITableViewDataSource,UITableViewDelegate,SDCycleScrollViewDelegate>
 /** 轮播图 */
 @property (nonatomic, strong) SDCycleScrollView *cycleView;
 @property(nonatomic, strong) UITableView *tableView;
 @property(nonatomic, strong) ZCHomeViewModel *viewModel;
-
+@property(nonatomic, strong) ZCSystemNoticeVM *noticeViewModel;
 @end
 
 static NSString *noticeCellid = @"ZCHomeNoticeCell_id";
@@ -64,6 +65,13 @@ static NSString *homeFooterid = @"ZCHomeTableFooterView_id";
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:NO];
+    
+    [[self.noticeViewModel.noticeCmd execute:nil] subscribeNext:^(NSNumber  *_Nullable x) {
+        
+        UIView *newsView = self.navigationItem.rightBarButtonItems.firstObject.customView;
+        newsView.badgeValue = StringFormat(@"%@", x.boolValue?@"-1":@"0");
+    } error:^(NSError * _Nullable error) {
+    }];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -339,11 +347,13 @@ static NSString *homeFooterid = @"ZCHomeTableFooterView_id";
 
 - (void)newsButtonItemAction:(UIBarButtonItem *)item {
     ZCNewsCenterViewController *newsVC = [[ZCNewsCenterViewController alloc] init];
+    newsVC.noticeVM = self.noticeViewModel;
     [self.navigationController pushViewController:newsVC animated:YES];
 }
 
 - (void)signButtonItemAction:(UIBarButtonItem *)item {
-    [MBProgressHUD showText:@"暂未开放,敬请期待"];
+    ZCWebViewController *webVC = [[ZCWebViewController alloc] initWithPath:@"sign-in" parameters:@{}];
+    [self.navigationController pushViewController:webVC animated:YES];
 }
 
 
@@ -389,12 +399,18 @@ static NSString *homeFooterid = @"ZCHomeTableFooterView_id";
     return _viewModel;
 }
 
+- (ZCSystemNoticeVM *)noticeViewModel {
+    if (!_noticeViewModel) {
+        _noticeViewModel = [[ZCSystemNoticeVM alloc] init];
+    }
+    return _noticeViewModel;
+}
+
 - (UIButton *)buttonItemWithImage:(UIImage *)image title:(NSString *)title target:(nullable id)target action:(nullable SEL)action {
     UIButton *button = [UITool richButton:UIButtonTypeCustom title:title titleColor:HEX_COLOR(0xaaaaaa) font:[UIFont systemFontOfSize:11] bgColor:[UIColor whiteColor] image:image];
     [button addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
     button.frame = CGRectMake(0, 0, 44, 44);
     [button setImagePosition:ZCImagePositionTop spacing:4];
-    button.badgeValue = @"0";
     return button;
 }
 

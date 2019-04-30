@@ -82,6 +82,7 @@ static void *badgeValueKey = &badgeValueKey;
         badgeValue = @"";
     }
     objc_setAssociatedObject(self, &badgeValueKey, badgeValue, OBJC_ASSOCIATION_COPY);
+    [self layoutIfNeeded];
     [self updateBadgeLabel];
 }
 

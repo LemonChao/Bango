@@ -9,8 +9,11 @@
 #import <UIKit/UIKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
+@class ZCSystemNoticeModel;
 
 @interface ZCSystemNoticeListCell : UITableViewCell
+
+@property(nonatomic, strong) ZCSystemNoticeModel *model;
 
 @end
 

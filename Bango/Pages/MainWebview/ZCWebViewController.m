@@ -66,7 +66,7 @@
 //        if ([path isEqualToString:@"GuoGuoGame"]) {
 //            self.urlString = StringFormat(@"%@/%@?%@",AppBaseUrl,self.pathForH5,AFQueryStringFromParameters(self.parameters));
 //        }else {
-//            self.urlString = StringFormat(@"%@/#/%@?%@",@"http://192.168.0.126:10002",self.pathForH5,AFQueryStringFromParameters(self.parameters));
+//            self.urlString = StringFormat(@"%@/#/%@?%@",@"http://192.168.0.190:10002",self.pathForH5,AFQueryStringFromParameters(self.parameters));
 //        }
 
     }

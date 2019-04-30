@@ -11,6 +11,9 @@
 #import "ZCClassifyViewModel.h"
 #import "ZCClassifyLeftCell.h"
 #import "ZCClassifyRightVC.h"
+#import "ZCSystemNoticeVM.h"
+#import "UIView+BadgeValue.h"
+#import "ZCNewsCenterViewController.h"
 
 
 @interface ZCClassifyViewController ()<UITableViewDataSource,UITableViewDelegate>
@@ -20,6 +23,7 @@
 @property(nonatomic, strong) UITableView *leftTableView;
 
 @property(nonatomic, strong) ZCClassifyRightVC *rightVC;
+@property(nonatomic, strong) ZCSystemNoticeVM *noticeViewModel;
 
 @end
 
@@ -33,6 +37,17 @@ static NSString *leftCellid = @"ZCClassifyLeftCell_id";
     [self getData];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+
+    [[self.noticeViewModel.noticeCmd execute:nil] subscribeNext:^(NSNumber  *_Nullable x) {
+        
+        UIView *newsView = self.navigationItem.rightBarButtonItems.firstObject.customView;
+        newsView.badgeValue = StringFormat(@"%@", x.boolValue?@"-1":@"0");
+    } error:^(NSError * _Nullable error) {
+    }];
+
+}
 
 - (void)configCustomNav {
     
@@ -112,11 +127,14 @@ static NSString *leftCellid = @"ZCClassifyLeftCell_id";
 }
 
 - (void)newsButtonItemAction:(UIBarButtonItem *)item {
-    [MBProgressHUD showText:@"暂未开放,敬请期待"];
+    ZCNewsCenterViewController *newsVC = [[ZCNewsCenterViewController alloc] init];
+    newsVC.noticeVM = self.noticeViewModel;
+    [self.navigationController pushViewController:newsVC animated:YES];
 }
 
 - (void)signButtonItemAction:(UIBarButtonItem *)item {
-    [MBProgressHUD showText:@"暂未开放,敬请期待"];
+    ZCWebViewController *webVC = [[ZCWebViewController alloc] initWithPath:@"sign-in" parameters:@{}];
+    [self.navigationController pushViewController:webVC animated:YES];
 }
 
 #pragma mark - setter && getter
@@ -138,6 +156,12 @@ static NSString *leftCellid = @"ZCClassifyLeftCell_id";
         _leftTableView.delegate = self;
     }
     return _leftTableView;
+}
+- (ZCSystemNoticeVM *)noticeViewModel {
+    if (!_noticeViewModel) {
+        _noticeViewModel = [[ZCSystemNoticeVM alloc] init];
+    }
+    return _noticeViewModel;
 }
 
 

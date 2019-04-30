@@ -46,7 +46,7 @@ static NSString *newsCellid = @"ZCNewsCenterCell_id";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     ZCNewsCenterCell *cell = [tableView dequeueReusableCellWithIdentifier:newsCellid];
-    
+    cell.cellViewModel = self.noticeVM;
     return cell;
 }
 

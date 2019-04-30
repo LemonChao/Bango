@@ -8,6 +8,7 @@
 
 #import "ZCNewsCenterCell.h"
 #import "UIView+BadgeValue.h"
+#import "ZCSystemNoticeVM.h"
 
 @interface ZCNewsCenterCell ()
 
@@ -40,14 +41,13 @@
         
         [self.imgView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(self.contentView).inset(WidthRatio(12));
-            make.size.mas_equalTo(CGSizeMake(WidthRatio(38), WidthRatio(38)));
             make.centerY.equalTo(self.contentView);
             make.bottom.equalTo(self.contentView.mas_bottom).inset(WidthRatio(14));
         }];
         
         [self.titleLab mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerY.equalTo(self.imgView);
-            make.left.equalTo(self.imgView.mas_left).offset(WidthRatio(10));
+            make.left.equalTo(self.imgView.mas_right).offset(WidthRatio(10));
         }];
 
         [self.timeLab mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -59,10 +59,15 @@
     return self;
 }
 
+- (void)setCellViewModel:(ZCSystemNoticeVM *)cellViewModel {
+    _cellViewModel = cellViewModel;
+    self.timeLab.text = cellViewModel.showTime;
+    self.imgView.badgeValue = StringFormat(@"%@", cellViewModel.isReaded ? @"-1":@"0");
+}
+
 - (UIImageView *)imgView {
     if (!_imgView) {
         _imgView = [[UIImageView alloc] initWithImage:ImageNamed(@"bg_newsCenter_list2")];
-        _imgView.badgeValue = @"5";
     }
     return _imgView;
 }
@@ -70,6 +75,7 @@
 - (UILabel *)titleLab {
     if (!_titleLab) {
         _titleLab = [UITool labelWithTextColor:ImportantColor font:SystemFont(14)];
+        _titleLab.text = @"系统公告";
     }
     return _titleLab;
 }

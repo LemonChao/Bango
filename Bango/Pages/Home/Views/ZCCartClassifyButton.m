@@ -73,8 +73,8 @@
 
 
 - (void)commonInit {
-    self.addButton = [UITool imageButton:ImageNamed(@"tabBar3_select")];
-    [self.addButton setImage:ImageNamed(@"tabBar3_select") forState:UIControlStateSelected];
+    self.addButton = [UITool imageButton:ImageNamed(@"cart_logo")];
+    [self.addButton setImage:ImageNamed(@"cart_logo") forState:UIControlStateSelected];
     self.divisionButton = [UITool imageButton:ImageNamed(@"home_division")];
     self.countLab = [UITool labelWithTextColor:ImportantColor font:MediumFont(WidthRatio(14)) alignment:NSTextAlignmentCenter];
     self.divisionButton.hidden = self.countLab.hidden = YES;

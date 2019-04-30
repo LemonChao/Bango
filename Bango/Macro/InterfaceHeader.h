@@ -48,6 +48,8 @@
 #define kIndex_home             @"?s=/wap/Index/app_index"
 // 分类首页
 #define kAllCategory_home       @"?s=/wap/Goods/goodsAllCategoryListAPPJin"
+// 公告列表-首页
+#define kNotice_home            @"?s=/wap/notice/getNotice"
 //会员中心
 #define kMember_index           @"?s=/wap/Member/memberIndex"
 //购物车-猜你喜欢

@@ -7,6 +7,8 @@
 //
 
 #import "ZCSystemNoticeListCell.h"
+#import "ZCSystemNoticeModel.h"
+#import "UIView+BadgeValue.h"
 
 @interface ZCSystemNoticeListCell ()
 
@@ -35,7 +37,7 @@
         [self.timeLab mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(self.titleLab.mas_right).offset(WidthRatio(5));
             make.right.equalTo(self.contentView).inset(WidthRatio(12));
-            make.centerY.equalTo(self.contentView);
+            make.top.bottom.equalTo(self.contentView).inset(4);
         }];
     }
     
@@ -46,10 +48,18 @@
 
 #pragma mark - setter && getter
 
+- (void)setModel:(ZCSystemNoticeModel *)model {
+    _model = model;
+    self.titleLab.text = model.notice_title;
+    self.timeLab.text = model.showTime;
+    self.timeLab.badgeValue = model.is_read.integerValue ? @"-1":@"0";
+}
+
+
+
 - (UILabel *)titleLab {
     if (!_titleLab) {
         _titleLab = [UITool labelWithTextColor:ImportantColor font:MediumFont(14)];
-        _titleLab.text = @"占位《搬果将用户注册协议》占位《搬果将用户注册协议》占位《搬果将用户注册协议》占位《搬果将用户注册协议》占位《搬果将用户注册协议》";
     }
     return _titleLab;
 }
@@ -57,7 +67,6 @@
 - (UILabel *)timeLab {
     if (!_timeLab) {
         _timeLab = [UITool labelWithTextColor:AssistColor font:SystemFont(11)];
-        _timeLab.text = @"2019/04/04";
     }
     return _timeLab;
 }

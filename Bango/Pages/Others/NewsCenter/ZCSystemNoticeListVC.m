@@ -8,10 +8,13 @@
 
 #import "ZCSystemNoticeListVC.h"
 #import "ZCSystemNoticeListCell.h"
+#import "ZCSystemNoticeVM.h"
+
 
 @interface ZCSystemNoticeListVC ()<UITableViewDelegate,UITableViewDataSource>
 
 @property(nonatomic, strong) UITableView *tableView;
+@property(nonatomic, strong) ZCSystemNoticeVM *viewModel;
 
 @end
 
@@ -22,9 +25,6 @@ static NSString *noticeListCellid = @"ZCSystemNoticeListCell_id";
 #pragma mark - life cycle
 - (void)viewDidLoad {
     [super viewDidLoad];
-    //https://mr-bango.cn/html-src/dist/#/notice-detail?id=7
-    [self.view addSubview:self.tableView];
-    
 }
 
 - (void)configCustomNav {
@@ -32,24 +32,54 @@ static NSString *noticeListCellid = @"ZCSystemNoticeListCell_id";
     [self.customNavBar setTitle:@"系统公告"];
 }
 
+- (void)configViews {
+    [self.view addSubview:self.tableView];
+    
+    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        [self getData];
+    }];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self getData];
+}
 
 #pragma mark - event response
 
+
+- (void)getData {
+    [[self.viewModel.noticeListCmd execute:nil] subscribeNext:^(id  _Nullable x) {
+        if ([x boolValue]) {
+            kHidHud
+            [self.tableView reloadData];
+        }
+        
+        [self.tableView.mj_header endRefreshing];
+    }error:^(NSError * _Nullable error) {
+        [self.tableView.mj_header endRefreshing];
+    }];
+    
+}
+
+
+
 #pragma mark - UITableViewDelegate && UITableViewDataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 20;
+    return self.viewModel.dataArray.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     ZCSystemNoticeListCell *cell = [tableView dequeueReusableCellWithIdentifier:noticeListCellid];
-    
+    ZCSystemNoticeModel *model = self.viewModel.dataArray[indexPath.row];
+    cell.model = model;
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
-    ZCWebViewController *webVC = [[ZCWebViewController alloc] initWithPath:@"notice-detail" parameters:@{@"id":@"7"}];
+    ZCSystemNoticeModel *model = self.viewModel.dataArray[indexPath.row];
+    ZCWebViewController *webVC = [[ZCWebViewController alloc] initWithPath:@"notice-detail" parameters:@{@"id":model.aid}];
     [self.navigationController pushViewController:webVC animated:YES];
 }
 
@@ -68,6 +98,12 @@ static NSString *noticeListCellid = @"ZCSystemNoticeListCell_id";
     return _tableView;
 }
 
+- (ZCSystemNoticeVM *)viewModel {
+    if (!_viewModel) {
+        _viewModel = [[ZCSystemNoticeVM alloc] init];
+    }
+    return _viewModel;
+}
 
 #pragma mark - private
 

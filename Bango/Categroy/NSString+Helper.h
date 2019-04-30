@@ -44,29 +44,29 @@
 -(BOOL)isValidateEmail;
 
 /** 判断是否是手机号*/
--(BOOL) isValidateMobile;
+-(BOOL)isValidateMobile;
 /** 手机号加密*/
 +(NSString *)mobileNumberEncryption:(NSString *)number;
 /** 判断是否是手机号或固话 */
--(BOOL) isValidateMobileAndTel;
+-(BOOL)isValidateMobileAndTel;
 
 /** 判断是否是手机号或固话或400 */
--(BOOL) isValidateMobileAndTelAnd400;
+-(BOOL)isValidateMobileAndTelAnd400;
 
 /** 银行账号判断 */
  -(BOOL)isValidateBank;
 
 /** 身份证号 */
--(BOOL) isValidateIdentityCard;
+-(BOOL)isValidateIdentityCard;
 
 /** 判断是否是车牌号 */
--(BOOL) isValidateCarNo;
+-(BOOL)isValidateCarNo;
 
 /** 车型号 */
-- (BOOL) isValidateCarType;
+- (BOOL)isValidateCarType;
 
 /** 昵称 */
-- (BOOL) isValidateNickname;
+- (BOOL)isValidateNickname;
 
 /** 密码（6~20位，数字，字母）NO：不是 YES：是*/
 -(BOOL)isValidatePassword;
@@ -79,7 +79,7 @@
 -(BOOL)isPayPassword;
 
 /** 用户名 */
-- (BOOL) isValidateUserName;
+- (BOOL)isValidateUserName;
 
 /** 判断汉字 */
 -(BOOL)isChinese;
@@ -114,9 +114,26 @@
 + (NSString *)TimeDifferenceWithStartTime:(NSString *)startTime endTime:(NSString *)endTime;
 
 /** 获取距离现在多久（几分钟前，几小时前，几天前）[str:服务器返回时间] */
-+ (NSString *) compareCurrentTime:(NSString *)str;
++ (NSString *)compareCurrentTime:(NSString *)str;
+
+/**
+ 根据时间戳获取距离现在多长时间 （几分钟前，几小时前，几天前）
+ 由时间字符串调用
+
+ @return (几分钟前，几小时前，几天前)
+ */
+- (NSString *)timeStampStringSinceNow;
+
 /** 时间戳转时间 */
 - (NSString *)timeStampTurnTime;
+
+/**
+ 时间戳转时间
+
+ @param dataFormat 时间格式 eg.yyyy-MM-dd HH:mm:ss
+ @return timeString
+ */
+- (NSString *)stringFromeTimestampWithDataFormat:(NSString *)dataFormat;
 /** 将时间字符串的字符清除 */
 -(NSString *)formattingDate;
 /** 金额处理 */

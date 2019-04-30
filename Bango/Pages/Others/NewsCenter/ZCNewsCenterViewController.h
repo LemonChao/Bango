@@ -7,10 +7,13 @@
 //
 
 #import "ZCBaseViewController.h"
+#import "ZCSystemNoticeVM.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface ZCNewsCenterViewController : ZCBaseViewController
+
+@property(nonatomic, strong) ZCSystemNoticeVM *noticeVM;
 
 @end
 
