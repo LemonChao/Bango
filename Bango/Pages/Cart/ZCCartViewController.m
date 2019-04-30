@@ -40,20 +40,14 @@ static NSString *invaluedHeaderid = @"ZCCartInvaluedSectionHeader_id";
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self.navigationController setNavigationBarHidden:YES animated:NO];
     [self getData];
 }
 
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-    [self.navigationController setNavigationBarHidden:NO animated:NO];
-}
 
 - (void)configCustomNav {
     [super setupNavBar];
     
     [self.customNavBar setTitle:@"购物车"];
-    [self.customNavBar wr_setRightButtonWithTitle:@"删除" titleColor:AssistColor];
     [self.customNavBar wr_setBottomLineHidden:YES];
     @weakify(self);
     self.customNavBar.onClickRightButton = ^{
@@ -93,11 +87,11 @@ static NSString *invaluedHeaderid = @"ZCCartInvaluedSectionHeader_id";
 
 - (void)bindViewModel {
     @weakify(self);
-    [RACObserve(self, viewModel.cartDatas) subscribeNext:^(NSArray <__kindof ZCCartModel *> *  _Nullable cartDatas) {
+    [[RACObserve(self, viewModel.cartDatas) skip:1] subscribeNext:^(NSArray <__kindof ZCCartModel *> *  _Nullable cartDatas) {
         @strongify(self);
 //        if (!cartDatas.count) return;
         [self.viewModel calculateTotalPrice];
-        [self.customNavBar wr_setRightButtonWithTitle:self.viewModel.onlyTuijian?@"":@"删除" titleColor:AssistColor];
+//        [self.customNavBar wr_setRightButtonWithTitle:self.viewModel.onlyTuijian?@"":@"删除" titleColor:AssistColor];
 
         [self.collectionView reloadData];
     }];

@@ -22,7 +22,8 @@
 #import "UpdataViewModel.h"
 #import "WRNavigationBar.h"
 #import "ZCHomePagedFlowView.h"
-
+#import "ZCNewsCenterViewController.h"
+#import "UIView+BadgeValue.h"
 
 @interface ZCHomeViewController ()<UITableViewDataSource,UITableViewDelegate,SDCycleScrollViewDelegate>
 /** 轮播图 */
@@ -337,7 +338,8 @@ static NSString *homeFooterid = @"ZCHomeTableFooterView_id";
 }
 
 - (void)newsButtonItemAction:(UIBarButtonItem *)item {
-    [MBProgressHUD showText:@"暂未开放,敬请期待"];
+    ZCNewsCenterViewController *newsVC = [[ZCNewsCenterViewController alloc] init];
+    [self.navigationController pushViewController:newsVC animated:YES];
 }
 
 - (void)signButtonItemAction:(UIBarButtonItem *)item {
@@ -392,6 +394,7 @@ static NSString *homeFooterid = @"ZCHomeTableFooterView_id";
     [button addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
     button.frame = CGRectMake(0, 0, 44, 44);
     [button setImagePosition:ZCImagePositionTop spacing:4];
+    button.badgeValue = @"0";
     return button;
 }
 

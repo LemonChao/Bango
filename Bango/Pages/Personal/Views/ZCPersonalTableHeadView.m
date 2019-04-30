@@ -7,6 +7,7 @@
 //
 
 #import "ZCPersonalTableHeadView.h"
+#import "UIButton+HXExtension.h"
 
 @interface ZCPersonalTableHeadView ()
 
@@ -102,6 +103,7 @@
 - (UIButton *)avatarButton {
     if (!_avatarButton) {
         _avatarButton = [UITool imageButton:ImageNamed(@"portrait_placeholder_normal")];
+        [_avatarButton setEnlargeEdgeWithTop:0 right:0 bottom:30 left:0];
         [_avatarButton addTarget:self action:@selector(avatarButtonAction:) forControlEvents:UIControlEventTouchUpInside];
         _avatarButton.imageView.contentMode = UIViewContentModeScaleAspectFill;
     }
