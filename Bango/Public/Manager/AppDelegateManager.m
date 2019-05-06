@@ -148,10 +148,7 @@
     NSString *currentV = [AppVersion stringByReplacingOccurrencesOfString:@"." withString:@""];
     if (currentV.integerValue > onlineV.integerValue) {
         //当前是新版本,更新版本号记录,赋值
-        //新版本启动首次启动 resetUserDefaults
-        NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
-        [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
-        
+        //新版本启动首次启动
         [[NSUserDefaults standardUserDefaults] setObject:currentV forKey:saveAppVersionKey];
     }else {
         NSLog(@"旧版本 firstlaunch");

@@ -142,7 +142,7 @@
                 if (success) {
                     success(responseObject);
                     //对数据进行异步缓存
-                    if (kStatusTrue) {
+                    if (kStatusTrue && caches) {
                         [ZCNetworkCache setHttpCache:responseObject URL:url parameters:parameter];
                     }
                 }
@@ -161,7 +161,7 @@
                 if (success) {
                     success(responseObject);
                     //对数据进行异步缓存
-                    if (kStatusTrue) {
+                    if (kStatusTrue && caches) {
                         [ZCNetworkCache setHttpCache:responseObject URL:url parameters:parameter];
                     }
                 }
@@ -180,7 +180,7 @@
                 if (success) {
                     success(responseObject);
                     //对数据进行异步缓存
-                    if (kStatusTrue) {
+                    if (kStatusTrue && caches) {
                         [ZCNetworkCache setHttpCache:responseObject URL:url parameters:parameter];
                     }
                 }
@@ -199,7 +199,7 @@
                 if (success) {
                     success(responseObject);
                     //对数据进行异步缓存
-                    if (kStatusTrue) {
+                    if (kStatusTrue && caches) {
                         [ZCNetworkCache setHttpCache:responseObject URL:url parameters:parameter];
                     }
                 }
