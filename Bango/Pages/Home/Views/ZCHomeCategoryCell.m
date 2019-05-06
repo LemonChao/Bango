@@ -68,7 +68,7 @@ static NSString *cellid = @"ZCCategoryCollectionCell_id";
         return;
     }
     
-    NSDictionary *dic = @{@"category_id":model.category_id,@"key_word@":model.category_name};
+    NSDictionary *dic = @{@"category_id":model.category_id,@"key_word":model.category_name};
     ZCWebViewController *webVC = [[ZCWebViewController alloc] initWithPath:@"search-result" parameters:dic];
     [[self viewController].navigationController pushViewController:webVC animated:YES];
 }

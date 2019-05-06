@@ -56,7 +56,12 @@
 - (void)moreButtonAction:(UIButton *)button {
     UIViewController *baseVC = [self viewController];
     
-    NSDictionary *dic = @{@"type":self.model.category_id};
+    NSDictionary *dic;
+    if ([self.model.category_alias isEqualToString:@"爆款推荐"] || [self.model.category_alias isEqualToString:@"鲜果一起拼"]) {
+        dic = @{@"type":self.model.category_id};
+    }else {
+        dic = @{@"category_id":self.model.category_id};
+    }
     
     ZCWebViewController *webView = [[ZCWebViewController alloc] initWithPath:@"search-result" parameters:dic];
     [baseVC.navigationController pushViewController:webView animated:YES];

@@ -341,7 +341,33 @@
 }
 
 
-#pragma mark - WKUIDelegate
+#pragma mark - WKUIDelegate && NavigationDelegate
+
+- (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
+    // ------  对scheme:相关的scheme处理 -------
+    // 若遇到微信、支付宝、QQ等相关scheme，则跳转到本地App
+    NSString *scheme = navigationAction.request.URL.scheme;
+
+    // 判断scheme是否是 http或者https，并返回BOOL的值
+    BOOL urlOpen = [scheme isEqualToString:@"https"] || [scheme isEqualToString:@"http"];
+
+    if (!urlOpen) {
+        // 跳转相关客户端
+        BOOL bSucc = [[UIApplication sharedApplication]openURL:navigationAction.request.URL];
+
+        // 如果跳转失败，则弹窗提示客户
+        if (!bSucc) {
+            // 设置弹窗
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"温馨提示" message:@"未检测到该客户端，请您安装后重试。" preferredStyle:UIAlertControllerStyleAlert];
+            // 确定按键不带点击事件
+            [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:nil]];
+            [self presentViewController:alertController animated:YES completion:nil];
+        }
+    }
+    // 确认可以跳转，必须实现该方法，不实现会报错
+    decisionHandler(WKNavigationActionPolicyAllow);
+}
+
 
 //- (void)webView:(WKWebView *)webView runJavaScriptAlertPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(void))completionHandler{
 //    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"提示" message:message?:@"" preferredStyle:UIAlertControllerStyleAlert];
@@ -648,7 +674,6 @@
     
 }
 -(void)VersionBounced{
-    __weak __typeof(&*self)weakSelf = self;
     NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
     CFShow((__bridge CFTypeRef)(infoDictionary));
     // app版本
