@@ -33,7 +33,6 @@
     
     self.viewControllers = @[self.homeNav,self.classifyNav,self.cartNav,self.personalNav];
     self.tabBar.backgroundImage = [UIImage imageWithColor:[UIColor whiteColor]];
-    self.tabBar.shadowImage = ImageNamed(@"tab");
     self.delegate = self;
 }
 
@@ -111,7 +110,7 @@
 
 
 //- (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController {
-
+//
 //    if (viewController == self.viewControllers[3]) {
 //        UserInfoModel *info = [BaseMethod readObjectWithKey:UserInfo_UDSKEY];
 //        if (!info.asstoken) {

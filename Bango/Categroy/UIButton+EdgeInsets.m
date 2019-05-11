@@ -63,11 +63,19 @@
 
 /**根据图文距边框的距离调整图文间距*/
 - (void)setImagePosition:(ZCImagePosition)postion WithMargin:(CGFloat )margin{
-    CGFloat imageWith = self.imageView.image.size.width;
-    CGFloat labelWidth = [self.titleLabel sizeThatFits:CGSizeMake(MAXFLOAT, MAXFLOAT)].width;
-    CGFloat spacing = self.bounds.size.width - imageWith - labelWidth - 2*margin;
-    
-    [self setImagePosition:postion spacing:spacing];
+    if (postion == ZCImagePositionLeft || postion == ZCImagePositionRight) {
+        CGFloat imageWith = self.imageView.image.size.width;
+        CGFloat labelWidth = [self.titleLabel sizeThatFits:CGSizeMake(MAXFLOAT, MAXFLOAT)].width;
+        CGFloat spacing = self.bounds.size.width - imageWith - labelWidth - 2*margin;
+        
+        [self setImagePosition:postion spacing:spacing];
+    }else {
+        CGFloat imageHeight = self.imageView.image.size.height;
+        CGFloat labelHeight = [self.titleLabel sizeThatFits:CGSizeMake(MAXFLOAT, MAXFLOAT)].height;
+        CGFloat spacing = self.bounds.size.height - imageHeight - labelHeight - 2*margin;
+        
+        [self setImagePosition:postion spacing:spacing];
+    }
 }
 
 
