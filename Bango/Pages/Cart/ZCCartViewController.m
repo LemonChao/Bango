@@ -91,7 +91,7 @@ static NSString *invaluedHeaderid = @"ZCCartInvaluedSectionHeader_id";
         @strongify(self);
 //        if (!cartDatas.count) return;
         [self.viewModel calculateTotalPrice];
-//        [self.customNavBar wr_setRightButtonWithTitle:self.viewModel.onlyTuijian?@"":@"删除" titleColor:AssistColor];
+        [self.customNavBar wr_setRightButtonWithTitle:self.viewModel.onlyTuijian?@"":@"删除 " titleColor:AssistColor];
 
         [self.collectionView reloadData];
     }];

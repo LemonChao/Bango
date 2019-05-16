@@ -125,33 +125,6 @@
 }
 
 
-//- (RACCommand *)addCartCmd {
-//    if (!_addCartCmd) {
-//        _addCartCmd = [[RACCommand alloc] initWithSignalBlock:^RACSignal * _Nonnull(id  _Nullable input) {
-//            return [RACSignal createSignal:^RACDisposable * _Nullable(id<RACSubscriber>  _Nonnull subscriber) {
-//                
-//                [NetWorkManager.sharedManager requestWithUrl:kGod_uploadCartFromLocal withParameters:@{@"goods_id":[self goodsIds]} withRequestType:POSTTYPE withSuccess:^(id  _Nonnull responseObject) {
-//                    
-//                    if (kStatusTrue) {
-//                        [BaseMethod deleteObjectForKey:ZCGoodsDictionary_UDSKey];
-//                        [subscriber sendNext:@(1)];
-//                    }else {
-//                        kShowMessage
-//                        [subscriber sendNext:@(0)];
-//                    }
-//                    [subscriber sendCompleted];
-//                } withFailure:^(NSError * _Nonnull error) {
-//                    kShowError
-//                    [subscriber sendError:error];
-//                }];
-//                return nil;
-//            }];
-//        }];
-//    }
-//    return _addCartCmd;
-//}
-
-
 
 // 计算选中的总价
 -(void)calculateTotalPrice {
@@ -255,27 +228,5 @@
     
     return self.cartDatas.mutableCopy;
 }
-
-
-/**
- 本地商品id，，支持批量上传
-
- @return 拼接的上传参数
- */
-- (NSString *)goodsIds {
-    NSArray *tempArray = [BaseMethod shopGoodsFromeUserDefaults];
-    if (!tempArray.count) return @"";
-    
-    NSMutableArray *mArray = [NSMutableArray array];
-    [tempArray enumerateObjectsUsingBlock:^(ZCPublicGoodsModel *_Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        
-        NSString *item = StringFormat(@"%@:%@", obj.goods_id,obj.have_num);
-        [mArray addObject:item];
-        
-    }];
-    
-    return [mArray componentsJoinedByString:@","];
-}
-
 
 @end
