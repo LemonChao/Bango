@@ -47,7 +47,7 @@
         [self.contentView addSubview:bgView];
         [bgView addSubview:self.titleLable];
         [bgView addSubview:lineView];
-//        [bgView addSubview:self.powerView];
+        [bgView addSubview:self.powerView];
         [bgView addSubview:guoBgView];
         self.topBgView = bgView;
         [bgView addSubview:self.guoguoView];
@@ -83,12 +83,12 @@
             make.height.mas_equalTo(WidthRatio(50));
         }];
         
-//        [self.powerView mas_makeConstraints:^(MASConstraintMaker *make) {
-//            make.right.equalTo(bgView).inset(WidthRatio(10));
-//            make.left.equalTo(self.guoguoView.mas_right);
-//            make.size.equalTo(self.guoguoView);
-//            make.top.equalTo(self.guoguoView);
-//        }];
+        [self.powerView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.right.equalTo(bgView).inset(WidthRatio(10));
+            make.left.equalTo(self.guoguoView.mas_right);
+            make.size.equalTo(self.guoguoView);
+            make.top.equalTo(self.guoguoView);
+        }];
         
         [self.leftButton mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(self.contentView).inset(WidthRatio(12));
@@ -154,6 +154,12 @@
     [[self viewController].navigationController pushViewController:webVC animated:YES];
 }
 - (void)powerViewAction:(ZCWelfareButton *)button {
+    UserInfoModel *info = [BaseMethod readObjectWithKey:UserInfo_UDSKEY];
+    
+    ZCWebViewController *webVC = [[ZCWebViewController alloc] initWithPath:@"FruitTreeGame" parameters:@{@"asstoken":info.asstoken?:@""}];
+    webVC.topInset = 0.f;
+    webVC.bottomInset = 0.f;
+    [[self viewController].navigationController pushViewController:webVC animated:YES];
 }
 
 
@@ -185,9 +191,9 @@
 - (ZCWelfareButton *)powerView {
     if (!_powerView) {
         _powerView = [[ZCWelfareButton alloc] init];
-        _powerView.imgView.image = ImageNamed(@"personal_power");
-        _powerView.titleLabel.text = @"我的能量值";
-        _powerView.descriptLabel.text = @"可兑换果果道具";
+        _powerView.imgView.image = ImageNamed(@"banguoleyuan");
+        _powerView.titleLabel.text = @"搬果乐园";
+        _powerView.descriptLabel.text = @"玩游戏得水果";
         [_powerView addTarget:self action:@selector(powerViewAction:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _powerView;
@@ -198,7 +204,7 @@
         _guoguoView  = [[ZCWelfareButton alloc] init];
         _guoguoView.imgView.image = ImageNamed(@"personal_guoguo");
         _guoguoView.titleLabel.text = @"果果大冒险";
-        _guoguoView.descriptLabel.text = @"玩游戏得水果";
+        _guoguoView.descriptLabel.text = @"欢乐蹦蹦跳";
         [_guoguoView addTarget:self action:@selector(guoguoViewAction:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _guoguoView;

@@ -2769,7 +2769,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.ly.banguojiang;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = Banguojiang_Distribution;
+				PROVISIONING_PROFILE_SPECIFIER = Banguojiang_adHoc;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

@@ -58,15 +58,16 @@ static NSString *cellid = @"ZCCategoryCollectionCell_id";
     
     
     ZCHomeCategoryModel *model = self.categoryList[indexPath.row];
-    if ([model.category_name isEqualToString:@"果果大冒险"]) {
+    if (model.is_game.boolValue) {
         UserInfoModel *info = [BaseMethod readObjectWithKey:UserInfo_UDSKEY];
         
-        ZCWebViewController *webVC = [[ZCWebViewController alloc] initWithPath:@"GuoGuoGame" parameters:@{@"asstoken":info.asstoken?:@""}];
+        ZCWebViewController *webVC = [[ZCWebViewController alloc] initWithPath:model.game_url parameters:@{@"asstoken":info.asstoken?:@""}];
         webVC.topInset = 0.f;
         webVC.bottomInset = 0.f;
         [[self viewController].navigationController pushViewController:webVC animated:YES];
         return;
     }
+
     
     NSDictionary *dic = @{@"category_id":model.category_id,@"key_word":model.category_name};
     ZCWebViewController *webVC = [[ZCWebViewController alloc] initWithPath:@"search-result" parameters:dic];

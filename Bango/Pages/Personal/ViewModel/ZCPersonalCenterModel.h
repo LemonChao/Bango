@@ -78,12 +78,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, copy) NSString *guo_open;
 @property(nonatomic, copy) NSArray<__kindof ZCPersonalAdvModel *> *platforms;
 
-//@property(nonatomic, copy) NSString *avatarhead;
-//@property(nonatomic, copy) NSString *avatarhead;
-//@property(nonatomic, copy) NSString *avatarhead;
-//@property(nonatomic, copy) NSString *avatarhead;
-//@property(nonatomic, copy) NSString *avatarhead;
-//
 /** 过期model */
 - (instancetype)initWithExpiration;
 

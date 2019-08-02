@@ -58,7 +58,7 @@
         self.bottomInset = HomeIndicatorHeight;
         self.pathForH5 = path;
         self.parameters = parameters?:@{};//
-        if ([path isEqualToString:@"GuoGuoGame"]) {
+        if ([path isEqualToString:@"GuoGuoGame"] || [path isEqualToString:@"FruitTreeGame"]) {
             self.urlString = StringFormat(@"%@/%@?%@",AppBaseUrl,self.pathForH5,AFQueryStringFromParameters(self.parameters));
         }else {
             self.urlString = StringFormat(@"%@html-src/dist/#/%@?%@",AppBaseUrl,self.pathForH5,AFQueryStringFromParameters(self.parameters));
@@ -745,6 +745,8 @@
     return nil;
 }
 
-
+- (void)dealloc {
+    NSLog(@"%@ dealloc", [self class]);
+}
 
 @end

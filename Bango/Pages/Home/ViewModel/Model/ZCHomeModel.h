@@ -32,6 +32,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, copy) NSString *category_name;
 @property(nonatomic, copy) NSString *category_pic;
 @property(nonatomic, copy) NSString *short_name;
+/** 是不是游戏分类 */
+@property(nonatomic, copy) NSString *is_game;
+/** 游戏的链接 */
+@property(nonatomic, copy) NSString *game_url;
 @end
 
 /// 公告

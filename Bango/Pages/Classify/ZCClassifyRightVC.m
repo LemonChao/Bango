@@ -76,7 +76,9 @@ static NSString *rightCellid = @"ZCClassifyRightCell_id";
     
     _dataArray = dataArray;
     [self.rightTableView reloadData];
-    [self.rightTableView scrollToRow:0 inSection:0 atScrollPosition:UITableViewScrollPositionTop animated:NO];
+    if (_dataArray.count) {
+        [self.rightTableView scrollToRow:0 inSection:0 atScrollPosition:UITableViewScrollPositionTop animated:NO];
+    }
 }
 
 
