@@ -24,7 +24,7 @@
     if (self) {
         self.contentView.backgroundColor = [UIColor whiteColor];
         self.titleLab = [UITool labelWithTextColor:ImportantColor font:BoldFont(WidthRatio(20))];
-        self.moreButton = [UITool richButton:UIButtonTypeCustom title:@"查看更多" titleColor:GeneralRedColor font:MediumFont(WidthRatio(14)) bgColor:[UIColor whiteColor] image:ImageNamed(@"home_arrow_right")];
+        self.moreButton = [UITool richButton:UIButtonTypeCustom title:@"查看更多" titleColor:GeneralRedColor font:MediumFont(WidthRatio(14)) bgColor:[UIColor whiteColor] image:[ImageNamed(@"home_arrow_right") imageByTintColor:GeneralRedColor]];
         [self.moreButton addTarget:self action:@selector(moreButtonAction:) forControlEvents:UIControlEventTouchUpInside];
         [self.contentView addSubview:self.titleLab];
         [self.contentView addSubview:self.moreButton];

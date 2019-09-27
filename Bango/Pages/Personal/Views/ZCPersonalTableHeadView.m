@@ -95,7 +95,7 @@
 
 - (UIImageView *)backgroundImgView {
     if (!_backgroundImgView) {
-        _backgroundImgView = [[UIImageView alloc] initWithImage:ImageNamed(@"personal_headerBG")];
+        _backgroundImgView = [[UIImageView alloc] initWithImage:[UIImage imageWithColor:GeneralRedColor]];
     }
     return _backgroundImgView;
 }

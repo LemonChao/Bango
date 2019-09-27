@@ -13,15 +13,16 @@
 
 #pragma mark - 第三方平台Key
 //微信
-#define WX_APP_ID          @"wx38b7868a84d849dc"
-#define WX_APP_SECRET      @"2eaa26f8428af0cfa756bdf08f44bc77"
+#define WX_APP_ID          @"wxf170e0024889b271"
+#define WX_APP_SECRET      @"70b2b8c8ac99919cb5cbcda1d4c9dbba"
 //QQ（空间，好友）
 #define QQ_APP_ID          @"1108073806"
 #define QQ_APP_SECRET      @"KEYuIW15429r8XMuuNR"
 //QQ微博
 #define QQ_APP_WB_ID       @"801307650"
 #define QQ_APP_WB_SECRET   @"ae36f4ee3946e1cbb98d6965b0b2ff5c"
-
+//支付宝
+#define Alipay_scheme         @"QuxiangAlipay"
 //融云
 #define RY_APP_KEY  @"qd46yzrfqigrf"
 

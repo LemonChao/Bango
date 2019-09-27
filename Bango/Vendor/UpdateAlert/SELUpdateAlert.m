@@ -130,7 +130,7 @@ description 格式如 @"1.xxxxxx\n2.xxxxxx"
     UILabel *versionLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, Ratio(10) + CGRectGetMaxY(updateIcon.frame), updateView.frame.size.width, Ratio(28))];
     versionLabel.font = [UIFont systemFontOfSize:Ratio(17)];
     versionLabel.textAlignment = NSTextAlignmentCenter;
-    versionLabel.textColor = SELColor(252,94,98);
+    versionLabel.textColor = SELColor(240,172,27);
     versionLabel.text = [NSString stringWithFormat:@"发现新版本 V%@",self.version];
     [updateView addSubview:versionLabel];
     
@@ -155,7 +155,7 @@ description 格式如 @"1.xxxxxx\n2.xxxxxx"
     
     //更新按钮
     UIButton *updateButton = [UIButton buttonWithType:UIButtonTypeSystem];
-    updateButton.backgroundColor = SELColor(252, 83, 87);
+    updateButton.backgroundColor = SELColor(240, 172, 27);
     updateButton.frame = CGRectMake(Ratio(25), CGRectGetMaxY(descTextView.frame) + Ratio(20), updateView.frame.size.width - Ratio(50), Ratio(40));
     updateButton.clipsToBounds = YES;
     updateButton.layer.cornerRadius = 2.0f;

@@ -2714,9 +2714,9 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = Bango/Bango.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_STYLE = Automatic;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = TYVC4FRF5U;
+				DEVELOPMENT_TEAM = 5QKRSN9NW3;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2733,9 +2733,9 @@
 					"$(PROJECT_DIR)/Bango/Vendor/支付/Alipay",
 					"$(PROJECT_DIR)/Bango/Vendor/IDCardRecognition/libexidcard",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.ly.banguojiang;
+				PRODUCT_BUNDLE_IDENTIFIER = com.quxiangmall.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = Banguojiang_Developer;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -2747,10 +2747,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = Bango/Bango.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = TYVC4FRF5U;
+				DEVELOPMENT_TEAM = 5QKRSN9NW3;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2767,9 +2767,9 @@
 					"$(PROJECT_DIR)/Bango/Vendor/支付/Alipay",
 					"$(PROJECT_DIR)/Bango/Vendor/IDCardRecognition/libexidcard",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.ly.banguojiang;
+				PRODUCT_BUNDLE_IDENTIFIER = com.quxiangmall.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = Banguojiang_adHoc;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

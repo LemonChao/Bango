@@ -89,11 +89,13 @@
                                       title:title
                                        type:SSDKContentTypeAuto];
     
+//    NSArray *items = @[@(SSDKPlatformSubTypeWechatSession),
+//                       @(SSDKPlatformSubTypeWechatTimeline),
+//                       @(SSDKPlatformTypeQQ),
+//                       @(SSDKPlatformSubTypeQZone)];
     NSArray *items = @[@(SSDKPlatformSubTypeWechatSession),
-                       @(SSDKPlatformSubTypeWechatTimeline),
-                       @(SSDKPlatformTypeQQ),
-                       @(SSDKPlatformSubTypeQZone)];
-    
+                       @(SSDKPlatformSubTypeWechatTimeline)];
+
     [ShareSDK showShareActionSheet:nil
                        customItems:items
                        shareParams:shareParams

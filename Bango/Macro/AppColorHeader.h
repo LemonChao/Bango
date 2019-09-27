@@ -33,8 +33,8 @@
 /** 辅助 - aaaaaa */
 #define AssistColor RGBA(170,170,170,1)
 
-/** 通用红 FC5E62 */
-#define GeneralRedColor RGBA(252,94,98,1)
+/** 通用黄 f0ac1b */
+#define GeneralRedColor RGBA(240,172,27,1)
 
 
 #endif /* AppColorHeader_h */

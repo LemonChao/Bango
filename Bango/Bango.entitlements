@@ -6,8 +6,8 @@
 	<string>development</string>
 	<key>com.apple.developer.associated-domains</key>
 	<array>
-		<string>applinks:mr-bango.cn</string>
-		<string>applinks:www.mr-bango.cn</string>
+		<string>applinks:lsqxsc.com</string>
+		<string>applinks:www.lsqxsc.com</string>
 	</array>
 </dict>
 </plist>

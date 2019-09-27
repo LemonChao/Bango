@@ -123,9 +123,9 @@
 - (UIView *)savedView {
     
     UIView *backgroundView = [UITool viewWithColor:[UIColor blackColor]];
-    backgroundView.frame = CGRectMake(0, 0, WidthRatio(278), WidthRatio(314));
+    backgroundView.frame = CGRectMake(0, 0, WidthRatio(278), WidthRatio(316));
     UIView *cornerView = [UITool viewCornerRadius:WidthRatio(17)];
-    cornerView.backgroundColor = RGBA(252, 83, 87, 1);
+    cornerView.backgroundColor = GeneralRedColor;
     UIView *topCornerView = [UITool viewCornerRadius:WidthRatio(17)];
     topCornerView.backgroundColor = [UIColor blackColor];
     UIImageView *shareBg = [[UIImageView alloc] initWithImage:ImageNamed(@"face_invite_box")];
@@ -154,7 +154,7 @@
     [logoView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(backgroundView).inset(WidthRatio(12));
         make.centerX.equalTo(backgroundView);
-        make.size.mas_equalTo(CGSizeMake(WidthRatio(228), WidthRatio(45)));
+        make.size.mas_equalTo(CGSizeMake(WidthRatio(228), WidthRatio(47)));
     }];
     [titleLab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(cornerView).inset(WidthRatio(16));

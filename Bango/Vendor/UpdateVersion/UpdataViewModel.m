@@ -22,11 +22,10 @@
         @weakify(self);
         _updateCmd = [[RACCommand alloc] initWithSignalBlock:^RACSignal * _Nonnull(NSDictionary *_Nullable input) {
             return [RACSignal createSignal:^RACDisposable * _Nullable(id<RACSubscriber>  _Nonnull subscriber) {
-                [NetWorkManager.sharedManager requestWithUrl:kIndex_version withParameters:@{@"appname":@"搬果将",@"type":@"2",@"version":AppVersion} withRequestType:POSTTYPE responseCache:^(id  _Nonnull responseObject) {
+                [NetWorkManager.sharedManager requestWithUrl:kIndex_version withParameters:@{@"appname":@"趣享商城",@"type":@"2",@"version":AppVersion} withRequestType:POSTTYPE responseCache:^(id  _Nonnull responseObject) {
                     @strongify(self);
                     self.model = [ZCUpdateModel modelWithDictionary:responseObject[@"data"]];
                 } withSuccess:^(id  _Nonnull responseObject) {
-                    @strongify(self);
                     ZCUpdateModel *model = [ZCUpdateModel modelWithDictionary:responseObject[@"data"]];
                     if (kStatusTrue) {
                         [self versionBouncedWithModel:model];
@@ -34,7 +33,6 @@
                     [subscriber sendNext:@(1)];
                     [subscriber sendCompleted];
                 } withFailure:^(NSError * _Nonnull error) {
-                    @strongify(self);
                     ZCUpdateModel *model = self.model.copy;
                     
                     [self versionBouncedWithModel:model];

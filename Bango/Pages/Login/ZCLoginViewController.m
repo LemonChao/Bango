@@ -40,22 +40,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loginSuccessComplete:) name:loginSuccessNotification object:nil];
 }
 
-- (void)loginSuccessComplete:(NSNotification *)notif {
-    NSLog(@"notif_userInfo:%@", notif.userInfo);
-
-//    [self dismissViewControllerAnimated:YES completion:^{
-//        //保存用户登录信息
-//        UserInfoModel *model = [notif.userInfo objectForKey:@"userModel"];
-//        [BaseMethod saveObject:model withKey:UserInfo_UDSKEY];
-//        [self.viewModel.personDataCmd execute:nil];
-//    }];
-//    if (self.loginCallback) {
-//        self.loginCallback([notif.userInfo objectForKey:@"userResp"]);
-//    }
-}
+//- (void)loginSuccessComplete:(NSNotification *)notif {
+//    NSLog(@"notif_userInfo:%@", notif.userInfo);
+//}
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:YES animated:NO];
@@ -104,15 +93,6 @@
     self.failingBtnView = [[ZCFallingAnimationView alloc] initWithFrame:CGRectMake(0, topDiff, SCREEN_WIDTH, SCREEN_HEIGHT-topDiff)];
 }
 
-//
-//- (void)executeLoginCmd {
-//    [[self.viewModel.phoneCmd execute:@{@"username":self.phoneNumberField.text,@"send_param":self.authCodeField.text}] subscribeNext:^(id  _Nullable x) {
-//
-//    } error:^(NSError * _Nullable error) {
-//
-//    }];
-//}
-
 
 - (void)executeAuthCmd {
     
@@ -155,7 +135,7 @@
     [button startCountDownWithSecond:60];
     [button countDownChanging:^NSString *(JKCountDownButton *countDownButton, NSUInteger second) {
         button.enabled = NO;
-        button.layer.borderColor = [HEX_COLOR(0xFC5E62) CGColor];
+        button.layer.borderColor = [GeneralRedColor CGColor];
         return [NSString stringWithFormat:@"重新发送(%zd)", second];
     }];
     [button countDownFinished:^NSString *(JKCountDownButton *countDownButton, NSUInteger second) {
@@ -188,14 +168,14 @@
     UserInfoModel *model = [BaseMethod readObjectWithKey:UserInfo_UDSKEY];
     UIImageView *portraitView = [UITool imageViewImage:model.avatarhead placeHolder:ImageNamed(@"placeHolder") contentMode:UIViewContentModeScaleAspectFill cornerRadius:WidthRatio(37) borderWidth:0 borderColor:[UIColor clearColor]];
 
-    UIButton *loginButton = [UITool wordButton:self.viewModel.loginBtnTitle titleColor:[UIColor whiteColor] font:MediumFont(17) bgColor:HEX_COLOR(0xFD1617)];
+    UIButton *loginButton = [UITool wordButton:self.viewModel.loginBtnTitle titleColor:[UIColor whiteColor] font:MediumFont(17) bgColor:GeneralRedColor];
     MMViewBorderRadius(loginButton, WidthRatio(22), 0, [UIColor clearColor]);
     
     UIButton *agreeButton = [UITool richButton:UIButtonTypeCustom title:@" 我已阅读同意" titleColor:AssistColor font:MediumFont(14) bgColor:[UIColor clearColor] image:ImageNamed(@"login_disagree")];
     [agreeButton setImage:ImageNamed(@"login_agree") forState:UIControlStateSelected];
     agreeButton.selected = YES;
     [agreeButton addTarget:self action:@selector(agreeButtonAction:) forControlEvents:UIControlEventTouchUpInside];
-    UIButton *policyButton = [UITool wordButton:@"《服务条款与隐私政策》" titleColor:RGBA(252, 83, 87, 1) font:MediumFont(14) bgColor:[UIColor clearColor]];
+    UIButton *policyButton = [UITool wordButton:@"《服务条款与隐私政策》" titleColor:GeneralRedColor font:MediumFont(14) bgColor:[UIColor clearColor]];
     UILabel *otherLoginLab = [UITool labelWithText:@"  快速登录  " textColor:AssistColor font:MediumFont(14)];
     otherLoginLab.backgroundColor = [UIColor whiteColor];
     UIView *bottomLine = [UITool viewWithColor:LineColor];
@@ -288,15 +268,15 @@
     authCodeBtn.titleLabel.font = MediumFont(12);
     [authCodeBtn setTitle:@"获取验证码" forState:UIControlStateNormal];
     [authCodeBtn setTitleColor:AssistColor forState:UIControlStateNormal];
-    [authCodeBtn setTitleColor:HEX_COLOR(0xFC5E62) forState:UIControlStateDisabled];
+    [authCodeBtn setTitleColor:GeneralRedColor forState:UIControlStateDisabled];
     authCodeBtn.backgroundColor = [UIColor whiteColor];
     
     [authCodeBtn addTarget:self action:@selector(authCodeBtnAction:) forControlEvents:UIControlEventTouchUpInside];
     MMViewBorderRadius(authCodeBtn, WidthRatio(13), 0.5, AssistColor);
     
     UIButton *loginButton = [UITool wordButton:@"登录" titleColor:[UIColor whiteColor] font:MediumFont(17) bgColor:[UIColor whiteColor]];
-    [loginButton setBackgroundImage:[BaseMethod createImageWithColor:HEX_COLOR(0xFC5E62)] forState:UIControlStateDisabled];
-    [loginButton setBackgroundImage:[BaseMethod createImageWithColor:HEX_COLOR(0xFD1617)] forState:UIControlStateNormal];
+    [loginButton setBackgroundImage:[BaseMethod createImageWithColor:AssistColor] forState:UIControlStateDisabled];
+    [loginButton setBackgroundImage:[BaseMethod createImageWithColor:GeneralRedColor] forState:UIControlStateNormal];
     MMViewBorderRadius(loginButton, WidthRatio(22), 0, [UIColor clearColor]);
     [loginButton addTarget:self action:@selector(loginAction:) forControlEvents:UIControlEventTouchUpInside];
     
@@ -304,7 +284,7 @@
     [agreeButton setImage:ImageNamed(@"login_agree") forState:UIControlStateSelected];
     agreeButton.selected = YES;
     [agreeButton addTarget:self action:@selector(agreeButtonAction:) forControlEvents:UIControlEventTouchUpInside];
-    UIButton *policyButton = [UITool wordButton:@"《服务条款与隐私政策》" titleColor:RGBA(252, 83, 87, 1) font:MediumFont(14) bgColor:[UIColor clearColor]];
+    UIButton *policyButton = [UITool wordButton:@"《服务条款与隐私政策》" titleColor:GeneralRedColor font:MediumFont(14) bgColor:[UIColor clearColor]];
     UIView *bottomLine = [UITool viewWithColor:LineColor];
     UILabel *fastLoginLab = [UITool labelWithText:@"  快速登录  " textColor:AssistColor font:MediumFont(14)];
     fastLoginLab.backgroundColor = [UIColor whiteColor];

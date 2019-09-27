@@ -186,7 +186,7 @@ static NSString *homeFooterid = @"ZCHomeTableFooterView_id";
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    NSUInteger index = self.viewModel.hasTuan ? 4 : 3;
+    NSUInteger index = self.viewModel.hasTuan ? 3 : 2;
     if (section < index) {
         return 1;
     }else {

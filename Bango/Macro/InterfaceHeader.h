@@ -12,7 +12,7 @@
 #define kOnLine   1
 #if kOnLine
 //生产环境
-#define AppBaseUrl                              @"https://mr-bango.cn/"
+#define AppBaseUrl                              @"http://www.lsqxsc.com/"
 #define AppPictureBaseUrl                       @"https://appapi.toushijinfu.com/"
 #define AppGuoGuoBaseUrl                        @"https://mr-bango.cn/GuoGuoGame/"
 #else
@@ -22,7 +22,7 @@
 #define AppGuoGuoBaseUrl                        @"http://ceshi.mr-bango.cn/GuoGuoGame/"
 #endif
 
-#define AppIconUrl                              @"https://mr-bango.cn/template/wap/default_new/public/css/qianrui/images/logo.png"
+#define AppIconUrl                              @"https://www.lsqxsc.com/template/wap/default_new/public/css/qianrui/images/logo.png"
 
 #pragma mark - 登陆注册
 

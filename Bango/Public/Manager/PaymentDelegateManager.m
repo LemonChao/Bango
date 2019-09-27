@@ -63,26 +63,24 @@
                 
                 //支付宝SDK返回result 从服务器换userinfo
                 if (DictIsEmpty(resultDic)) return;
-//                if (self.loginFinish) {
-//                    dispatch_async(dispatch_get_main_queue(), ^{
-//                        // UI更新代码
-//                        if (self.loginFinish) {
-//                            self.loginFinish(resultDic);
-//                        }
-//                    });
-//                    return;//v1.0.1 之前h5调用支付宝SDK登陆
-//                }
                 kShowActivityText(@"登陆中...")
-                [NetWorkManager.sharedManager requestWithUrl:kLogin_alipay_auth withParameters:@{@"auth_code":resultDic[@"result"]} withRequestType:POSTTYPE withSuccess:^(id  _Nonnull responseObject) {
-                    if (kStatusTrue) {
-                        UserInfoModel *model = [UserInfoModel modelWithDictionary:responseObject[@"data"]];
-                        [[NSNotificationCenter defaultCenter] postNotificationName:loginSuccessNotification object:nil userInfo:@{@"userModel":model,@"userResp":responseObject}];
-                    }else {
-                        kShowMessage
-                    }
-                }withFailure:^(NSError * _Nonnull error) {
-                    kShowError
-                }];
+                
+                // 延迟主要解决 iOS12 系统bug https://github.com/AFNetworking/AFNetworking/issues/4279
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 1.0 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+                    
+                    [NetWorkManager.sharedManager requestWithUrl:kLogin_alipay_auth withParameters:@{@"auth_code":resultDic[@"result"]} withRequestType:POSTTYPE withSuccess:^(id  _Nonnull responseObject) {
+                        if (kStatusTrue) {
+                            UserInfoModel *model = [UserInfoModel modelWithDictionary:responseObject[@"data"]];
+                            [[NSNotificationCenter defaultCenter] postNotificationName:loginSuccessNotification object:nil userInfo:@{@"userModel":model,@"userResp":responseObject}];
+                        }else {
+                            kShowMessage
+                        }
+                    }withFailure:^(NSError * _Nonnull error) {
+                        kShowError
+                    }];
+
+                });
+                
             }];
         }else {
             
@@ -150,7 +148,7 @@
     [NetWorkManager.sharedManager requestWithUrl:kOrderinfo_alipay withParameters:dataDict withRequestType:POSTTYPE withSuccess:^(id  _Nonnull responseObject) {
         NSString *dataString = responseObject[@"info"];
         if (![NSString isNOTNull:dataString]) {
-            [[AlipaySDK defaultService] payOrder:dataString fromScheme:@"BanGuoAlipay" callback:^(NSDictionary *resultDic) {
+            [[AlipaySDK defaultService] payOrder:dataString fromScheme:Alipay_scheme callback:^(NSDictionary *resultDic) {
                 NSLog(@"==============================reslut = %@",resultDic);
                 NSString *resultStatus = [resultDic objectForKey:@"resultStatus"];
                 payFinish([resultStatus intValue]);
@@ -170,7 +168,7 @@
 -(void)loginAlipayPaycompleteParams:(NSString *)auth_V2WithInfo {
     isLogin = YES;
     // this callback is invaild 需要调用方在appDelegate中调用processAuth_V2Result:standbyCallback:方法获取授权结果
-    [[AlipaySDK defaultService] auth_V2WithInfo:auth_V2WithInfo fromScheme:@"BanGuoAlipay" callback:nil];
+    [[AlipaySDK defaultService] auth_V2WithInfo:auth_V2WithInfo fromScheme:Alipay_scheme callback:nil];
 
 }
 
@@ -178,7 +176,7 @@
 //- (void)v_1LoginAlipayPaycompleteParams:(NSString *)auth_V2WithInfo loginFinish:(void (^)(id))loginFinish {
 //    self.loginFinish  = loginFinish;
 //    isLogin = YES;
-//    [[AlipaySDK defaultService] auth_V2WithInfo:auth_V2WithInfo fromScheme:@"BanGuoAlipay" callback:nil];
+//    [[AlipaySDK defaultService] auth_V2WithInfo:auth_V2WithInfo fromScheme:Alipay_scheme callback:nil];
 //
 //}
 @end

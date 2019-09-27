@@ -174,7 +174,7 @@
         self.textAlignment = NSTextAlignmentCenter;
         self.font = [UIFont systemFontOfSize:11];
         self.textColor = [UIColor whiteColor];
-        self.backgroundColor = [UIColor redColor];
+        self.backgroundColor = GeneralRedColor;
         self.layer.cornerRadius = 6.f;
         self.clipsToBounds = YES;
     }

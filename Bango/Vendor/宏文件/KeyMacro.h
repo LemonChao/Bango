@@ -31,7 +31,5 @@
 #define QQ_APP_WB_ID       @"801307650"
 #define QQ_APP_WB_SECRET   @"ae36f4ee3946e1cbb98d6965b0b2ff5c"
 
-//融云
-#define RY_APP_KEY  @"qd46yzrfqigrf"
 
 #endif /* KeyMacro_h */

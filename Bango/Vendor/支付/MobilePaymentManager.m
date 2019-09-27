@@ -97,8 +97,7 @@
             NSDictionary *response = (NSDictionary *)[payResult getContent];
             NSString *dataString = response[@"info"];
             if (![NSString  isNOTNull:dataString]){
-                NSString *appScheme = @"BanGuoAlipay";
-                [[AlipaySDK defaultService] payOrder:dataString fromScheme:appScheme callback:^(NSDictionary *resultDic){
+                [[AlipaySDK defaultService] payOrder:dataString fromScheme:Alipay_scheme callback:^(NSDictionary *resultDic){
                     NSLog(@"==============================reslut = %@",resultDic);
                     NSString *resultStatus = [resultDic objectForKey:@"resultStatus"];
                     payFinish([resultStatus intValue]);
@@ -119,7 +118,7 @@
                         loginFinish:(void (^)(id))loginFinish{
     _loginFinish = loginFinish;
     isLogin = YES;
-    [[AlipaySDK defaultService] auth_V2WithInfo:auth_V2WithInfo fromScheme:@"BanGuoAlipay" callback:^(NSDictionary *resultDic) {
+    [[AlipaySDK defaultService] auth_V2WithInfo:auth_V2WithInfo fromScheme:Alipay_scheme callback:^(NSDictionary *resultDic) {
         loginFinish(resultDic);
     }];
 }
