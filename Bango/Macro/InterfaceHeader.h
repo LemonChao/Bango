@@ -12,7 +12,7 @@
 #define kOnLine   1
 #if kOnLine
 //生产环境
-#define AppBaseUrl                              @"http://www.lsqxsc.com/"
+#define AppBaseUrl                              @"https://www.lsqxsc.com/"
 #define AppPictureBaseUrl                       @"https://appapi.toushijinfu.com/"
 #define AppGuoGuoBaseUrl                        @"https://mr-bango.cn/GuoGuoGame/"
 #else

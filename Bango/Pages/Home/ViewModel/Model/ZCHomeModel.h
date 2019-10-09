@@ -108,7 +108,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, assign) CGFloat rowHeight;
 @property(nonatomic, assign) CGFloat headerHeight;
 @property(nonatomic, assign) CGFloat footerHeight;
-
+/** 分区内行数 */
+@property(nonatomic, assign) NSInteger rows;
 @end
 
 

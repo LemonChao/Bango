@@ -192,8 +192,8 @@
     if (!_powerView) {
         _powerView = [[ZCWelfareButton alloc] init];
         _powerView.imgView.image = ImageNamed(@"banguoleyuan");
-        _powerView.titleLabel.text = @"搬果乐园";
-        _powerView.descriptLabel.text = @"玩游戏得水果";
+        _powerView.titleLabel.text = @"种果发酵乐园";
+        _powerView.descriptLabel.text = @"玩游戏得商城奖励";
         [_powerView addTarget:self action:@selector(powerViewAction:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _powerView;
@@ -203,7 +203,7 @@
     if (!_guoguoView) {
         _guoguoView  = [[ZCWelfareButton alloc] init];
         _guoguoView.imgView.image = ImageNamed(@"personal_guoguo");
-        _guoguoView.titleLabel.text = @"果果大冒险";
+        _guoguoView.titleLabel.text = @"摘果大冒险";
         _guoguoView.descriptLabel.text = @"欢乐蹦蹦跳";
         [_guoguoView addTarget:self action:@selector(guoguoViewAction:) forControlEvents:UIControlEventTouchUpInside];
     }

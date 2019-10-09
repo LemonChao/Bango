@@ -57,7 +57,7 @@
     UIViewController *baseVC = [self viewController];
     
     NSDictionary *dic;
-    if ([self.model.category_alias isEqualToString:@"爆款推荐"] || [self.model.category_alias isEqualToString:@"鲜果一起拼"]) {
+    if ([self.model.category_alias isEqualToString:@"爆款推荐"] || [self.model.category_alias isEqualToString:@"大家一起拼"]) {
         dic = @{@"type":self.model.category_id};
     }else {
         dic = @{@"category_id":self.model.category_id};

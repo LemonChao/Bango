@@ -186,13 +186,18 @@ static NSString *homeFooterid = @"ZCHomeTableFooterView_id";
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    NSUInteger index = self.viewModel.hasTuan ? 3 : 2;
-    if (section < index) {
-        return 1;
-    }else {
-        ZCHomeEverygodsModel *everyModel = self.viewModel.dataArray[section];
-        return everyModel.goods_list.count;
-    }
+    ZCHomeEverygodsModel *everyModel = self.viewModel.dataArray[section];
+    return everyModel.rows;
+
+    
+    
+//    NSUInteger index = self.viewModel.hasTuan ? 4 : 3;
+//    if (section < index) {
+//        return 1;
+//    }else {
+//        ZCHomeEverygodsModel *everyModel = self.viewModel.dataArray[section];
+//        return everyModel.goods_list.count;
+//    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -205,71 +210,108 @@ static NSString *homeFooterid = @"ZCHomeTableFooterView_id";
 
     ZCHomeEverygodsModel *model = self.viewModel.dataArray[indexPath.section];
 
-    if (self.viewModel.hasTuan) { //存在拼团
-        if (indexPath.section == 0) {
-            ZCHomeNoticeCell *cell = [tableView dequeueReusableCellWithIdentifier:noticeCellid];
-            cell.notics = model.goods_list;
-            return cell;
-        }
-        else if (indexPath.section == 1) {
-            ZCHomeCategoryCell *cell = [tableView dequeueReusableCellWithIdentifier:categoryCellid];
-            cell.categoryList = model.goods_list;
-            return cell;
-        }
-        else if (indexPath.section == 2) {
-            
-            ZCHomeRecommendCell *cell = [tableView dequeueReusableCellWithIdentifier:recommendCellid];
-            cell.tuijianList = model.goods_list;
-            return cell;
-        }
-        else if (indexPath.section == 3) {
-            
-            ZCHomeTuanCell *cell = [tableView dequeueReusableCellWithIdentifier:tuanCellid];
-            cell.pintuanList = model.goods_list;
-            return cell;
-        }else if (indexPath.section == 4){//4
-            ZCHomeBangoCell *cell = [tableView dequeueReusableCellWithIdentifier:bangoCellid];
-            cell.model = model.goods_list[indexPath.row];
-            return cell;
-        }
-        else {
-            ZCCategoryEverygodsCell *cell = [tableView dequeueReusableCellWithIdentifier:everygodsCellid];
-            cell.model = model.goods_list[indexPath.row];
-            cell.lineView.hidden = indexPath.row == model.goods_list.count-1;
-            return cell;
-        }
+    if ([model.category_alias isEqualToString:@"公告"]) {
+        ZCHomeNoticeCell *cell = [tableView dequeueReusableCellWithIdentifier:noticeCellid];
+        cell.notics = model.goods_list;
+        return cell;
     }
-    else {
-        if (indexPath.section == 0) {
-            ZCHomeNoticeCell *cell = [tableView dequeueReusableCellWithIdentifier:noticeCellid];
-            cell.notics = model.goods_list;
-            return cell;
-        }
-        else if (indexPath.section == 1) {
-            ZCHomeCategoryCell *cell = [tableView dequeueReusableCellWithIdentifier:categoryCellid];
-            cell.categoryList = model.goods_list;
-            return cell;
-        }
-        else if (indexPath.section == 2) {
-            
-            ZCHomeRecommendCell *cell = [tableView dequeueReusableCellWithIdentifier:recommendCellid];
-            cell.tuijianList = model.goods_list;
-            return cell;
-        }
-        else if (indexPath.section == 3) {
-            
-            ZCHomeBangoCell *cell = [tableView dequeueReusableCellWithIdentifier:bangoCellid];
-            cell.model = model.goods_list[indexPath.row];
-            return cell;
-        }
-        else {
-            ZCCategoryEverygodsCell *cell = [tableView dequeueReusableCellWithIdentifier:everygodsCellid];
-            cell.model = model.goods_list[indexPath.row];
-            cell.lineView.hidden = indexPath.row == model.goods_list.count-1;
-            return cell;
-        }
+    else if ([model.category_alias isEqualToString:@"分类"]) {
+        ZCHomeCategoryCell *cell = [tableView dequeueReusableCellWithIdentifier:categoryCellid];
+        cell.categoryList = model.goods_list;
+        return cell;
+    }
+    else if ([model.category_alias isEqualToString:@"爆款推荐"]) {
+        ZCHomeRecommendCell *cell = [tableView dequeueReusableCellWithIdentifier:recommendCellid];
+        cell.tuijianList = model.goods_list;
+        return cell;
+    }
+    else if ([model.category_alias isEqualToString:@"大家一起拼"]) {
+        ZCHomeTuanCell *cell = [tableView dequeueReusableCellWithIdentifier:tuanCellid];
+        cell.pintuanList = model.goods_list;
+        return cell;
+    }
+    else if ([model.category_alias isEqualToString:@"成为搬果小将"]) {
+        ZCHomeBangoCell *cell = [tableView dequeueReusableCellWithIdentifier:bangoCellid];
+        cell.model = model.goods_list[indexPath.row];
+        return cell;
+    }
+    else{
+        ZCCategoryEverygodsCell *cell = [tableView dequeueReusableCellWithIdentifier:everygodsCellid];
+        cell.model = model.goods_list[indexPath.row];
+        cell.lineView.hidden = indexPath.row == model.goods_list.count-1;
+        return cell;
     }
 
+    
+    
+//    if (self.viewModel.hasTuan) { //存在拼团
+//        if (indexPath.section == 0) {
+//            ZCHomeNoticeCell *cell = [tableView dequeueReusableCellWithIdentifier:noticeCellid];
+//            cell.notics = model.goods_list;
+//            return cell;
+//        }
+//        else if (indexPath.section == 1) {
+//            ZCHomeCategoryCell *cell = [tableView dequeueReusableCellWithIdentifier:categoryCellid];
+//            cell.categoryList = model.goods_list;
+//            return cell;
+//        }
+//        else if (indexPath.section == 2) {
+//
+//            ZCHomeRecommendCell *cell = [tableView dequeueReusableCellWithIdentifier:recommendCellid];
+//            cell.tuijianList = model.goods_list;
+//            return cell;
+//        }
+//        else if (indexPath.section == 3) {
+//
+//            ZCHomeTuanCell *cell = [tableView dequeueReusableCellWithIdentifier:tuanCellid];
+//            cell.pintuanList = model.goods_list;
+//            return cell;
+//        }else if (indexPath.section == 4){//4
+//            ZCHomeBangoCell *cell = [tableView dequeueReusableCellWithIdentifier:bangoCellid];
+//            cell.model = model.goods_list[indexPath.row];
+//            return cell;
+//        }
+//        else {
+//            ZCCategoryEverygodsCell *cell = [tableView dequeueReusableCellWithIdentifier:everygodsCellid];
+//            cell.model = model.goods_list[indexPath.row];
+//            cell.lineView.hidden = indexPath.row == model.goods_list.count-1;
+//            return cell;
+//        }
+//    }
+//    else {
+//        if (indexPath.section == 0) {
+//            ZCHomeNoticeCell *cell = [tableView dequeueReusableCellWithIdentifier:noticeCellid];
+//            cell.notics = model.goods_list;
+//            return cell;
+//        }
+//        else if (indexPath.section == 1) {
+//            ZCHomeCategoryCell *cell = [tableView dequeueReusableCellWithIdentifier:categoryCellid];
+//            cell.categoryList = model.goods_list;
+//            return cell;
+//        }
+//        else if (indexPath.section == 2) {
+//
+//            ZCHomeRecommendCell *cell = [tableView dequeueReusableCellWithIdentifier:recommendCellid];
+//            cell.tuijianList = model.goods_list;
+//            return cell;
+//        }
+//        else if (indexPath.section == 3) {
+//
+//            ZCHomeBangoCell *cell = [tableView dequeueReusableCellWithIdentifier:bangoCellid];
+//            cell.model = model.goods_list[indexPath.row];
+//            return cell;
+//        }
+//        else {
+//            ZCCategoryEverygodsCell *cell = [tableView dequeueReusableCellWithIdentifier:everygodsCellid];
+//            cell.model = model.goods_list[indexPath.row];
+//            cell.lineView.hidden = indexPath.row == model.goods_list.count-1;
+//            return cell;
+//        }
+//    }
+
+    
+    
+    
     return nil;
 }
 
@@ -277,22 +319,28 @@ static NSString *homeFooterid = @"ZCHomeTableFooterView_id";
     
     ZCHomeEverygodsModel *model = self.viewModel.dataArray[indexPath.section];
     
-    if (self.viewModel.hasTuan) {
-        if (indexPath.section >= 4) {
-            ZCPublicGoodsModel *goods = model.goods_list[indexPath.row];
-            NSDictionary *dic = @{@"goods_id":goods.goods_id};
-            ZCWebViewController *webVC = [[ZCWebViewController alloc] initWithPath:@"goods-detail" parameters:dic];
-            [self.navigationController pushViewController:webVC animated:YES];
-        }
-    }
-    else {
-        if (indexPath.section >= 3) {
-            ZCPublicGoodsModel *goods = model.goods_list[indexPath.row];
-            NSDictionary *dic = @{@"goods_id":goods.goods_id};
-            ZCWebViewController *webVC = [[ZCWebViewController alloc] initWithPath:@"goods-detail" parameters:dic];
-            [self.navigationController pushViewController:webVC animated:YES];
-        }
-    }
+    ZCPublicGoodsModel *goods = model.goods_list[indexPath.row];
+    NSDictionary *dic = @{@"goods_id":goods.goods_id};
+    ZCWebViewController *webVC = [[ZCWebViewController alloc] initWithPath:@"goods-detail" parameters:dic];
+    [self.navigationController pushViewController:webVC animated:YES];
+
+    
+//    if (self.viewModel.hasTuan) {
+//        if (indexPath.section >= 4) {
+//            ZCPublicGoodsModel *goods = model.goods_list[indexPath.row];
+//            NSDictionary *dic = @{@"goods_id":goods.goods_id};
+//            ZCWebViewController *webVC = [[ZCWebViewController alloc] initWithPath:@"goods-detail" parameters:dic];
+//            [self.navigationController pushViewController:webVC animated:YES];
+//        }
+//    }
+//    else {
+//        if (indexPath.section >= 3) {
+//            ZCPublicGoodsModel *goods = model.goods_list[indexPath.row];
+//            NSDictionary *dic = @{@"goods_id":goods.goods_id};
+//            ZCWebViewController *webVC = [[ZCWebViewController alloc] initWithPath:@"goods-detail" parameters:dic];
+//            [self.navigationController pushViewController:webVC animated:YES];
+//        }
+//    }
 
 }
 
